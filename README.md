@@ -10,7 +10,7 @@ Todos os dados do site são reais e foram extraídos de [iguatemiautomoveis.com.
 | --- | --- |
 | `index.html` | Busca por marca/modelo/preço/ano, atalhos, últimas novidades, marcas, diferenciais, mapa e contato |
 | `estoque.html` | Lista completa com busca por texto, filtros (tipo, marca, modelo, preço, ano, câmbio, combustível, características), ordenação e estado na URL |
-| `veiculo.html?id=…` | Galeria com swipe e tela cheia, especificações, opcionais, descrição, vídeo, WhatsApp, ligação, simulação de financiamento, compartilhar, veículos semelhantes |
+| `v/<id>.html` (e `veiculo.html?id=…`) | Galeria com swipe e tela cheia, especificações, opcionais, descrição, vídeo, WhatsApp, ligação, simulação de financiamento, compartilhar, veículos semelhantes. As páginas em `v/` são geradas a partir de `veiculo.html` com título, Open Graph (foto e preço) e JSON-LD próprios, para a prévia do link ficar certa no WhatsApp e no Google |
 | `venda-seu-veiculo.html` | Formulário que monta a mensagem e abre o WhatsApp da loja |
 | `financiamento.html` | Pré-análise (veículo, entrada, parcelas) enviada pelo WhatsApp |
 | `quem-somos.html`, `contato.html`, `politica-de-privacidade.html`, `404.html` | Institucionais |
@@ -30,6 +30,8 @@ assets/img/               logo, favicon, imagem de compartilhamento
 data/vehicles.json        estoque completo (usado na página do veículo)
 data/index.json           estoque resumido (usado nas listagens)
 scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
+scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo) e sitemap.xml
+v/                        páginas geradas (não edite à mão: mude veiculo.html e rode npm run pages)
 ```
 
 ## Atualizar o estoque
@@ -40,7 +42,7 @@ O estoque vem do site atual (plataforma AutoCerto). Para sincronizar:
 npm run sync        # ou: node scripts/sync-inventory.mjs
 ```
 
-Requer Node 22+. O script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes).
+Requer Node 22+. O primeiro script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes). O segundo regenera `v/*.html` e `sitemap.xml` (apaga as páginas de veículos que saíram do estoque). Se o site for publicado em outro domínio, rode `node scripts/gerar-paginas.mjs --site-url https://seu-dominio/`.
 
 O workflow `.github/workflows/sync-estoque.yml` faz isso automaticamente todo dia às 06:00 (Brasília) e também pode ser disparado manualmente em **Actions → Sincronizar estoque → Run workflow**. Ele commita as mudanças no branch padrão, o que dispara a publicação.
 
@@ -48,8 +50,9 @@ As fotos dos veículos continuam hospedadas em `www.autocerto.com` (mesmo servid
 
 ## Publicar no GitHub Pages
 
-1. Em **Settings → Pages**, escolha **Source: GitHub Actions**.
-2. Faça merge deste branch em `main`. O workflow `.github/workflows/pages.yml` publica o site em `https://marcusbarbosa92.github.io/IguatemiVeiculos/`.
+1. O repositório nasceu vazio, então o primeiro branch enviado (`claude/car-sales-mobile-site-m0ixyw`) virou o padrão. Crie o branch `main` a partir dele (ou renomeie-o para `main` em **Settings → Branches**).
+2. Em **Settings → Pages**, escolha **Source: GitHub Actions**.
+3. Todo push em `main` roda `.github/workflows/pages.yml` e publica o site em `https://marcusbarbosa92.github.io/IguatemiVeiculos/`. Também dá para disparar manualmente em **Actions → Publicar no GitHub Pages → Run workflow**, escolhendo o branch.
 
 Se for usar um domínio próprio, troque as URLs absolutas de `og:image`/`canonical` nos HTML (hoje apontam para o endereço acima) e o prefixo `/IguatemiVeiculos/` em `404.html`.
 

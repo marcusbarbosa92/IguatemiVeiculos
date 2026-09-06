@@ -3,16 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- meta:start (bloco substituído por scripts/gerar-paginas.mjs nas páginas v/<id>.html) -->
 <title>Veículo · Iguatemi Automóveis</title>
 <meta name="description" content="Detalhes do veículo, fotos, opcionais e contato direto pelo WhatsApp. Iguatemi Automóveis, Campinas - SP.">
-<meta name="theme-color" content="#0b0b0c">
-<link rel="icon" href="assets/img/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="assets/img/favicon.png">
-<link rel="manifest" href="manifest.webmanifest">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Veículo · Iguatemi Automóveis">
 <meta property="og:description" content="Detalhes do veículo na Iguatemi Automóveis, Campinas - SP.">
 <meta property="og:image" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/og.png">
+<!-- meta:end -->
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://www.autocerto.com">
@@ -37,7 +39,7 @@
       <p class="muted small" style="margin:0">Preencha e enviaremos sua solicitação pelo WhatsApp. Um consultor retorna com as condições disponíveis, sujeitas à análise de crédito.</p>
       <input type="hidden" name="veiculo" id="sim-veiculo" data-label="Veículo">
       <input type="hidden" name="valor" id="sim-valor" data-label="Valor do veículo">
-      <div class="field"><label for="sim-entrada">Valor de entrada (R$)</label><input class="input" id="sim-entrada" name="entrada" type="text" inputmode="numeric" placeholder="Ex.: 30.000" data-label="Entrada"></div>
+      <div class="field"><label for="sim-entrada">Valor de entrada (R$)</label><input class="input" id="sim-entrada" name="entrada" type="text" inputmode="numeric" placeholder="Ex.: 30.000" data-label="Entrada (R$)"></div>
       <div class="field"><label for="sim-parcelas">Número de parcelas</label><select class="input" id="sim-parcelas" name="parcelas" data-label="Parcelas"><option value="12">12x</option><option value="24">24x</option><option value="36">36x</option><option value="48" selected>48x</option><option value="60">60x</option></select></div>
       <div class="field"><label for="sim-nome">Seu nome</label><input class="input" id="sim-nome" name="nome" type="text" autocomplete="name" required data-label="Nome"></div>
       <div class="field"><label for="sim-tel">Seu telefone</label><input class="input" id="sim-tel" name="telefone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(19) 99999-9999" required data-label="Telefone"></div>

@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://marcusbarbosa92.github.io/IguatemiVeiculos/sitemap.xml

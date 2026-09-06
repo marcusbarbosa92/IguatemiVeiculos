@@ -16,6 +16,8 @@
     const desc = name + " por " + A.fmtBRL(v.preco) + ". " + A.fmtKm(v.km) + ", " + v.cambio + ", " + v.combustivel + ". " + S.nome + ", Campinas - SP.";
     const setMeta = (sel, val) => { const m = document.querySelector(sel); if (m) m.setAttribute("content", val); };
     setMeta('meta[name="description"]', desc); setMeta('meta[property="og:title"]', name + " · " + A.fmtBRL(v.preco)); setMeta('meta[property="og:description"]', desc); setMeta('meta[property="og:image"]', v.capa);
+    const canonical = A.absUrl(A.vehUrl(v));
+    let link = document.querySelector('link[rel="canonical"]'); if (!link) { link = document.createElement("link"); link.rel = "canonical"; document.head.appendChild(link); } link.href = canonical;
     const tags = (v.caracteristicas || []).filter((c) => c in TAG_STYLE);
     const chars = (v.caracteristicas || []).filter((c) => !(c in TAG_STYLE));
     const isNew = v.km < 1000 && v.anoModelo >= new Date().getFullYear();
@@ -76,7 +78,7 @@
 
     /* compartilhar */
     $("#btn-share").addEventListener("click", async () => {
-      const url = location.href, text = name + " · " + A.fmtBRL(v.preco) + " · " + S.nome;
+      const url = canonical, text = name + " · " + A.fmtBRL(v.preco) + " · " + S.nome;
       if (navigator.share) { try { await navigator.share({ title: text, text: text, url: url }); } catch (e) { /* cancelado */ } }
       else { try { await navigator.clipboard.writeText(url); A.toast("Link copiado!"); } catch (e) { A.toast(url); } }
     });
@@ -100,14 +102,14 @@
       "@context": "https://schema.org", "@type": v.tipo === "moto" ? "Motorcycle" : "Car", name: name, brand: { "@type": "Brand", name: v.marca }, model: v.modelo,
       vehicleConfiguration: v.versao || undefined, productionDate: String(v.anoFabricacao), vehicleModelDate: String(v.anoModelo),
       mileageFromOdometer: { "@type": "QuantitativeValue", value: v.km, unitCode: "KMT" }, vehicleTransmission: v.cambio, fuelType: v.combustivel,
-      image: v.fotos.slice(0, 5), url: location.href, sku: String(v.id), itemCondition: "https://schema.org/UsedCondition",
-      offers: { "@type": "Offer", price: v.preco, priceCurrency: "BRL", availability: "https://schema.org/InStock", url: location.href, seller: { "@type": "AutoDealer", name: S.nome, telephone: S.telefone.e164 } }
+      image: v.fotos.slice(0, 5), url: canonical, sku: String(v.id), itemCondition: "https://schema.org/UsedCondition",
+      offers: { "@type": "Offer", price: v.preco, priceCurrency: "BRL", availability: "https://schema.org/InStock", url: canonical, seller: { "@type": "AutoDealer", name: S.nome, telephone: S.telefone.e164 } }
     };
-    const s = document.createElement("script"); s.type = "application/ld+json"; s.textContent = JSON.stringify(ld); document.head.appendChild(s);
+    if (!document.querySelector('script[type="application/ld+json"]')) { const s = document.createElement("script"); s.type = "application/ld+json"; s.textContent = JSON.stringify(ld); document.head.appendChild(s); }
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
-    const id = +(new URLSearchParams(location.search).get("id") || 0);
+    const id = +(document.body.dataset.vehicleId || new URLSearchParams(location.search).get("id") || 0);
     if (!id) return notFound("Nenhum veículo informado");
     try {
       const data = await A.loadAll();

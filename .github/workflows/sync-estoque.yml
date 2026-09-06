@@ -19,11 +19,12 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/sync-inventory.mjs
+      - run: node scripts/gerar-paginas.mjs
       - name: Commit se houver mudanças
         run: |
-          if git diff --quiet -- data; then echo "Estoque sem mudanças."; exit 0; fi
+          if git diff --quiet -- data v sitemap.xml && [ -z "$(git ls-files --others --exclude-standard -- v)" ]; then echo "Estoque sem mudanças."; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data
+          git add data v sitemap.xml
           git commit -m "chore: sincroniza estoque ($(date -u +%Y-%m-%d))"
           git push

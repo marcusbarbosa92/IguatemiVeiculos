@@ -60,8 +60,8 @@
   const titleCase = (s) => String(s).toLowerCase().replace(/(^|[\s\-\/])([a-zà-ú])/g, (m, p, c) => p + c.toUpperCase());
   const vehName = (v) => v.marca + " " + v.modelo + (v.versao ? " " + v.versao : "") + " " + v.anoFabricacao + "/" + v.anoModelo;
   const vehShort = (v) => v.marca + " " + v.modelo + " " + v.anoFabricacao + "/" + v.anoModelo;
-  const vehUrl = (v) => "veiculo.html?id=" + v.id + "&v=" + encodeURIComponent(v.slug || "");
-  const absUrl = (rel) => new URL(rel, location.href).href;
+  const vehUrl = (v) => "v/" + v.id + ".html";
+  const absUrl = (rel) => new URL(rel, document.baseURI).href;
 
   /* ---------- WhatsApp / telefone ---------- */
   const waLink = (msg) => "https://wa.me/" + S.whatsapp.numero + "?text=" + encodeURIComponent(msg || S.whatsapp.mensagemPadrao);
