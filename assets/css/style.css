@@ -148,12 +148,18 @@ p { margin: 0 0 .75rem; }
 .bottom-nav a .ic { width: 24px; height: 24px; }
 .bottom-nav a[aria-current="page"] { color: var(--red-700); }
 .bottom-nav .bn-wa { color: #fff; }
-.bottom-nav .bn-wa span { color: var(--muted); }
+.bottom-nav .bn-wa > span:last-child { color: var(--muted); }
+/* círculo do WhatsApp: pouco maior que os outros ícones, ícone branco, anel claro que pulsa devagar */
 .bottom-nav .bn-wa .bn-wa-circle {
-  width: 52px; height: 52px; margin-top: -26px; border-radius: 50%; background: var(--green);
-  display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(37,211,102,.45), 0 0 0 5px #fff, 0 0 0 8px rgba(37,211,102,.35);
+  position: relative; width: 44px; height: 44px; margin-top: -16px; border-radius: 50%; background: var(--green); color: #fff;
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(17,131,63,.35), 0 0 0 3px #fff;
 }
-.bottom-nav .bn-wa .ic { width: 28px; height: 28px; }
+.bottom-nav .bn-wa .bn-wa-circle::before {
+  content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--green-light); opacity: 0; pointer-events: none;
+  animation: wa-pulse 2.6s ease-out infinite;
+}
+.bottom-nav .bn-wa .ic { width: 24px; height: 24px; }
+@keyframes wa-pulse { 0% { transform: scale(1); opacity: .55; } 70% { transform: scale(1.45); opacity: 0; } 100% { transform: scale(1.45); opacity: 0; } }
 body.no-bottom-nav .bottom-nav { display: none; }
 
 /* ---------- Rodapé ---------- */
@@ -294,7 +300,7 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .search-bar input::-webkit-search-cancel-button { -webkit-appearance: none; }
 .search-bar:focus-within { border-color: var(--ink); }
 .search-bar .btn { flex: 0 0 auto; }
-@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } .bottom-nav .bn-wa .bn-wa-circle::before { animation: none; } }
 @media (min-width: 900px) { .hero-video { display: none; } .hero-bg { background-image: url("../video/hero-poster-wide.webp"); } }
 @media (min-width: 900px) { .hero-bg::after { background: linear-gradient(90deg, rgba(11,11,12,.72) 0%, rgba(11,11,12,.32) 50%, rgba(11,11,12,.5) 100%), linear-gradient(180deg, rgba(11,11,12,.35) 0%, rgba(11,11,12,0) 30%, rgba(11,11,12,0) 75%, rgba(11,11,12,.6) 100%); } }
 .hero h1 { font-size: clamp(1.8rem, 6.4vw, 2.8rem); line-height: 1.05; letter-spacing: -.025em; max-width: 14ch; }
