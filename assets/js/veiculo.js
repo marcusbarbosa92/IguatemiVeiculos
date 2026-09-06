@@ -26,15 +26,16 @@
     const chars = (v.caracteristicas || []).filter((c) => !has(c));
     const especificas = (v.descricao || []).filter((p) => !PADRAO.some((re) => re.test(p.trim())));
     const n = v.fotos.length;
-    const slideSrc = (f) => (f === v.capa ? A.thumbUrl(v) : null); // capa local em 800 px; as demais só quando chegam perto
+    const GAL_N = 6; // as 6 primeiras fotos têm versão local de 640 px (scripts/gerar-miniaturas.py)
+    const slideSrc = (f, i) => (f === v.capa ? A.thumbUrl(v) : (i < GAL_N ? A.fotoThumbUrl(v, f).replace(/\.webp$/, "-640.webp") : f));
 
     $("#vehicle").innerHTML =
       '<div class="container v-layout">' +
       '<div class="v-main-top">' +
-      '<div class="gallery" id="gallery" role="region" aria-label="Fotos do veículo"><div class="track" id="g-track">' + v.fotos.map((f, i) => { const local = slideSrc(f); return '<button type="button" tabindex="-1" data-i="' + i + '" aria-label="Abrir foto ' + (i + 1) + ' em tela cheia"><img ' + (local ? 'src="' + local + '" data-fallback="' + esc(f) + '" fetchpriority="high"' : 'src="' + PLACEHOLDER + '" data-src="' + esc(f) + '"') + ' alt="' + esc(name) + " — foto " + (i + 1) + '" decoding="async"></button>'; }).join("") + "</div>" +
+      '<div class="gallery" id="gallery" role="region" aria-label="Fotos do veículo"><div class="track" id="g-track">' + v.fotos.map((f, i) => { const src = slideSrc(f, i); return '<button type="button" tabindex="-1" data-i="' + i + '" aria-label="Abrir foto ' + (i + 1) + ' em tela cheia"><img ' + (i === 0 ? 'src="' + src + '" fetchpriority="high"' : 'src="' + PLACEHOLDER + '" data-src="' + esc(src) + '"') + ' data-fallback="' + esc(f) + '" alt="' + esc(name) + " — foto " + (i + 1) + '" decoding="async"></button>'; }).join("") + "</div>" +
       '<button class="g-nav prev" type="button" id="g-prev" aria-label="Foto anterior">' + icon("chevL") + '</button><button class="g-nav next" type="button" id="g-next" aria-label="Próxima foto">' + icon("chevR") + "</button>" +
-      '<div class="counter" id="g-counter" aria-live="polite" aria-atomic="true">1/' + n + "</div>" +
-      '<button class="btn btn-sm btn-outline-light g-full" type="button" id="g-full">' + icon("image") + " Ver todas as fotos</button></div>" +
+      '<div class="g-top"><div class="counter" id="g-counter" aria-live="polite" aria-atomic="true">1/' + n + "</div>" +
+      '<button class="btn btn-sm btn-outline-light g-full" type="button" id="g-full">' + icon("image") + " Ver todas</button></div></div>" +
       '<div class="thumbs" id="thumbs" role="group" aria-label="Miniaturas">' + v.fotos.map((f, i) => '<button type="button" data-i="' + i + '"' + (i === 0 ? ' class="on" aria-current="true" tabindex="0"' : ' tabindex="-1"') + ' aria-label="Foto ' + (i + 1) + ' de ' + n + '"><img src="' + A.fotoThumbUrl(v, f) + '" data-fallback="' + esc(f) + '" alt="" loading="lazy" decoding="async" width="64" height="48"></button>').join("") + "</div>" +
       '<div class="v-head"><nav class="breadcrumb" aria-label="Você está em"><a href="estoque.html">Estoque</a><span aria-hidden="true">›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + '">' + esc(v.marca) + '</a><span aria-hidden="true">›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + "&modelo=" + encodeURIComponent(v.modelo) + '" aria-current="page">' + esc(v.modelo) + "</a></nav>" +
       '<h1><img class="brand-logo" src="' + A.brandLogo(v.marca, v.tipo) + '" alt="" width="44" height="44" onerror="this.remove()"><small>' + esc(v.marca) + " </small>" + esc(v.modelo) + "</h1>" + (v.versao ? '<div class="version">' + esc(v.versao) + "</div>" : "") +
@@ -43,6 +44,7 @@
       "</div>" +
       '<aside class="v-side">' +
       '<div class="cta-block">' +
+      '<div class="side-title" aria-hidden="true"><span class="v-brand">' + esc(v.marca) + "</span><b>" + esc(v.modelo) + "</b>" + (v.versao ? "<span>" + esc(v.versao) + "</span>" : "") + "</div>" +
       '<div class="price-box"><div><div class="p"><small>R$</small>' + A.fmtBRL(v.preco).replace(/^R\$\s?/, "") + '</div><div class="lbl">Valor do veículo</div></div><div class="price-actions">' + A.Fav.button(v.id, "btn btn-icon btn-outline") + '<button class="btn btn-icon btn-outline" type="button" id="btn-share" aria-label="Compartilhar">' + icon("share") + "</button></div></div>" +
       '<div class="cta-row"><a class="btn btn-wa btn-lg" href="' + wa + '" target="_blank" rel="noopener">' + icon("whatsapp") + ' Tenho interesse</a><a class="btn btn-dark btn-lg" href="' + A.telLink + '">' + icon("phone") + " Ligar agora</a>" +
       '<div class="row2"><button class="btn btn-outline" type="button" id="btn-sim">' + icon("calc") + ' Proposta de financiamento</button><a class="btn btn-outline" href="venda-seu-veiculo.html">' + icon("tag") + " Vender meu veículo</a></div></div>" +
@@ -65,12 +67,18 @@
     const slides = $$("#g-track img");
     const loadSlide = (i) => { const im = slides[i]; if (im && im.dataset.src) { im.src = im.dataset.src; delete im.dataset.src; } };
     const loadAround = (i) => { loadSlide(i); loadSlide(i + 1); loadSlide(i - 1); };
+    // a foto vizinha só é baixada quando o visitante mexe na galeria (toque, tecla, miniatura, setas)
+    let interagiu = false;
+    const armar = () => { if (interagiu) return; interagiu = true; loadAround(idx); if ("IntersectionObserver" in window) { const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { loadSlide(+e.target.dataset.i); io.unobserve(e.target); } }), { root: track, rootMargin: "0px 60% 0px 60%" }); $$("#g-track > button").forEach((b) => io.observe(b)); } };
+    ["touchstart", "pointerdown", "wheel", "keydown"].forEach((ev) => track.addEventListener(ev, armar, { passive: true, once: true }));
+    $("#thumbs").addEventListener("pointerdown", armar, { passive: true, once: true });
     if ("IntersectionObserver" in window) {
-      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { loadSlide(+e.target.dataset.i); io.unobserve(e.target); } }), { root: track, rootMargin: "0px 60% 0px 60%" });
-      $$("#g-track > button").forEach((b) => io.observe(b));
-    } else loadAround(0);
+      // barra fixa de contato só aparece quando o bloco de preço/botões saiu da tela
+      const cta = $(".cta-block"), sticky = $("#sticky-cta");
+      new IntersectionObserver((es) => { sticky.classList.toggle("is-hidden", es[0].isIntersecting); }, { threshold: 0.35 }).observe(cta);
+    }
     let idx = 0;
-    const goTo = (i, smooth) => { i = (i + n) % n; loadAround(i); track.scrollTo({ left: i * track.clientWidth, behavior: smooth === false ? "auto" : "smooth" }); };
+    const goTo = (i, smooth) => { i = (i + n) % n; armar(); loadAround(i); track.scrollTo({ left: i * track.clientWidth, behavior: smooth === false ? "auto" : "smooth" }); };
     const thumbsEl = $("#thumbs");
     const setThumb = (i) => { $$("#thumbs button").forEach((b, k) => { const on = k === i; b.classList.toggle("on", on); b.tabIndex = on ? 0 : -1; if (on) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); }); const tb = $$("#thumbs button")[i]; if (tb) thumbsEl.scrollTo({ left: tb.offsetLeft - thumbsEl.clientWidth / 2 + tb.offsetWidth / 2, behavior: "smooth" }); };
     track.addEventListener("scroll", () => { const i = Math.round(track.scrollLeft / track.clientWidth); if (i !== idx) { idx = i; loadAround(idx); $("#g-counter").textContent = (idx + 1) + "/" + n; setThumb(idx); } }, { passive: true });
@@ -90,11 +98,26 @@
     $("#lb-counter").setAttribute("aria-live", "polite");
     const trapLb = (e) => { if (e.key !== "Tab") return; const items = $$("button", lb).filter((b) => b.offsetParent !== null); if (!items.length) return; const f = items[0], l = items[items.length - 1]; if (e.shiftKey && document.activeElement === f) { e.preventDefault(); l.focus(); } else if (!e.shiftKey && document.activeElement === l) { e.preventDefault(); f.focus(); } };
     function openLightbox(i) { lbOpener = document.activeElement; lbLoad(i); lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; requestAnimationFrame(() => { lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "auto" }); lbIdx = i; $("#lb-counter").textContent = (i + 1) + "/" + n; }); $("#lb-close").focus(); document.addEventListener("keydown", trapLb); }
-    function closeLightbox() { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; document.removeEventListener("keydown", trapLb); goTo(lbIdx, false); const t = $$("#thumbs button")[lbIdx]; if (t) t.focus(); else if (lbOpener && lbOpener.focus) lbOpener.focus(); }
+    function closeLightbox() { if (zoomed) setZoom(false); lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; document.removeEventListener("keydown", trapLb); goTo(lbIdx, false); const t = $$("#thumbs button")[lbIdx]; if (t) t.focus(); else if (lbOpener && lbOpener.focus) lbOpener.focus(); }
     const lbGo = (i) => { i = (i + n) % n; lbLoad(i); lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "smooth" }); };
     lbTrack.addEventListener("scroll", () => { const i = Math.round(lbTrack.scrollLeft / lbTrack.clientWidth); if (i !== lbIdx) { lbIdx = i; lbLoad(i); $("#lb-counter").textContent = (i + 1) + "/" + n; } }, { passive: true });
-    lbTrack.addEventListener("click", (e) => { if (e.target === lbTrack || (e.target.tagName === "DIV" && e.target.parentElement === lbTrack)) closeLightbox(); });
-    let ty = null; lbTrack.addEventListener("touchstart", (e) => { ty = e.touches[0].clientY; }, { passive: true }); lbTrack.addEventListener("touchend", (e) => { if (ty !== null && e.changedTouches[0].clientY - ty > 90) closeLightbox(); ty = null; }, { passive: true });
+    lbTrack.addEventListener("click", (e) => { if (zoomed) return; if (e.target === lbTrack || (e.target.tagName === "DIV" && e.target.parentElement === lbTrack)) closeLightbox(); });
+    let ty = null; lbTrack.addEventListener("touchstart", (e) => { ty = zoomed ? null : e.touches[0].clientY; }, { passive: true }); lbTrack.addEventListener("touchend", (e) => { if (ty !== null && e.changedTouches[0].clientY - ty > 90) closeLightbox(); ty = null; }, { passive: true });
+    /* zoom: duplo toque (ou duplo clique) amplia 2,5x no ponto tocado; arrastar move; duplo toque de novo volta */
+    let zoomed = false, lastTap = 0, pan = null;
+    const zoomImg = () => lbImgs[lbIdx];
+    const setZoom = (on, x, y) => {
+      const im = zoomImg(); if (!im) return; zoomed = on; lb.classList.toggle("zoomed", on);
+      if (on) { const r = im.getBoundingClientRect(); const ox = ((x - r.left) / r.width) * 100, oy = ((y - r.top) / r.height) * 100; im.style.transformOrigin = ox + "% " + oy + "%"; im.style.transform = "scale(2.5)"; im.style.cursor = "grab"; }
+      else { im.style.transform = ""; im.style.transformOrigin = ""; im.style.cursor = ""; }
+    };
+    const toggleZoom = (x, y) => setZoom(!zoomed, x, y);
+    lbTrack.addEventListener("dblclick", (e) => { if (e.target.tagName === "IMG") { e.preventDefault(); toggleZoom(e.clientX, e.clientY); } });
+    lbTrack.addEventListener("touchend", (e) => { if (e.target.tagName !== "IMG") return; const now = Date.now(); if (now - lastTap < 300) { e.preventDefault(); const t = e.changedTouches[0]; toggleZoom(t.clientX, t.clientY); } lastTap = now; });
+    lbTrack.addEventListener("pointerdown", (e) => { if (!zoomed || e.target.tagName !== "IMG") return; pan = { x: e.clientX, y: e.clientY, ox: 0, oy: 0 }; const m = /translate\((-?[\d.]+)px, (-?[\d.]+)px\)/.exec(e.target.style.transform); if (m) { pan.ox = +m[1]; pan.oy = +m[2]; } e.target.setPointerCapture(e.pointerId); });
+    lbTrack.addEventListener("pointermove", (e) => { if (!pan || !zoomed) return; e.preventDefault(); const im = zoomImg(); im.style.transform = "translate(" + (pan.ox + e.clientX - pan.x) + "px, " + (pan.oy + e.clientY - pan.y) + "px) scale(2.5)"; });
+    ["pointerup", "pointercancel"].forEach((ev) => lbTrack.addEventListener(ev, () => { pan = null; }));
+    lbTrack.addEventListener("scroll", () => { if (zoomed) setZoom(false); }, { passive: true });
     $("#lb-close").addEventListener("click", closeLightbox); $("#lb-prev").addEventListener("click", () => lbGo(lbIdx - 1)); $("#lb-next").addEventListener("click", () => lbGo(lbIdx + 1));
     document.addEventListener("keydown", (e) => { if (!lb.classList.contains("open")) return; if (e.key === "Escape") closeLightbox(); if (e.key === "ArrowLeft") lbGo(lbIdx - 1); if (e.key === "ArrowRight") lbGo(lbIdx + 1); });
 

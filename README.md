@@ -37,7 +37,7 @@ sw.js                     service worker (mude VERSAO para descartar o cache dos
 tests/                    validação de dados, parser do sync (fixtures reais) e fumaça no Chromium
 scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
 scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo) e sitemap.xml
-scripts/gerar-miniaturas.py gera assets/thumbs (capa 800 px), assets/fotos (cada foto em 160 px), assets/og (capa JPEG para a prévia do WhatsApp) e baixa assets/marcas
+scripts/gerar-miniaturas.py gera assets/thumbs (capa 800 px), assets/fotos (cada foto em 160 px + as 6 primeiras em 640 px), assets/og (capa JPEG para a prévia do WhatsApp) e baixa assets/marcas
 v/                        páginas geradas (não edite à mão: mude veiculo.html e rode npm run pages)
 ```
 
@@ -53,7 +53,7 @@ Requer Node 22+ e Python 3 com Pillow (`pip install pillow`) para as miniaturas.
 
 O workflow `.github/workflows/sync-estoque.yml` faz isso automaticamente todo dia às 06:00 (Brasília) e também pode ser disparado manualmente em **Actions → Sincronizar estoque → Run workflow**. Ele commita as mudanças no branch padrão, o que dispara a publicação.
 
-Os cartões, a faixa de miniaturas e a primeira foto da galeria usam imagens locais (`assets/thumbs`, `assets/fotos`), com a foto original como reserva se faltarem; as demais fotos da galeria só são baixadas quando o visitante chega perto delas. As fotos grandes continuam hospedadas em `www.autocerto.com` (mesmo servidor usado pelo site atual). Se a loja deixar a AutoCerto, as fotos precisam ser copiadas para outro lugar e o campo `fotos` ajustado.
+Os cartões, a faixa de miniaturas e as seis primeiras fotos da galeria usam imagens locais (`assets/thumbs`, `assets/fotos`), com a foto original como reserva se faltarem; as demais fotos da galeria só são baixadas quando o visitante mexe na galeria e chega perto delas, e a tela cheia usa as originais. As fotos grandes continuam hospedadas em `www.autocerto.com` (mesmo servidor usado pelo site atual). Se a loja deixar a AutoCerto, as fotos precisam ser copiadas para outro lugar e o campo `fotos` ajustado.
 
 ## Publicar no GitHub Pages
 

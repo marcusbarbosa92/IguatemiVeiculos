@@ -101,7 +101,6 @@
 
   function activeList() {
     const out = [];
-    if (state.salvos) out.push(["salvos", "", "Salvos"]);
     if (state.q) out.push(["q", "", "“" + state.q + "”"]);
     if (state.tipo) out.push(["tipo", "", state.tipo === "moto" ? "Motos" : "Carros"]);
     state.categoria.forEach((v) => out.push(["categoria", v, CATS[v] || v]));

@@ -44,7 +44,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
   const A = window.App, S = window.STORE, esc = A.esc, icon = A.icon;
-  document.getElementById("sobre").innerHTML = "<h2>Nossa história</h2>" + S.sobre.map((p) => "<p>" + esc(p) + "</p>").join("") + "<h2>Compromisso com a procedência</h2><ul>" + S.garantias.map((g) => "<li><b>" + esc(g.titulo) + ":</b> " + esc(g.texto) + "</li>").join("") + "</ul>";
+  document.getElementById("sobre").innerHTML = "<h2>Nossa história</h2>" + S.sobre.map((p) => "<p>" + esc(p) + "</p>").join("") + "";
   document.getElementById("features").innerHTML = S.garantias.map((g, i) => '<div class="feature"><div class="fi">' + icon(["shield", "doc", "star", "lock"][i]) + "</div><div><h3>" + esc(g.titulo) + "</h3><p>" + esc(g.texto) + "</p></div></div>").join("");
   const soc = document.getElementById("social"); soc.innerHTML = A.socialRow(); soc.querySelectorAll(".social-row a").forEach((a) => { a.style.background = "#17171a"; });
   try {

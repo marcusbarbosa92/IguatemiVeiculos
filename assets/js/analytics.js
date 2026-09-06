@@ -21,7 +21,11 @@
     window.gtag("consent", "default", consent === "all" ? granted : denied);
     window.gtag("js", new Date());
     window.gtag("config", cfg.ga4, { anonymize_ip: true, send_page_view: true });
-    var g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(cfg.ga4); document.head.appendChild(g);
+    // o script do Google (~600 KB) só é baixado depois da primeira interação ou do aceite, para não pesar na abertura
+    var gtagOn = false;
+    var loadGtag = function () { if (gtagOn) return; gtagOn = true; var g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(cfg.ga4); document.head.appendChild(g); };
+    if (consent === "all") loadGtag();
+    else { ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (ev) { window.addEventListener(ev, loadGtag, { once: true, passive: true }); }); document.addEventListener("consent:change", loadGtag); }
   }
   var pixelOn = false;
   function startPixel() {

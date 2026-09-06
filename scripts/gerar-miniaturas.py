@@ -6,6 +6,7 @@ Gera as imagens locais que o site usa no lugar das fotos originais (~400 KB cada
   assets/thumbs/<id>-<capaId>.webp   capa em 800 px (cartões e primeira foto da galeria)
   assets/og/<id>-<capaId>.jpg        capa em 960x720 JPEG (prévia do link no WhatsApp/Facebook, que exige < 300 KB)
   assets/fotos/<id>/<foto>.webp       cada foto em 160 px (faixa de miniaturas da galeria)
+  assets/fotos/<id>/<foto>-640.webp   as 6 primeiras fotos em 640 px (galeria no celular; as demais vêm da AutoCerto sob demanda)
   assets/marcas/<chave>.webp          logo da marca
 Nomes carregam a identidade da foto de origem: se a loja trocar a capa, a miniatura antiga é apagada
 e a nova gerada. Fotos de veículos que saíram do estoque são removidas.
@@ -34,6 +35,7 @@ OG = ROOT / "assets" / "og"
 CAPA_W, CAPA_Q = 800, 78
 OG_W, OG_Q = 960, 76
 FOTO_W, FOTO_Q = 160, 70
+GAL_W, GAL_Q, GAL_N = 640, 72, 6
 UA = "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Mobile Safari/537.36"
 FORCE = "--force" in sys.argv
 
@@ -73,7 +75,7 @@ def job(kind, url, out, width, quality):
     if url not in _cache:
         _cache[url] = fetch(url)
     resize_save(_cache[url], out, width, quality)
-    if kind != "capa":  # a capa é reaproveitada pela imagem OG logo em seguida
+    if kind == "foto":  # a mesma foto pode ser usada pela versão de 640 px e pela capa/OG logo em seguida
         _cache.pop(url, None)
     return "novo"
 
@@ -104,7 +106,7 @@ def main():
     for v in veiculos:
         d = FOTOS / str(v["id"])
         if d.is_dir():
-            atuais = {f"{foto_id(f)}.webp" for f in v["fotos"]}
+            atuais = {f"{foto_id(f)}.webp" for f in v["fotos"]} | {f"{foto_id(f)}-640.webp" for f in v["fotos"][:GAL_N]}
             for f in d.glob("*.webp"):
                 if f.name not in atuais:
                     f.unlink(); removidos += 1
@@ -113,7 +115,9 @@ def main():
     for v in veiculos:
         tarefas.append(("capa", v["capa"], THUMBS / f"{v['id']}-{foto_id(v['capa'])}.webp", CAPA_W, CAPA_Q))
         tarefas.append(("og", v["capa"], OG / f"{v['id']}-{foto_id(v['capa'])}.jpg", OG_W, OG_Q))
-        for f in v["fotos"]:
+        for i, f in enumerate(v["fotos"]):
+            if i < GAL_N:
+                tarefas.append(("galeria", f, FOTOS / str(v["id"]) / f"{foto_id(f)}-640.webp", GAL_W, GAL_Q))
             tarefas.append(("foto", f, FOTOS / str(v["id"]) / f"{foto_id(f)}.webp", FOTO_W, FOTO_Q))
     novos, erros = 0, []
     with cf.ThreadPoolExecutor(max_workers=8) as ex:
