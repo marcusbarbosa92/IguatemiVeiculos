@@ -1,0 +1,29 @@
+{
+ "_nota": "Categoria de carroceria por modelo (MARCA|MODELO), conferida modelo a modelo com a versão anunciada. Modelos que não estiverem aqui aparecem no estoque normalmente, só não entram no filtro por categoria. Motos vêm do campo tipo.",
+ "categorias": { "suv": "SUVs", "picape": "Picapes", "sedan": "Sedans", "hatch": "Hatches", "perua": "Peruas", "moto": "Motos" },
+ "modelos": {
+  "AUDI|A3": "sedan", "AUDI|Q3": "suv", "AUDI|Q7": "suv",
+  "BMW|220i": "sedan", "BMW|330i": "sedan", "BMW|X1": "suv", "BMW|X2": "suv", "BMW|X3": "suv", "BMW|X6": "suv",
+  "BYD|SONG PLUS PREMIUM": "suv",
+  "CHERY|TIGGO 5X PRO": "suv", "CHERY|TIGGO 8": "suv", "CHERY|TIGGO 8 PRO": "suv",
+  "CHEVROLET|EQUINOX": "suv", "CHEVROLET|TRACKER": "suv",
+  "FIAT|FASTBACK": "suv", "FIAT|PULSE": "suv", "FIAT|TORO": "picape",
+  "FORD|BRONCO SPORT": "suv", "FORD|MAVERICK": "picape", "FORD|RANGER": "picape",
+  "GWM|ORA 03": "hatch",
+  "HONDA|CITY": "hatch", "HONDA|HR-V": "suv",
+  "HYUNDAI|CRETA": "suv", "HYUNDAI|HB20": "hatch",
+  "JEEP|COMMANDER": "suv", "JEEP|COMPASS": "suv", "JEEP|RENEGADE": "suv",
+  "KIA|SORENTO": "suv",
+  "MERCEDES-BENZ|C 180": "sedan", "MERCEDES-BENZ|C 300": "perua", "MERCEDES-BENZ|GLA 200": "suv", "MERCEDES-BENZ|GLB 200": "suv", "MERCEDES-BENZ|GLC 250": "suv", "MERCEDES-BENZ|GLC 300": "suv",
+  "MINI|COUNTRYMAN": "suv",
+  "MITSUBISHI|ECLIPSE CROSS": "suv", "MITSUBISHI|L200 TRITON": "picape", "MITSUBISHI|PAJERO SPORT": "suv", "MITSUBISHI|TRITON": "picape",
+  "NISSAN|FRONTIER": "picape", "NISSAN|KICKS": "suv", "NISSAN|SENTRA": "sedan",
+  "RAM|2500": "picape", "RAM|RAMPAGE": "picape",
+  "RENAULT|CAPTUR": "suv",
+  "SUZUKI|S-CROSS": "suv",
+  "TOYOTA|COROLLA": "sedan", "TOYOTA|COROLLA CROSS": "suv", "TOYOTA|HILUX": "picape", "TOYOTA|HILUX SW4": "suv",
+  "TROLLER|T4": "suv",
+  "VOLKSWAGEN|GOL": "hatch", "VOLKSWAGEN|GOLF": "hatch", "VOLKSWAGEN|JETTA": "sedan", "VOLKSWAGEN|POLO": "hatch", "VOLKSWAGEN|T-CROSS": "suv", "VOLKSWAGEN|TIGUAN": "suv",
+  "VOLVO|XC 40": "suv"
+ }
+}

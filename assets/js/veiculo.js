@@ -23,11 +23,12 @@
 
     $("#vehicle").innerHTML =
       '<div class="container v-layout"><div class="v-main">' +
-      '<div class="gallery" id="gallery"><div class="track" id="g-track">' + v.fotos.map((f, i) => '<button type="button" data-i="' + i + '" aria-label="Abrir foto ' + (i + 1) + ' em tela cheia"><img src="' + esc(f) + '" alt="' + esc(name) + " — foto " + (i + 1) + '" loading="' + (i < 2 ? "eager" : "lazy") + '" decoding="async"' + (i === 0 ? ' fetchpriority="high"' : "") + "></button>").join("") + "</div>" +
+      '<div class="gallery" id="gallery" role="region" aria-label="Fotos do veículo"><div class="track" id="g-track">' + v.fotos.map((f, i) => '<button type="button" tabindex="-1" data-i="' + i + '" aria-label="Abrir foto ' + (i + 1) + ' em tela cheia"><img src="' + esc(f) + '" alt="' + esc(name) + " — foto " + (i + 1) + '" loading="' + (i < 2 ? "eager" : "lazy") + '" decoding="async"' + (i === 0 ? ' fetchpriority="high"' : "") + "></button>").join("") + "</div>" +
       '<button class="g-nav prev" type="button" id="g-prev" aria-label="Foto anterior">' + icon("chevL") + '</button><button class="g-nav next" type="button" id="g-next" aria-label="Próxima foto">' + icon("chevR") + "</button>" +
-      '<div class="counter" id="g-counter">1/' + v.fotos.length + "</div></div>" +
-      '<div class="thumbs" id="thumbs">' + v.fotos.map((f, i) => '<button type="button" data-i="' + i + '"' + (i === 0 ? ' class="on"' : "") + ' aria-label="Ver foto ' + (i + 1) + '"><img src="' + esc(f) + '" alt="" loading="lazy" decoding="async"></button>').join("") + "</div>" +
-      '<div class="v-head"><nav class="breadcrumb" aria-label="Você está em"><a href="estoque.html">Estoque</a><span>›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + '">' + esc(A.titleCase(v.marca)) + '</a><span>›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + "&modelo=" + encodeURIComponent(v.modelo) + '">' + esc(v.modelo) + "</a></nav>" +
+      '<div class="counter" id="g-counter" aria-live="polite" aria-atomic="true">1/' + v.fotos.length + "</div>" +
+      '<button class="btn btn-sm btn-outline-light g-full" type="button" id="g-full">' + icon("image") + " Ver todas as fotos</button></div>" +
+      '<div class="thumbs" id="thumbs" role="group" aria-label="Miniaturas">' + v.fotos.map((f, i) => '<button type="button" data-i="' + i + '"' + (i === 0 ? ' class="on" aria-current="true" tabindex="0"' : ' tabindex="-1"') + ' aria-label="Foto ' + (i + 1) + ' de ' + v.fotos.length + '"><img src="' + esc(f) + '" alt="" loading="lazy" decoding="async"></button>').join("") + "</div>" +
+      '<div class="v-head"><nav class="breadcrumb" aria-label="Você está em"><a href="estoque.html">Estoque</a><span aria-hidden="true">›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + '">' + esc(A.titleCase(v.marca)) + '</a><span aria-hidden="true">›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + "&modelo=" + encodeURIComponent(v.modelo) + '" aria-current="page">' + esc(v.modelo) + "</a></nav>" +
       '<h1><img class="brand-logo" src="' + A.brandLogo(v.marca, v.tipo) + '" alt="" width="44" height="44" onerror="this.remove()"><small>' + esc(v.marca) + " </small>" + esc(v.modelo) + "</h1>" + (v.versao ? '<div class="version">' + esc(v.versao) + "</div>" : "") +
       '<div class="tags">' + tags.map((t) => '<span class="badge ' + TAG_STYLE[t] + '">' + esc(t) + "</span>").join("") + chars.map((t) => '<span class="badge gray">' + esc(t) + "</span>").join("") + "</div></div>" +
       '<div class="specs">' + [["calendar", "Ano", v.anoFabricacao + "/" + v.anoModelo], ["gauge", "Km", A.fmtNum(v.km)], ["gear", "Câmbio", v.cambio], ["fuel", "Combustível", v.combustivel]].map((s) => '<div class="spec"><div class="fi">' + icon(s[0]) + "</div><div><span>" + s[1] + "</span><b>" + esc(s[2]) + "</b></div></div>").join("") + "</div>" +
@@ -44,15 +45,20 @@
       "</aside></div>";
 
     $("#sticky-cta").hidden = false;
-    $("#sticky-cta").innerHTML = '<div class="sp"><b>' + A.fmtBRL(v.preco) + "</b><span>" + esc(A.vehShort(v)) + '</span></div><a class="btn btn-icon btn-dark" href="' + A.telLink + '" aria-label="Ligar">' + icon("phone") + '</a><a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">' + icon("whatsapp") + " WhatsApp</a>";
+    $("#sticky-cta").setAttribute("role", "region"); $("#sticky-cta").setAttribute("aria-label", "Contato rápido");
+    $("#sticky-cta").innerHTML = '<div class="sp"><b>' + A.fmtBRL(v.preco) + "</b><span>" + esc(v.marca + " " + v.modelo) + '</span></div><a class="btn btn-icon btn-dark" href="' + A.telLink + '" aria-label="Ligar">' + icon("phone") + '</a><a class="btn btn-wa" href="' + wa + '" target="_blank" rel="noopener">' + icon("whatsapp") + " WhatsApp</a>";
 
     /* galeria */
     const track = $("#g-track"), n = v.fotos.length;
     let idx = 0;
     const goTo = (i, smooth) => { i = (i + n) % n; track.scrollTo({ left: i * track.clientWidth, behavior: smooth === false ? "auto" : "smooth" }); };
-    track.addEventListener("scroll", () => { const i = Math.round(track.scrollLeft / track.clientWidth); if (i !== idx) { idx = i; $("#g-counter").textContent = (idx + 1) + "/" + n; $$("#thumbs button").forEach((b, k) => b.classList.toggle("on", k === idx)); const tb = $$("#thumbs button")[idx]; if (tb) tb.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" }); } }, { passive: true });
+    const thumbsEl = $("#thumbs");
+    const setThumb = (i) => { $$("#thumbs button").forEach((b, k) => { const on = k === i; b.classList.toggle("on", on); b.tabIndex = on ? 0 : -1; if (on) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current"); }); const tb = $$("#thumbs button")[i]; if (tb) thumbsEl.scrollTo({ left: tb.offsetLeft - thumbsEl.clientWidth / 2 + tb.offsetWidth / 2, behavior: "smooth" }); };
+    track.addEventListener("scroll", () => { const i = Math.round(track.scrollLeft / track.clientWidth); if (i !== idx) { idx = i; $("#g-counter").textContent = (idx + 1) + "/" + n; setThumb(idx); } }, { passive: true });
+    $("#g-full").addEventListener("click", () => openLightbox(idx));
     $("#g-prev").addEventListener("click", () => goTo(idx - 1)); $("#g-next").addEventListener("click", () => goTo(idx + 1));
-    $$("#thumbs button").forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.i)));
+    $$("#thumbs button").forEach((b) => { b.addEventListener("click", () => goTo(+b.dataset.i)); b.addEventListener("dblclick", () => openLightbox(+b.dataset.i)); });
+    thumbsEl.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openLightbox(idx); } });
     $$("#g-track > button").forEach((b) => b.addEventListener("click", () => openLightbox(+b.dataset.i)));
     document.addEventListener("keydown", (e) => { if ($("#lightbox").classList.contains("open") || $(".sheet.open") || (e.target && e.target.matches && e.target.matches("input, select, textarea"))) return; if (e.key === "ArrowLeft") goTo(idx - 1); if (e.key === "ArrowRight") goTo(idx + 1); });
 
@@ -60,6 +66,7 @@
     const lb = $("#lightbox"), lbTrack = $("#lb-track");
     lbTrack.innerHTML = v.fotos.map((f, i) => '<div><img src="' + esc(f) + '" alt="' + esc(name) + " — foto " + (i + 1) + '" loading="lazy" decoding="async"></div>').join("");
     let lbIdx = 0;
+    $("#lb-counter").setAttribute("aria-live", "polite");
     let lbOpener = null, lbTab = null;
     const trapLb = (e) => { if (e.key !== "Tab") return; const items = $$("button", lb).filter((b) => b.offsetParent !== null); if (!items.length) return; const f = items[0], l = items[items.length - 1]; if (e.shiftKey && document.activeElement === f) { e.preventDefault(); l.focus(); } else if (!e.shiftKey && document.activeElement === l) { e.preventDefault(); f.focus(); } };
     function openLightbox(i) { lbOpener = document.activeElement; lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; requestAnimationFrame(() => { lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "auto" }); lbIdx = i; $("#lb-counter").textContent = (i + 1) + "/" + n; }); $("#lb-close").focus(); document.addEventListener("keydown", trapLb); }

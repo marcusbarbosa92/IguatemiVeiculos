@@ -19,7 +19,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body class="page-estoque">
 <header id="site-header"></header>
 <main id="main">
   <div class="toolbar">
@@ -28,12 +28,12 @@
         <div class="search-box">
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <label class="sr-only" for="q">Buscar por marca, modelo ou versão</label>
-          <input class="input" id="q" type="search" placeholder="Marca, modelo ou versão" autocomplete="off" enterkeyhint="search">
+          <input class="input" id="q" type="search" placeholder="Buscar" autocomplete="off" enterkeyhint="search">
           <button class="clear" id="q-clear" type="button" aria-label="Limpar busca" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </div>
         <button class="tb-btn" id="btn-filters" type="button" aria-haspopup="dialog" aria-controls="filters"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtros<span class="cnt" id="filter-count" hidden>0</span></button>
-        <div class="tb-btn" aria-hidden="false">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M4 12h7M4 17h4M17 6v12m0 0 3-3m-3 3-3-3"/></svg>
+        <div class="tb-btn">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M4 12h7M4 17h4M17 6v12m0 0 3-3m-3 3-3-3"/></svg><span class="lbl" id="ordem-label" aria-hidden="true"></span>
           <label class="sr-only" for="ordem">Ordenar por</label>
           <select id="ordem">
             <option value="marca">Marca / modelo</option>
@@ -47,6 +47,7 @@
     </div>
   </div>
   <div class="container">
+    <h1 class="sr-only">Estoque de veículos</h1>
     <div class="active-filters" id="active-filters"></div>
     <div class="results-head"><span id="results-count" aria-live="polite">Carregando…</span><span id="results-updated" class="small"></span></div>
     <div class="v-grid" id="results"><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div></div>

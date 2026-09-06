@@ -106,7 +106,7 @@
       '<a class="card-link" href="' + vehUrl(v) + '" aria-label="' + esc(vehName(v)) + '"></a>' +
       '<div class="v-img"><img src="' + thumbUrl(v) + '" data-fallback="' + esc(v.capa) + '" alt="' + esc(vehName(v)) + '" loading="' + (opts.eager ? "eager" : "lazy") + '" decoding="async" width="640" height="480">' +
       '<div class="v-badges">' + tags.map((t) => '<span class="badge ' + (TAGS[t] || "") + '">' + esc(t) + "</span>").join("") + "</div>" +
-      (v.nFotos ? '<span class="v-photos">' + icon("image") + v.nFotos + "</span>" : "") + "</div>" +
+      (v.nFotos ? '<span class="v-photos" aria-label="' + v.nFotos + ' fotos">' + icon("image") + v.nFotos + "</span>" : "") + "</div>" +
       '<div class="v-body">' +
       '<div class="v-brand">' + esc(v.marca) + "</div>" +
       '<div class="v-title">' + esc(v.modelo) + "</div>" +
@@ -145,9 +145,10 @@
         '<a class="hdr-btn phone" href="' + telLink + '" aria-label="Ligar para ' + esc(S.telefone.exibicao) + '">' + icon("phone") + "</a>" +
         '<a class="btn btn-wa hdr-wa" href="' + waLink() + '" target="_blank" rel="noopener">' + icon("whatsapp") + " " + esc(S.whatsapp.exibicao) + "</a>" +
         "</div>";
+      const skip = document.createElement("a"); skip.className = "skip-link"; skip.href = "#main"; skip.textContent = "Pular para o conteúdo"; document.body.prepend(skip);
       const drawer = document.createElement("div");
       drawer.innerHTML = '<div class="drawer-backdrop" id="drawer-backdrop"></div>' +
-        '<aside class="drawer" id="drawer" aria-label="Menu" aria-hidden="true">' +
+        '<aside class="drawer" id="drawer" aria-label="Menu" aria-hidden="true" inert>' +
         '<div class="drawer-top"><img src="assets/img/logo.png" alt="' + esc(S.nome) + '"><button class="hdr-btn" type="button" id="menu-close" aria-label="Fechar menu">' + icon("close") + "</button></div>" +
         '<nav class="drawer-nav" aria-label="Menu principal">' + NAV.map((n) => '<a href="' + n[0] + '"' + cur(n[0]) + ">" + icon(n[2]) + n[1] + "</a>").join("") + "</nav>" +
         '<div class="drawer-contact">' +
@@ -157,8 +158,8 @@
         socialRow() + "</div></aside>";
       document.body.append(...drawer.childNodes);
       let untrapDrawer = null;
-      const open = () => { $("#drawer").classList.add("open"); $("#drawer-backdrop").classList.add("open"); $("#drawer").setAttribute("aria-hidden", "false"); $("#menu-open").setAttribute("aria-expanded", "true"); document.body.style.overflow = "hidden"; $("#menu-close").focus(); untrapDrawer = trapFocus($("#drawer")); };
-      const close = () => { if (!$("#drawer").classList.contains("open")) return; $("#drawer").classList.remove("open"); $("#drawer-backdrop").classList.remove("open"); $("#drawer").setAttribute("aria-hidden", "true"); $("#menu-open").setAttribute("aria-expanded", "false"); document.body.style.overflow = ""; if (untrapDrawer) { untrapDrawer(); untrapDrawer = null; } $("#menu-open").focus(); };
+      const open = () => { const d = $("#drawer"); d.removeAttribute("inert"); d.classList.add("open"); $("#drawer-backdrop").classList.add("open"); d.setAttribute("aria-hidden", "false"); $("#menu-open").setAttribute("aria-expanded", "true"); document.body.style.overflow = "hidden"; $("#menu-close").focus(); untrapDrawer = trapFocus(d); };
+      const close = () => { const d = $("#drawer"); if (!d.classList.contains("open")) return; d.classList.remove("open"); $("#drawer-backdrop").classList.remove("open"); d.setAttribute("aria-hidden", "true"); d.setAttribute("inert", ""); $("#menu-open").setAttribute("aria-expanded", "false"); document.body.style.overflow = ""; if (untrapDrawer) { untrapDrawer(); untrapDrawer = null; } $("#menu-open").focus(); };
       $("#menu-open").addEventListener("click", open);
       $("#menu-close").addEventListener("click", close);
       $("#drawer-backdrop").addEventListener("click", close);
@@ -183,16 +184,16 @@
       const e = S.endereco;
       footer.innerHTML = '<div class="container">' +
         '<div class="f-brand"><img src="assets/img/logo.png" alt="' + esc(S.nome) + '"><p>' + esc(S.slogan) + "</p>" + socialRow() + "</div>" +
-        "<div><h4>Onde estamos</h4><ul class=\"f-list\">" +
+        "<div><h2>Onde estamos</h2><ul class=\"f-list\">" +
         "<li>" + icon("pin") + '<a href="' + esc(S.links.googleMaps) + '" target="_blank" rel="noopener">' + esc(e.logradouro + ", " + e.numero) + "<br>" + esc(e.bairro + " · " + e.cidade + " - " + e.uf) + "<br>CEP " + esc(e.cep) + "</a></li>" +
         "<li>" + icon("clock") + "<span>" + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</span></li>" +
         "</ul></div>" +
-        "<div><h4>Fale conosco</h4><ul class=\"f-list\">" +
+        "<div><h2>Fale conosco</h2><ul class=\"f-list\">" +
         "<li>" + icon("whatsapp") + '<a href="' + waLink() + '" target="_blank" rel="noopener">WhatsApp ' + esc(S.whatsapp.exibicao) + "</a></li>" +
         "<li>" + icon("phone") + '<a href="' + telLink + '">' + esc(S.telefone.exibicao) + "</a></li>" +
         "<li>" + icon("mail") + '<a href="mailto:' + esc(S.email) + '">' + esc(S.email) + "</a></li>" +
         "</ul></div>" +
-        '<div><h4>Navegação</h4><nav class="f-nav" aria-label="Rodapé">' + NAV.map((n) => '<a href="' + n[0] + '">' + n[1] + "</a>").join("") + '<a href="politica-de-privacidade.html">Política de privacidade</a></nav></div>' +
+        '<div><h2>Navegação</h2><nav class="f-nav" aria-label="Rodapé">' + NAV.map((n) => '<a href="' + n[0] + '">' + n[1] + "</a>").join("") + '<a href="politica-de-privacidade.html">Política de privacidade</a></nav></div>' +
         '<div class="f-bottom"><span>© ' + new Date().getFullYear() + " " + esc(S.nome) + " · " + esc(S.razaoSocial) + " · CNPJ " + esc(S.cnpj) + "</span>" +
         "<span>" + esc(S.avisoLegal) + "</span></div>" +
         "</div>";
@@ -227,10 +228,11 @@
     opts = opts || {};
     const el = $("#" + id), bd = $("#" + id + "-backdrop");
     if (!el || !bd) return null;
+    el.setAttribute("inert", "");
     let lastFocus = null, untrap = null;
     const api = {
-      open() { lastFocus = document.activeElement; el.classList.add("open"); bd.classList.add("open"); el.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; const f = el.querySelector("button, input, select, [tabindex]"); if (f) f.focus(); untrap = trapFocus(el); },
-      close() { if (!el.classList.contains("open")) return; el.classList.remove("open"); bd.classList.remove("open"); el.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; if (untrap) { untrap(); untrap = null; } if (lastFocus && lastFocus.focus) lastFocus.focus(); if (opts.onClose) opts.onClose(); },
+      open() { lastFocus = document.activeElement; el.removeAttribute("inert"); el.classList.add("open"); bd.classList.add("open"); el.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; const f = el.querySelector("button, input, select, [tabindex]"); if (f) f.focus(); untrap = trapFocus(el); },
+      close() { if (!el.classList.contains("open")) return; el.classList.remove("open"); bd.classList.remove("open"); el.setAttribute("aria-hidden", "true"); el.setAttribute("inert", ""); document.body.style.overflow = ""; if (untrap) { untrap(); untrap = null; } if (lastFocus && lastFocus.focus) lastFocus.focus(); if (opts.onClose) opts.onClose(); },
       isOpen() { return el.classList.contains("open"); }
     };
     bd.addEventListener("click", api.close);
@@ -241,7 +243,7 @@
 
   /* ---------- Avaliações do Google (data/avaliacoes.json, preenchido à mão) ---------- */
   const loadReviews = () => loadJSON("data/avaliacoes.json").then((d) => (d && typeof d.nota === "number" && d.nota > 0 ? d : null)).catch(() => null);
-  const stars = (n) => '<span class="stars" aria-label="' + n + ' de 5 estrelas">' + [1, 2, 3, 4, 5].map((i) => icon("star", i <= Math.round(n) ? "ic-fill" : "ic-fill off")).join("") + "</span>";
+  const stars = (n) => '<span class="stars" role="img" aria-label="' + n + ' de 5 estrelas">' + [1, 2, 3, 4, 5].map((i) => icon("star", i <= Math.round(n) ? "ic-fill" : "ic-fill off")).join("") + "</span>";
   const fmtNota = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const googleBadge = (d) => '<a class="google-badge" href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">' + stars(d.nota) + "<span>" + fmtNota(d.nota) + " no Google" + (d.totalAvaliacoes ? " · " + fmtNum(d.totalAvaliacoes) + " avaliações" : "") + "</span></a>";
 

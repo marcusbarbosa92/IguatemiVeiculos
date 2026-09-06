@@ -6,6 +6,7 @@
   const TAGS = ["Blindado", "7 lugares", "Único Dono", "Garantia de Fábrica", "Revisado em Concessionária", "IPVA Pago", "Licenciado", "Chave Reserva", "Manual do proprietário"];
   const PAGE = 24;
   let ALL = [], state = {}, shown = 0, filtered = [];
+  const ordemLabel = () => { const o = $("#ordem"); const l = $("#ordem-label"); if (o && l) l.textContent = o.options[o.selectedIndex].text; };
 
   const norm = (s) => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/-/g, "").toLowerCase();
 
@@ -90,7 +91,7 @@
   function renderActive() {
     const act = activeList();
     $("#filter-count").hidden = !act.length; $("#filter-count").textContent = act.length;
-    $("#active-filters").innerHTML = act.map((a) => '<button class="chip on" type="button" data-k="' + esc(a[0]) + '" data-v="' + esc(a[1]) + '">' + esc(a[2]) + icon("close") + "</button>").join("") + (act.length > 1 ? '<button class="chip" type="button" id="chip-clear">Limpar tudo</button>' : "");
+    $("#active-filters").innerHTML = act.map((a) => '<button class="chip on" type="button" data-k="' + esc(a[0]) + '" data-v="' + esc(a[1]) + '" aria-label="Remover filtro: ' + esc(a[2]) + '">' + esc(a[2]) + icon("close") + "</button>").join("") + (act.length > 1 ? '<button class="chip" type="button" id="chip-clear">Limpar tudo</button>' : "");
     $$("#active-filters .chip[data-k]").forEach((b) => b.addEventListener("click", () => {
       const k = b.dataset.k, v = b.dataset.v;
       if (Array.isArray(state[k])) state[k] = state[k].filter((x) => x !== v); else state[k] = "";
@@ -138,7 +139,7 @@
     $("#f-precoMin").value = state.precoMin; $("#f-precoMax").value = state.precoMax; $("#f-anoMin").value = state.anoMin;
     $$("#f-tipo button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.val === state.tipo ? "true" : "false"));
     $$("#f-cambio .chip, #f-combustivel .chip, #f-tag .chip").forEach((b) => b.setAttribute("aria-pressed", state[b.dataset.key].includes(b.dataset.val) ? "true" : "false"));
-    $("#ordem").value = state.ordem;
+    $("#ordem").value = state.ordem; ordemLabel();
     updateApplyCount();
   }
   function updateApplyCount() {
@@ -161,7 +162,7 @@
     $("#btn-filters").addEventListener("click", () => { saved = JSON.parse(JSON.stringify(state)); applied = false; syncControls(); filtersSheet.open(); });
     let t; $("#q").addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { state.q = $("#q").value.trim(); $("#q-clear").hidden = !state.q; if (ALL.length) apply(); }, 220); });
     $("#q-clear").addEventListener("click", () => { $("#q").value = ""; state.q = ""; $("#q-clear").hidden = true; apply(); $("#q").focus(); });
-    $("#ordem").addEventListener("change", () => { state.ordem = $("#ordem").value; apply(); });
+    $("#ordem").addEventListener("change", () => { state.ordem = $("#ordem").value; ordemLabel(); apply(); });
     $("#btn-more").addEventListener("click", renderMore);
     try {
       const data = await A.loadIndex();
