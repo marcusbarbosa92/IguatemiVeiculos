@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Iguatemi Automóveis · Seminovos em Campinas</title>
+<meta name="description" content="Estoque de carros e motos seminovos com laudo cautelar aprovado e procedência comprovada. Iguatemi Automóveis, Av. José Bonifácio, 1580, Campinas - SP. Fale pelo WhatsApp (19) 99995-0000.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="canonical" href="https://marcusbarbosa92.github.io/IguatemiVeiculos/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Iguatemi Automóveis · Seminovos em Campinas">
+<meta property="og:description" content="Carros e motos seminovos com laudo cautelar aprovado e procedência comprovada, em Campinas - SP.">
+<meta property="og:image" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/og.png">
+<meta property="og:locale" content="pt_BR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.autocerto.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header id="site-header"></header>
+<main id="main">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow">Seminovos em Campinas</span>
+        <h1>Seu próximo carro <em>com procedência</em> comprovada</h1>
+        <p class="lead" data-store="slogan">O melhor preço, com a qualidade e procedência que você merece.</p>
+        <div class="hero-stats" id="hero-stats" aria-live="polite">
+          <div><b>—</b><span>veículos</span></div>
+          <div><b>—</b><span>marcas</span></div>
+          <div><b>100%</b><span>laudo aprovado</span></div>
+        </div>
+      </div>
+      <form class="search-card" id="home-search" action="estoque.html" method="get" aria-label="Buscar veículo">
+        <div class="row2">
+          <div class="field"><label for="hs-marca">Marca</label><select class="input" id="hs-marca" name="marca"><option value="">Todas</option></select></div>
+          <div class="field"><label for="hs-modelo">Modelo</label><select class="input" id="hs-modelo" name="modelo"><option value="">Todos</option></select></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="hs-precoMax">Preço até</label><select class="input" id="hs-precoMax" name="precoMax"><option value="">Sem limite</option></select></div>
+          <div class="field"><label for="hs-anoMin">Ano a partir de</label><select class="input" id="hs-anoMin" name="anoMin"><option value="">Qualquer</option></select></div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg> Buscar no estoque</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="section" style="padding-bottom:8px">
+    <div class="container">
+      <div class="chips" id="quick-chips" aria-label="Atalhos de busca"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:12px">
+    <div class="container">
+      <div class="section-head"><h2>Últimas novidades</h2><a class="link" href="estoque.html">Ver todos →</a></div>
+      <div class="h-scroll" id="novidades"><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="section-head"><h2>Busque por marca</h2></div>
+      <div class="brands-grid" id="brands"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div class="section-head"><h2>Por que comprar na Iguatemi</h2></div>
+      <div class="feature-grid" id="features"></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="container home-split">
+      <div class="cta-banner">
+        <h2>Quer vender seu veículo?</h2>
+        <p data-store="vendaSeuVeiculo"></p>
+        <a class="btn" href="venda-seu-veiculo.html">Avaliar meu veículo →</a>
+      </div>
+      <div class="store-card" id="store-card">
+        <div class="map">
+          <iframe id="map-iframe" title="Mapa: localização da Iguatemi Automóveis" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="about:blank"></iframe>
+          <div class="map-cta">
+            <a class="btn btn-dark btn-sm" id="link-maps" href="#" target="_blank" rel="noopener">Google Maps</a>
+            <a class="btn btn-outline btn-sm" id="link-waze" href="#" target="_blank" rel="noopener" style="background:#fff">Waze</a>
+          </div>
+        </div>
+        <div class="store-info" id="store-info"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "sync": "node scripts/sync-inventory.mjs"
+  }
+}

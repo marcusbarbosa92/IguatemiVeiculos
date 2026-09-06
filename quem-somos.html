@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<title>Quem somos · Iguatemi Automóveis</title>
+<meta name="description" content="Uma década de história em Campinas: mais de 150 veículos em estoque, todos vistoriados e com laudo cautelar aprovado. Conheça a Iguatemi Automóveis.">
+<meta property="og:title" content="Quem somos · Iguatemi Automóveis">
+<meta property="og:description" content="Uma década de história, veículos vistoriados e laudo cautelar aprovado. Conheça a Iguatemi Automóveis, em Campinas.">
+</head>
+<body>
+<header id="site-header"></header>
+<main id="main">
+  <section class="page-hero"><div class="container"><span class="eyebrow">Quem somos</span><h1>Uma década vendendo seminovos com procedência em Campinas</h1><p data-store="slogan"></p></div></section>
+  <section class="section"><div class="container content-split">
+    <div class="prose" id="sobre"></div>
+    <div>
+      <div class="hero-stats" style="color:#17171a;margin:0 0 16px" id="stats"></div>
+      <div class="feature-grid" style="grid-template-columns:1fr" id="features"></div>
+      <div class="cta-banner" style="margin-top:14px"><h2>Venha conhecer a loja</h2><p>Av. José Bonifácio, 1580 · Jardim das Paineiras · Campinas - SP</p><a class="btn" href="contato.html">Como chegar →</a></div>
+      <div style="margin-top:16px"><h3 style="margin-bottom:8px">Siga a Iguatemi</h3><div id="social"></div></div>
+    </div>
+  </div></section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const A = window.App, S = window.STORE, esc = A.esc, icon = A.icon;
+  document.getElementById("sobre").innerHTML = "<h2>Nossa história</h2>" + S.sobre.map((p) => "<p>" + esc(p) + "</p>").join("") + "<h2>Compromisso com a procedência</h2><ul>" + S.garantias.map((g) => "<li><b>" + esc(g.titulo) + ":</b> " + esc(g.texto) + "</li>").join("") + "</ul>";
+  document.getElementById("features").innerHTML = S.garantias.map((g, i) => '<div class="feature"><div class="fi">' + icon(["shield", "doc", "star", "lock"][i]) + "</div><div><h3>" + esc(g.titulo) + "</h3><p>" + esc(g.texto) + "</p></div></div>").join("");
+  const soc = document.getElementById("social"); soc.innerHTML = A.socialRow(); soc.querySelectorAll(".social-row a").forEach((a) => { a.style.background = "#17171a"; });
+  try {
+    const d = await A.loadIndex(); const marcas = new Set(d.veiculos.map((v) => v.marca));
+    document.getElementById("stats").innerHTML = "<div><b>" + d.veiculos.length + "</b><span style=\"color:#6b6b73\">veículos hoje</span></div><div><b>" + marcas.size + "</b><span style=\"color:#6b6b73\">marcas</span></div><div><b>100%</b><span style=\"color:#6b6b73\">laudo aprovado</span></div>";
+  } catch (e) { document.getElementById("stats").hidden = true; }
+});
+</script>
+</body>
+</html>

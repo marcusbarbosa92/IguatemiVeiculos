@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estoque · Iguatemi Automóveis</title>
+<meta name="description" content="Veja todos os carros e motos seminovos disponíveis na Iguatemi Automóveis em Campinas. Filtre por marca, modelo, preço, ano, câmbio e combustível.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/favicon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Estoque · Iguatemi Automóveis">
+<meta property="og:description" content="Carros e motos seminovos com laudo cautelar aprovado, em Campinas - SP.">
+<meta property="og:image" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.autocerto.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header id="site-header"></header>
+<main id="main">
+  <div class="toolbar">
+    <div class="container">
+      <div class="row">
+        <div class="search-box">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <label class="sr-only" for="q">Buscar por marca, modelo ou versão</label>
+          <input class="input" id="q" type="search" placeholder="Marca, modelo ou versão" autocomplete="off" enterkeyhint="search">
+          <button class="clear" id="q-clear" type="button" aria-label="Limpar busca" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <button class="tb-btn" id="btn-filters" type="button" aria-haspopup="dialog" aria-controls="filters"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtros<span class="cnt" id="filter-count" hidden>0</span></button>
+        <div class="tb-btn" aria-hidden="false">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M4 12h7M4 17h4M17 6v12m0 0 3-3m-3 3-3-3"/></svg>
+          <label class="sr-only" for="ordem">Ordenar por</label>
+          <select id="ordem">
+            <option value="novidades">Novidades</option>
+            <option value="marca">Marca / modelo</option>
+            <option value="preco-asc">Menor preço</option>
+            <option value="preco-desc">Maior preço</option>
+            <option value="ano">Ano mais novo</option>
+            <option value="km">Menor km</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="active-filters" id="active-filters"></div>
+    <div class="results-head"><span id="results-count" aria-live="polite">Carregando…</span><span id="results-updated" class="small"></span></div>
+    <div class="v-grid" id="results"><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div></div>
+    <div class="load-more" id="load-more" hidden><button class="btn btn-outline" id="btn-more" type="button">Carregar mais</button></div>
+  </div>
+
+  <div class="sheet-backdrop" id="filters-backdrop"></div>
+  <section class="sheet" id="filters" role="dialog" aria-modal="true" aria-labelledby="filters-title" aria-hidden="true">
+    <div class="sheet-head"><h3 id="filters-title">Filtrar estoque</h3><button class="hdr-btn" type="button" data-close aria-label="Fechar filtros" style="color:#17171a"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="sheet-body">
+      <div class="fgroup"><span class="lbl">Tipo</span><div class="seg" id="f-tipo" role="group" aria-label="Tipo de veículo"><button type="button" data-val="" aria-pressed="true">Todos</button><button type="button" data-val="carro">Carros</button><button type="button" data-val="moto">Motos</button></div></div>
+      <div class="fgroup"><label for="f-marca">Marca</label><select class="input" id="f-marca"><option value="">Todas as marcas</option></select></div>
+      <div class="fgroup"><label for="f-modelo">Modelo</label><select class="input" id="f-modelo"><option value="">Todos os modelos</option></select></div>
+      <div class="fgroup"><span class="lbl">Preço</span><div class="row2"><div><label class="sr-only" for="f-precoMin">Preço mínimo</label><select class="input" id="f-precoMin"><option value="">De</option></select></div><div><label class="sr-only" for="f-precoMax">Preço máximo</label><select class="input" id="f-precoMax"><option value="">Até</option></select></div></div></div>
+      <div class="fgroup"><label for="f-anoMin">Ano do modelo a partir de</label><select class="input" id="f-anoMin"><option value="">Qualquer ano</option></select></div>
+      <div class="fgroup"><span class="lbl">Câmbio</span><div class="chips wrap" id="f-cambio" role="group" aria-label="Câmbio"></div></div>
+      <div class="fgroup"><span class="lbl">Combustível</span><div class="chips wrap" id="f-combustivel" role="group" aria-label="Combustível"></div></div>
+      <div class="fgroup"><span class="lbl">Características</span><div class="chips wrap" id="f-tag" role="group" aria-label="Características"></div></div>
+    </div>
+    <div class="sheet-foot"><button class="btn btn-outline" type="button" id="f-clear">Limpar</button><button class="btn btn-primary" type="button" id="f-apply">Ver veículos</button></div>
+  </section>
+</main>
+<footer id="site-footer"></footer>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/estoque.js"></script>
+</body>
+</html>
