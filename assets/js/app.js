@@ -307,6 +307,18 @@
     $$("form[data-wa-form]").forEach((form) => {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+        // campos obrigatórios em falta ficam marcados com a mensagem embaixo (o balão do navegador some rápido no celular)
+        let primeiroErro = null;
+        $$("[required], [pattern]", form).forEach((f) => {
+          const campo = f.closest(".field"); if (!campo) return;
+          const ok = f.checkValidity();
+          campo.classList.toggle("is-invalid", !ok);
+          let msg = campo.querySelector(".erro"); if (!msg) { msg = document.createElement("span"); msg.className = "erro"; campo.appendChild(msg); }
+          msg.textContent = ok ? "" : (f.validity.valueMismatch || f.validity.patternMismatch ? "Confira o valor informado." : "Preencha este campo.");
+          if (!ok && !primeiroErro) primeiroErro = f;
+          f.addEventListener("input", () => { if (f.checkValidity()) { campo.classList.remove("is-invalid"); } }, { once: true });
+        });
+        if (primeiroErro) { primeiroErro.focus(); primeiroErro.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
         if (!form.reportValidity()) return;
         const title = form.getAttribute("data-wa-form");
         const lines = ["*" + title + "*"];
@@ -376,6 +388,8 @@
     cookieNotice();
     bindWaForms();
     $$('input[type="tel"]').forEach(maskPhone);
+    // números com separador de milhar (km, valores): só dígitos, formatados em pt-BR
+    $$('input[data-mask="numero"]').forEach((i) => i.addEventListener("input", () => { const d = i.value.replace(/\D/g, "").slice(0, 12); i.value = d ? fmtNum(+d) : ""; }));
     $$("[data-wa-link]").forEach((a) => { a.href = waLink(a.getAttribute("data-wa-link") || undefined); a.target = "_blank"; a.rel = "noopener"; });
     $$("[data-tel-link]").forEach((a) => { a.href = telLink; });
     $$("[data-store]").forEach((el) => { const path = el.getAttribute("data-store").split("."); let v = S; for (const p of path) v = v && v[p]; if (v != null) el.textContent = v; });

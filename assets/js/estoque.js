@@ -1,7 +1,7 @@
 /* estoque.js — listagem com filtros, ordenação e estado na URL */
 (function () {
   "use strict";
-  const A = window.App, $ = A.$, $$ = A.$$, esc = A.esc, icon = A.icon;
+  const A = window.App, S = window.STORE, $ = A.$, $$ = A.$$, esc = A.esc, icon = A.icon;
   const PRICES = [20000, 30000, 40000, 50000, 75000, 100000, 150000, 200000, 300000, 400000, 500000, 700000];
   const TAGS = ["Blindado", "7 lugares", "Único Dono", "Garantia de Fábrica", "Revisado em Concessionária", "IPVA Pago", "Licenciado", "Chave Reserva", "Manual do proprietário"];
   const PAGE = 24;
@@ -75,7 +75,9 @@
     $("#results").innerHTML = "";
     renderMore();
     const n = filtered.length;
-    $("#results-count").innerHTML = n ? "<b>" + n + "</b> " + (n === 1 ? "veículo encontrado" : "veículos encontrados") : "Nenhum veículo encontrado";
+    const rot = activeList().map((a) => a[2]);
+    $("#results-count").innerHTML = n ? "<b>" + n + "</b> " + (n === 1 ? "veículo" : "veículos") + (rot.length ? " · " + rot.map(esc).join(" · ") : " em estoque") : "Nenhum veículo" + (rot.length ? " · " + rot.map(esc).join(" · ") : "");
+    document.title = (rot.length ? rot.join(", ") + " · " : "") + "Estoque de carros e motos em Campinas · " + S.nome;
     renderSavedChip();
     renderActive();
     writeState();

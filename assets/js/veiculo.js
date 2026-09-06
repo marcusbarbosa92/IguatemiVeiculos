@@ -60,6 +60,8 @@
       '<div class="price-box"><div><div class="p"><small>R$</small>' + A.fmtBRL(v.preco).replace(/^R\$\s?/, "") + '</div><div class="lbl">Valor do veículo</div></div><div class="price-actions">' + A.Fav.button(v.id, "btn btn-icon btn-outline") + '<button class="btn btn-icon btn-outline" type="button" id="btn-share" aria-label="Compartilhar">' + icon("share") + "</button></div></div>" +
       '<div class="cta-row"><a class="btn btn-wa btn-lg" href="' + wa + '" target="_blank" rel="noopener">' + icon("whatsapp") + ' Tenho interesse</a><a class="btn btn-dark btn-lg" href="' + A.telLink + '">' + icon("phone") + " Ligar agora</a>" +
       '<div class="row2"><button class="btn btn-outline" type="button" id="btn-sim">' + icon("calc") + ' Proposta de financiamento</button><a class="btn btn-outline" href="' + waTroca + '" target="_blank" rel="noopener">' + icon("tag") + " Tenho carro na troca</a></div></div>" +
+      // o que dá segurança, ao lado do preço (os títulos das garantias da loja, sem texto novo)
+      '<p class="trust-line" id="trust-line">' + icon("shield") + "<span>Laudo cautelar 100% aprovado</span><span aria-hidden=\"true\">·</span><span>Procedência comprovada</span>" + '<a href="#trust">ver mais</a></p>' +
       // números escritos (quem quer ligar de outro aparelho ou anotar) e horário: fora do expediente, a ligação não é atendida
       '<p class="contact-line small"><a href="' + wa + '" target="_blank" rel="noopener">WhatsApp ' + esc(S.whatsapp.exibicao) + '</a><span aria-hidden="true"> · </span><a href="' + A.telLink + '">Telefone ' + esc(S.telefone.exibicao) + "</a></p>" +
       '<p class="open-line small ' + (st.open ? "is-open" : "is-closed") + '"><span class="dot" aria-hidden="true"></span>' + esc(st.label) + (st.open ? "" : (st.proxima ? " · " + esc(st.proxima) : "") + ". Deixe sua mensagem no WhatsApp.") + "</p>" +
@@ -170,7 +172,7 @@
     if (sim1.length) { $("#similar-wrap").hidden = false; $("#similar").innerHTML = sim1.map((x) => A.vehicleCard({ ...x, nFotos: x.fotos ? x.fotos.length : x.nFotos })).join(""); }
 
     /* nota do Google, se preenchida em data/avaliacoes.json */
-    A.loadReviews().then((d) => { if (!d) return; $("#trust").insertAdjacentHTML("beforeend", '<div style="margin-top:12px">' + A.googleBadge(d) + "</div>"); });
+    A.loadReviews().then((d) => { if (!d) return; $("#trust").insertAdjacentHTML("beforeend", '<div class="mt-3">' + A.googleBadge(d) + "</div>"); const tl = $("#trust-line"); if (tl) tl.querySelector("a").insertAdjacentHTML("beforebegin", '<span aria-hidden="true">·</span><span>' + A.fmtNota(d.nota) + ' ★ no Google</span>'); });
 
     document.dispatchEvent(new CustomEvent("veiculo:render", { detail: { id: v.id } }));
 

@@ -49,6 +49,19 @@ if (!template.includes('<body class="no-bottom-nav has-sticky-cta">')) throw new
 if (!template.includes('<meta charset="utf-8">')) throw new Error('veiculo.html: sem <meta charset>');
 
 const capaId = (url) => String(url).split('/').pop().replace(/\.[a-z0-9]+$/i, '').replace(/[^A-Za-z0-9_-]/g, '');
+// largura/altura do JPEG de prévia (as capas com faixas brancas aparadas ficam mais baixas que 720)
+function jpegDims(file) {
+  try {
+    const b = fs.readFileSync(file); let i = 2;
+    while (i < b.length - 9) {
+      if (b[i] !== 0xff) { i++; continue; }
+      const m = b[i + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+  } catch (e) { /* sem arquivo local: usa o padrão */ }
+  return { w: 960, h: 720 };
+}
 const toIndex = (v) => ({ id: v.id, slug: v.slug, tipo: v.tipo, marca: v.marca, modelo: v.modelo, versao: v.versao, anoFabricacao: v.anoFabricacao, anoModelo: v.anoModelo, km: v.km, preco: v.preco, cambio: v.cambio, combustivel: v.combustivel, capa: v.capa, capaId: capaId(v.capa), caracteristicas: v.caracteristicas, nFotos: v.fotos.length, video: !!v.video });
 function semelhantes(v, all) {
   // mesma regra de veiculo.js: mesmo modelo > mesma marca > preço até 20% de diferença
@@ -61,6 +74,7 @@ const jsonInline = (o) => JSON.stringify(o).replace(/</g, '\\u003c').replace(/\u
 
 function pagina(v, all) {
   const n = nome(v), preco = brl(v.preco), url = `${SITE_URL}v/${v.id}.html`;
+  const og = jpegDims(path.join(ROOT, 'assets/og', `${v.id}-${capaId(v.capa)}.jpg`));
   const desc = `${n} por ${preco}. ${num(v.km)} km, ${v.cambio}, ${v.combustivel}. ${NOME}, Campinas - SP.`;
   const ld = {
     '@context': 'https://schema.org', '@type': v.tipo === 'moto' ? 'Motorcycle' : 'Car', name: n,
@@ -80,8 +94,8 @@ function pagina(v, all) {
 <meta property="og:title" content="${esc(curto(v))} · ${esc(preco)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="${esc(SITE_URL + 'assets/og/' + v.id + '-' + capaId(v.capa) + '.jpg')}">
-<meta property="og:image:width" content="960">
-<meta property="og:image:height" content="720">
+<meta property="og:image:width" content="${og.w}">
+<meta property="og:image:height" content="${og.h}">
 <meta property="og:image:alt" content="${esc(n)}">
 <meta property="og:url" content="${esc(url)}">
 <meta property="og:locale" content="pt_BR">
@@ -158,7 +172,7 @@ const listaHome = '<ul class="static-list" aria-label="Últimas novidades">' + (
 const trocarLista = (arquivo, html) => ajustar(arquivo, (h) => h.replace(/(<!-- lista:start[^>]*-->)[\s\S]*?(<!-- lista:end -->)/, (m, a, b) => a + html + b));
 if (trocarLista('estoque.html', listaEstoque)) ajustados++;
 // contagem já no HTML (sem JS, o estoque não fica em "Carregando…")
-if (ajustar('estoque.html', (h) => h.replace(/(<span id="results-count"[^>]*>)[\s\S]*?(<\/span>)/, (m, a, b) => a + `<b>${doc.veiculos.length}</b> veículos` + b))) ajustados++;
+if (ajustar('estoque.html', (h) => h.replace(/(<h1 class="results-title" id="results-count"[^>]*>)[\s\S]*?(<\/h1>)/, (m, a, b) => a + `<b>${doc.veiculos.length}</b> veículos` + b))) ajustados++;
 if (trocarLista('index.html', listaHome)) ajustados++;
 
 // robots.txt só vale na raiz do domínio; a diretiva Sitemap precisa da URL completa

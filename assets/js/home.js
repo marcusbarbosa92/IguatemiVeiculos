@@ -148,8 +148,9 @@
     const slow = c.saveData || /(^|[^a-z])2g/.test(c.effectiveType || "");
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const desktop = window.matchMedia && window.matchMedia("(min-width: 900px)").matches; // no desktop o vídeo vertical vira mancha: fica o poster paisagem
-    if (slow || reduce || desktop) { v.removeAttribute("autoplay"); v.querySelectorAll("source").forEach((s) => s.remove()); v.load(); v.remove(); return; }
-    const p = v.play && v.play(); if (p && p.catch) p.catch(() => { /* autoplay bloqueado: fica o poster */ });
+    if (slow || reduce || desktop) { v.querySelectorAll("source").forEach((s) => s.remove()); v.remove(); return; } // nada foi baixado (preload="none")
+    v.preload = "auto"; v.autoplay = true; v.load();
+    const p = v.play && v.play(); if (p && p.catch) p.catch(() => { /* autoplay bloqueado: fica o poster do fundo */ });
   }
 
   document.addEventListener("DOMContentLoaded", async () => {

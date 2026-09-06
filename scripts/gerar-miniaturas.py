@@ -57,8 +57,22 @@ def fetch(url, tries=3):
     raise RuntimeError(f"falha ao baixar {url}: {last}")
 
 
+def aparar_faixas(img, limite=235, max_frac=0.14):
+    """Muitas fotos da AutoCerto vêm num quadro 4:3 com faixas brancas iguais em cima e embaixo.
+    Corta as duas quando existem e têm altura parecida (nunca só uma, para não cortar carro branco em fundo claro)."""
+    cinza = img.convert("L"); w, h = cinza.size; px = cinza.load(); passo = max(1, w // 160)
+    def media(y): return sum(px[x, y] for x in range(0, w, passo)) / len(range(0, w, passo))
+    topo = 0
+    while topo < h * max_frac and media(topo) > limite: topo += 1
+    base = 0
+    while base < h * max_frac and media(h - 1 - base) > limite: base += 1
+    if topo >= 6 and base >= 6 and abs(topo - base) <= max(4, min(topo, base) // 2):
+        return img.crop((0, topo, w, h - base))
+    return img
+
+
 def resize_save(data, out, width, quality):
-    img = ImageOps.exif_transpose(Image.open(io.BytesIO(data))).convert("RGB")
+    img = aparar_faixas(ImageOps.exif_transpose(Image.open(io.BytesIO(data))).convert("RGB"))
     if img.width > width:
         img = img.resize((width, round(img.height * width / img.width)), Image.LANCZOS)
     out.parent.mkdir(parents=True, exist_ok=True)

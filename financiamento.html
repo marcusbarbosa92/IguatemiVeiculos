@@ -24,36 +24,32 @@
 <body data-wa-msg="Olá! Quero financiar um veículo. Podem me ajudar com uma simulação?">
 <header id="site-header"></header>
 <main id="main">
-  <section class="page-hero"><div class="container"><span class="eyebrow">Financiamento</span><h1>Simule o financiamento do seu próximo veículo</h1><p>Informe o veículo, a entrada e o prazo desejado. A solicitação vai pelo seu WhatsApp para a loja, e as condições dependem da análise de crédito.</p></div></section>
-  <section class="section"><div class="container content-split">
+  <section class="page-hero"><div class="container"><span class="eyebrow">Financiamento</span><h1>Simule o financiamento do seu próximo veículo</h1><p>Informe o veículo, a entrada e o prazo. A loja responde pelo WhatsApp com as condições, sujeitas à análise de crédito.</p></div></section>  <section class="section"><div class="container content-split">
     <form class="form-card" data-wa-form="Solicitação de financiamento" novalidate="">
       <h2>Pré-análise rápida</h2>
-      <p class="lead">Sem cadastro no site: a mensagem abre no seu WhatsApp já preenchida, e você decide se envia.</p>
+      <p class="lead">Sem cadastro: você confere a mensagem antes de enviar.</p>
       <div class="form-grid two">
-        <div class="field span2"><label for="f-veiculo">Veículo de interesse</label><select class="input" id="f-veiculo" name="veiculo" data-label="Veículo"><option value="">Ainda não escolhi</option></select></div>
-        <div class="field"><label for="f-entrada">Valor de entrada (R$)</label><input class="input" id="f-entrada" name="entrada" type="text" inputmode="numeric" placeholder="Ex.: 30.000" data-label="Entrada (R$)"></div>
+        <div class="field span2" id="f-veiculo-campo"><label for="f-veiculo">Veículo de interesse (opcional)</label><select class="input" id="f-veiculo" name="veiculo" data-label="Veículo"><option value="">Ainda não escolhi</option></select></div>
+        <div class="field"><label for="f-entrada">Valor de entrada (opcional)</label><input class="input" id="f-entrada" name="entrada" type="text" inputmode="numeric" placeholder="R$" data-label="Entrada (R$)" data-mask="numero"></div>
         <div class="field"><label for="f-parcelas">Número de parcelas</label><select class="input" id="f-parcelas" name="parcelas" data-label="Parcelas"><option value="12">12x</option><option value="24">24x</option><option value="36">36x</option><option value="48" selected>48x</option><option value="60">60x</option></select></div>
         <div class="field"><label for="f-nome">Seu nome</label><input class="input" id="f-nome" name="nome" type="text" autocomplete="name" required data-label="Nome"></div>
         <div class="field"><label for="f-tel">Seu telefone</label><input class="input" id="f-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(19) 99999-9999" required data-label="Telefone"></div>
         <div class="span2"><label class="check"><input type="checkbox" name="cnh" data-label="Possui CNH"> Possuo CNH</label></div>
+        <div class="field span2"><label for="f-obs">Observações (opcional)</label><textarea class="input" id="f-obs" name="obs" placeholder="Ex.: tenho carro na troca, prefiro parcela até R$ 1.500..." data-label="Observações"></textarea></div>
       </div>
-      <p class="hint">Não pedimos CPF nem documentos pelo site.</p>
+      <p class="hint">Ao enviar, você concorda com a nossa <a href="politica-de-privacidade.html" class="u">política de privacidade</a>.</p>
       <button class="btn btn-wa btn-lg btn-block" type="submit"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m0 1.67c4.56 0 8.24 3.7 8.24 8.24s-3.68 8.24-8.24 8.24c-1.5 0-2.97-.4-4.24-1.17l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.29-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01"/></svg> Solicitar pelo WhatsApp</button>
     </form>
     <div class="stack">
       <div class="prose">
         <h2>Como funciona</h2>
         <ul>
-          <li>Você escolhe o veículo e informa entrada e prazo.</li>
-          <li>A solicitação abre no seu WhatsApp, já preenchida, para você enviar à loja.</li>
-          <li>As condições dependem da análise de crédito.</li>
-          <li>O pagamento é feito exclusivamente no CNPJ da Iguatemi Automóveis.</li>
+          <li>Você escolhe o veículo e informa entrada e prazo; a solicitação abre no seu WhatsApp para você enviar.</li>
+          <li>A loja responde com as condições de parcela e prazo, que dependem da análise de crédito e do veículo.</li>
+          <li>Não pedimos CPF nem documentos pelo site; o pagamento é feito exclusivamente no CNPJ da Iguatemi Automóveis.</li>
         </ul>
-        <h2>Bom saber</h2>
-        <ul>
-          <li>As condições dependem da análise de crédito e do veículo escolhido.</li>
-          <li>Quer vender ou avaliar o seu carro atual? Use a página <a href="venda-seu-veiculo.html" class="u">Venda seu veículo</a>.</li>
-        </ul>
+        <h2>Tem um carro para dar na troca?</h2>
+        <p>Diga nas observações ou use a página <a href="venda-seu-veiculo.html" class="u">Venda seu veículo</a>: a avaliação é feita na hora, na loja.</p>
       </div>
       <div class="cta-banner"><h2>Ainda não escolheu o carro?</h2><p>Veja o estoque completo e simule direto na página do veículo.</p><a class="btn" href="estoque.html">Ver estoque →</a></div>
     </div>
@@ -65,14 +61,20 @@
 <script src="assets/js/analytics.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  const A = window.App, sel = document.getElementById("f-veiculo"), ent = document.getElementById("f-entrada");
-  ent.addEventListener("input", () => { const d = ent.value.replace(/\D/g, ""); ent.value = d ? A.fmtNum(+d) : ""; });
+  const A = window.App, esc = A.esc, sel = document.getElementById("f-veiculo");
   try {
     const data = await A.loadIndex();
     const pre = +(new URLSearchParams(location.search).get("id") || 0);
     data.veiculos.slice().sort((a, b) => (a.marca + a.modelo).localeCompare(b.marca + b.modelo)).forEach((v) => {
       const o = document.createElement("option"); o.value = v.id; o.textContent = A.vehName(v) + " — " + A.fmtBRL(v.preco); if (v.id === pre) o.selected = true; sel.appendChild(o);
     });
+    // veio da página de um veículo: mostra qual é, com foto e preço (o select fica para trocar)
+    const esc_ = data.veiculos.find((v) => v.id === pre);
+    if (esc_) {
+      sel.closest(".field").insertAdjacentHTML("afterbegin", '<div class="veh-pick"><img src="' + A.thumbUrl(esc_) + '" alt="" width="72" height="54"><div><b>' + esc(A.vehName(esc_)) + "</b><span>" + A.fmtBRL(esc_.preco) + '</span></div><a href="#f-veiculo" id="veh-trocar">trocar</a></div>');
+      sel.closest(".field").querySelector("label").hidden = true;
+      document.getElementById("veh-trocar").addEventListener("click", (e) => { e.preventDefault(); sel.closest(".field").querySelector("label").hidden = false; sel.focus(); });
+    }
     const other = document.createElement("option"); other.value = "outro"; other.textContent = "Outro veículo (descrevo na conversa)"; sel.appendChild(other);
   } catch (e) { /* mantém "Ainda não escolhi" */ }
 });
