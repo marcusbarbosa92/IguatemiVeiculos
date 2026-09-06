@@ -102,7 +102,7 @@ Use apenas avaliações reais e o texto como está publicado. `totalExibicao` é
 
 ## YouTube: pop-up do vídeo novo
 
-A home mostra, uma vez por vídeo em cada aparelho, uma folha com o último vídeo do canal `@IguatemiAutomoveis` (miniatura, play no próprio site e "Ver o canal"). A fonte é o feed público do canal (`youtube.com/feeds/videos.xml?channel_id=...`, sem chave de API), lido por `scripts/sync-youtube.mjs`, que grava `data/youtube.json` só quando a lista muda. Quem atualiza: o workflow `youtube.yml` (a cada 3 horas), o sync diário e o build do Vercel (a cada deploy). Shorts são detectados e mostrados em pé. O id do canal fica em `assets/js/store.js` (`youtube.id`).
+A home mostra, uma vez por vídeo em cada aparelho, uma janela escura só com o último vídeo do canal `@IguatemiAutomoveis` tocando sem som (player em modo de privacidade ampliada) e um X para fechar. A fonte é o feed público do canal (`youtube.com/feeds/videos.xml?channel_id=...`, sem chave de API), lido por `scripts/sync-youtube.mjs`, que grava `data/youtube.json` só quando a lista muda. Quem atualiza: o workflow `youtube.yml` (a cada 3 horas), o sync diário e o build do Vercel (a cada deploy). Shorts são detectados e mostrados em pé. O id do canal fica em `assets/js/store.js` (`youtube.id`).
 
 Cuidado com o Google: pop-ups que cobrem o conteúdo logo ao abrir a página podem ser penalizados nas buscas no celular ("interstitials intrusivos"). Por isso o pop-up só aparece na home, só uma vez por vídeo, depois de 1,4 s e fecha com um toque; nas páginas de veículos (para onde vão os anúncios e os links compartilhados) ele não aparece.
 

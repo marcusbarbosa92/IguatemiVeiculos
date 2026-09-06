@@ -50,6 +50,13 @@ for (const key of Object.keys(cats.modelos)) check(Object.keys(cats.categorias).
 if (aval.nota !== null) { check(typeof aval.nota === 'number' && aval.nota > 0 && aval.nota <= 5, 'avaliacoes.json: nota fora de 0-5'); check(/^https:\/\//.test(aval.linkGoogle), 'avaliacoes.json: linkGoogle precisa ser https'); for (const r of aval.avaliacoes || []) check(r.nome && r.texto && r.estrelas >= 1 && r.estrelas <= 5, 'avaliacoes.json: avaliação incompleta'); }
 const estoqueHtml = fs.readFileSync(path.join(ROOT, 'estoque.html'), 'utf8');
 check((estoqueHtml.match(/href="v\/\d+\.html"/g) || []).length === list.length, 'estoque.html: a lista estática de links não bate com o estoque (rode npm run pages)');
+// HTML da raiz: nenhuma tag com aspas desbalanceadas (atributo sem fechar quebra ids, classes e o JS que depende deles)
+for (const f of fs.readdirSync(ROOT).filter((x) => x.endsWith('.html'))) {
+  const html = fs.readFileSync(path.join(ROOT, f), 'utf8');
+  for (const m of html.matchAll(/<[a-zA-Z][^<>]*>/g)) {
+    if ((m[0].match(/"/g) || []).length % 2) check(false, `${f}: tag com aspas desbalanceadas: ${m[0].slice(0, 80)}`);
+  }
+}
 const igPath = path.join(ROOT, 'data/instagram.json');
 if (fs.existsSync(igPath)) {
   const ig = JSON.parse(fs.readFileSync(igPath, 'utf8'));

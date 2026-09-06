@@ -99,29 +99,47 @@
     grid.hidden = false;
   }
 
-  // pop-up com o último vídeo do canal (data/youtube.json, atualizado pelo sync-youtube.mjs): aparece uma vez por vídeo em cada aparelho
+  // pop-up com o último vídeo do canal (data/youtube.json, atualizado pelo sync-youtube.mjs): só o vídeo e o fechar,
+  // uma vez por vídeo em cada aparelho; toca sem som (o visitante liga o som no próprio player)
   async function setupYoutube() {
-    if (!$("#yt-sheet")) return;
+    const pop = $("#yt-pop"); if (!pop) return;
     let d = null;
     try { d = await fetch("data/youtube.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)); } catch (e) { d = null; }
     const v = d && d.ultimo;
     if (!v || !/^[\w-]{6,}$/.test(v.id)) return;
     let visto = null; try { visto = localStorage.getItem("yt-visto"); } catch (e) { /* sem storage */ }
     if (visto === v.id) return;
-    const marcar = () => { try { localStorage.setItem("yt-visto", v.id); } catch (e) { /* sem storage */ } };
-    const body = $("#yt-sheet-body");
-    const thumb = v.vertical ? "https://i.ytimg.com/vi/" + v.id + "/oardefault.jpg" : "https://i.ytimg.com/vi/" + v.id + "/hqdefault.jpg";
-    body.innerHTML = '<div class="yt-pop' + (v.vertical ? " vertical" : "") + '"><div class="yt" id="yt-pop-player"><img src="' + esc(thumb) + '" alt="' + esc(v.titulo) + '" loading="eager" decoding="async"><button class="play" type="button" id="yt-pop-play" aria-label="Assistir: ' + esc(v.titulo) + '"><span>' + icon("play") + "</span></button></div>" +
-      '<div class="yt-pop-info"><b>' + esc(v.titulo) + "</b>" + (v.publicadoEm ? '<span class="muted small">Publicado em ' + esc(v.publicadoEm.split("-").reverse().join("/")) + "</span>" : "") + "</div>" +
-      '<div class="yt-pop-actions"><a class="btn btn-outline" href="' + esc((d.canal && d.canal.url) || S.links.youtube) + '" target="_blank" rel="noopener">' + icon("youtube") + ' Ver o canal</a><button class="btn btn-dark" type="button" id="yt-pop-close" data-autofocus>Fechar e ver o site</button></div></div>';
-    const sh = A.sheet("yt-sheet", { onClose: marcar });
-    $("#yt-pop-play").addEventListener("click", () => {
-      $("#yt-pop-player").innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + esc(v.id) + '?autoplay=1&rel=0&playsinline=1" title="' + esc(v.titulo) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    const frame = $("#yt-pop-frame"), btn = $("#yt-pop-close");
+    pop.classList.toggle("vertical", !!v.vertical);
+    frame.style.backgroundImage = "url(" + (v.vertical ? "https://i.ytimg.com/vi/" + v.id + "/oardefault.jpg" : "https://i.ytimg.com/vi/" + v.id + "/hqdefault.jpg") + ")";
+    let aberto = false, ultimoFoco = null;
+    const fechar = () => {
+      if (!aberto) return; aberto = false;
+      try { localStorage.setItem("yt-visto", v.id); } catch (e) { /* sem storage */ }
+      pop.classList.remove("open");
+      setTimeout(() => { pop.hidden = true; const f = frame.querySelector("iframe"); if (f) f.remove(); }, 220);
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", teclas);
+      if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
+    };
+    const teclas = (e) => { if (e.key === "Escape") fechar(); if (e.key === "Tab") { e.preventDefault(); btn.focus(); } };
+    const abrir = () => {
+      if (document.querySelector(".sheet.open, .drawer.open")) return;
+      aberto = true; ultimoFoco = document.activeElement;
+      const f = document.createElement("iframe");
+      f.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(v.id) + "?autoplay=1&mute=1&playsinline=1&rel=0&loop=1&playlist=" + encodeURIComponent(v.id);
+      f.title = v.titulo || "Vídeo novo no canal"; f.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"; f.setAttribute("allowfullscreen", "");
+      frame.appendChild(f);
+      pop.hidden = false; requestAnimationFrame(() => pop.classList.add("open"));
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", teclas);
+      frame.focus({ preventScroll: true });
       document.dispatchEvent(new CustomEvent("youtube:play", { detail: { id: v.id, origem: "popup_home" } }));
-    });
-    $("#yt-pop-close").addEventListener("click", () => sh.close());
-    // só depois de a página assentar, e nunca por cima do menu ou de outra folha aberta
-    setTimeout(() => { if (!document.querySelector(".sheet.open, .drawer.open")) sh.open(); }, 1400);
+    };
+    btn.addEventListener("click", fechar);
+    pop.addEventListener("click", (e) => { if (e.target === pop) fechar(); });
+    // só depois de a página assentar
+    setTimeout(abrir, 1400);
   }
 
   function setupVideo() {

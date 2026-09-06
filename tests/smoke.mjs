@@ -23,6 +23,7 @@ const server = http.createServer((req, res) => {
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
 const BASE = `http://127.0.0.1:${server.address().port}/`;
 const idx = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/index.json'), 'utf8'));
+const temAvaliacoes = (() => { try { const a = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/avaliacoes.json'), 'utf8')); return typeof a.nota === 'number' && (a.avaliacoes || []).length > 0; } catch (e) { return false; } })();
 const firstId = idx.veiculos[0].id, motoId = (idx.veiculos.find((v) => v.tipo === 'moto') || idx.veiculos[0]).id;
 const PAGES = ['index.html', 'estoque.html', `estoque.html?marca=${encodeURIComponent(idx.veiculos[0].marca)}`, `v/${firstId}.html`, `v/${motoId}.html`, `veiculo.html?id=${firstId}`, 'veiculo.html?id=1', 'venda-seu-veiculo.html', 'financiamento.html', 'quem-somos.html', 'contato.html', 'politica-de-privacidade.html'];
 const falhas = [];
@@ -34,10 +35,11 @@ for (const vp of [{ w: 390, h: 844, mobile: true }, { w: 1280, h: 800, mobile: f
     const page = await ctx.newPage(); const errs = [];
     page.on('pageerror', (e) => errs.push('erro JS: ' + e.message));
     page.on('response', (r) => { if (r.url().startsWith(BASE) && r.status() >= 400) errs.push(`HTTP ${r.status()} ${r.url().slice(BASE.length)}`); });
-    await page.goto(BASE + p, { waitUntil: 'load' }); await page.waitForTimeout(700);
+    await page.goto(BASE + p, { waitUntil: 'load' }); await page.waitForTimeout(1500); // dá tempo aos fetchs (avaliações, instagram, youtube) para pegar erros tardios
     const info = await page.evaluate(() => ({ h1: !!document.querySelector('h1'), header: !!document.querySelector('.site-header .brand'), footer: !!document.querySelector('.site-footer .f-bottom'), overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth, cards: document.querySelectorAll('.v-card').length, title: document.title }));
     if (!info.h1) errs.push('sem h1'); if (!info.header || !info.footer) errs.push('cabeçalho/rodapé não renderizados'); if (info.overflow) errs.push('overflow horizontal');
     if (/^(index|estoque)/.test(p) && info.cards === 0) errs.push('nenhum cartão de veículo');
+    if (p === 'index.html') { const ok = await page.evaluate(() => { const s = document.querySelector('#avaliacoes-section'); return !!s && !s.hidden && document.querySelectorAll('#avaliacoes .review-card').length > 0; }); if (temAvaliacoes && !ok) errs.push('seção de avaliações não apareceu (data/avaliacoes.json tem nota)'); }
     if (p.startsWith('v/') && !/R\$/.test(info.title)) errs.push('título do veículo sem preço');
     for (const e of errs) falhas.push(`${vp.w}px ${p}: ${e}`);
     await page.close();

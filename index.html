@@ -99,7 +99,7 @@
     </div>
   </section>
 
-  <section class="section tight" id="avaliacoes-section hidden>
+  <section class="section tight" id="avaliacoes-section" hidden>
     <div class="container">
       <div class="section-head"><h2>O que dizem nossos clientes</h2></div>
       <div class="rating-card" id="rating-card"></div>
@@ -127,11 +127,11 @@
     </div>
   </section>
 </main>
-<div class="sheet-backdrop" id="yt-sheet-backdrop"></div>
-<section class="sheet yt-sheet" id="yt-sheet" role="dialog" aria-modal="true" aria-labelledby="yt-sheet-title" aria-hidden="true">
-  <div class="sheet-head"><h3 id="yt-sheet-title">Vídeo novo no canal</h3><button class="hdr-btn" type="button" data-close aria-label="Fechar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-  <div class="sheet-body" id="yt-sheet-body"></div>
-</section>
+<div class="yt-pop" id="yt-pop" role="dialog" aria-modal="true" aria-label="Vídeo novo no canal da Iguatemi" hidden>
+  <div class="yt-pop-frame" id="yt-pop-frame" tabindex="-1">
+    <button class="yt-pop-close" type="button" id="yt-pop-close" aria-label="Fechar vídeo"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+</div>
 <footer id="site-footer"></footer>
 <script src="assets/js/store.js"></script>
 <script src="assets/js/app.js"></script>
