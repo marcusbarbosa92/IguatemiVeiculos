@@ -8,14 +8,14 @@
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
 <!-- ld:start (ficha da loja gerada por scripts/gerar-paginas.mjs a partir de assets/js/store.js) -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"AutoDealer","name":"Iguatemi Automóveis","legalName":"Iguatemi Automoveis Intermediacao de Veiculos Ltda","taxID":"25.189.123/0001-43","url":"https://marcusbarbosa92.github.io/IguatemiVeiculos/","telephone":"+551933268747","email":"vendas@iguatemiautomoveis.com.br","image":"https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/og.png","logo":"https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/logo.png","address":{"@type":"PostalAddress","streetAddress":"Av. José Bonifácio, 1580","addressLocality":"Campinas","addressRegion":"SP","postalCode":"13091-140","addressCountry":"BR"},"geo":{"@type":"GeoCoordinates","latitude":-22.8917336,"longitude":-47.0342262},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"09:00","closes":"13:00"}],"sameAs":["https://www.instagram.com/iguatemiautomoveis/","https://www.facebook.com/iguatemiautomoveis/","https://www.youtube.com/@IguatemiAutomoveis","https://www.tiktok.com/@iguatemi.automoveis"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"AutoDealer","name":"Iguatemi Automóveis","legalName":"Iguatemi Automoveis Intermediacao de Veiculos Ltda","taxID":"25.189.123/0001-43","url":"https://iguatemi-veiculos.vercel.app/","telephone":"+551933268747","email":"vendas@iguatemiautomoveis.com.br","image":"https://iguatemi-veiculos.vercel.app/assets/img/og.png","logo":"https://iguatemi-veiculos.vercel.app/assets/img/logo.png","address":{"@type":"PostalAddress","streetAddress":"Av. José Bonifácio, 1580","addressLocality":"Campinas","addressRegion":"SP","postalCode":"13091-140","addressCountry":"BR"},"geo":{"@type":"GeoCoordinates","latitude":-22.8917336,"longitude":-47.0342262},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"09:00","closes":"13:00"}],"sameAs":["https://www.instagram.com/iguatemiautomoveis/","https://www.facebook.com/iguatemiautomoveis/","https://www.youtube.com/@IguatemiAutomoveis","https://www.tiktok.com/@iguatemi.automoveis"]}</script>
 <!-- ld:end -->
-<link rel="canonical" href="https://marcusbarbosa92.github.io/IguatemiVeiculos/contato.html">
+<link rel="canonical" href="https://iguatemi-veiculos.vercel.app/contato.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/og.png">
+<meta property="og:image" content="https://iguatemi-veiculos.vercel.app/assets/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/contato.html">
+<meta property="og:url" content="https://iguatemi-veiculos.vercel.app/contato.html">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css">
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("link-maps").href = S.links.googleMaps;
   document.getElementById("link-waze").href = S.links.waze;
   document.getElementById("mail-link").href = "mailto:" + S.email;
-  const on = document.getElementById("open-now"); on.textContent = st.label; on.classList.toggle("closed", !st.open);
+  const on = document.getElementById("open-now"); on.textContent = st.label + (!st.open && st.proxima ? " · " + st.proxima : ""); on.classList.toggle("closed", !st.open);
   document.getElementById("hours").innerHTML = S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>");
   document.getElementById("contact-cards").innerHTML =
     '<a class="contact-card wa" href="' + A.waLink() + '" target="_blank" rel="noopener"><div class="fi">' + icon("whatsapp") + "</div><div><b>WhatsApp</b><span>" + esc(S.whatsapp.exibicao) + "</span></div><span class=\"go\">" + icon("chevR") + "</span></a>" +
@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     '<a class="contact-card insta" href="' + esc(S.links.instagramDirect || S.links.instagram) + '" target="_blank" rel="noopener"><div class="fi">' + icon("instagram") + "</div><div><b>Direct do Instagram</b><span>Mande uma mensagem para @iguatemiautomoveis</span></div><span class=\"go\">" + icon("chevR") + "</span></a>" +
     '<a class="contact-card" href="mailto:' + esc(S.email) + '"><div class="fi">' + icon("mail") + "</div><div><b>E-mail</b><span>" + esc(S.email) + "</span></div><span class=\"go\">" + icon("chevR") + "</span></a>" +
     '<a class="contact-card" href="' + esc(S.links.googleMaps) + '" target="_blank" rel="noopener"><div class="fi">' + icon("pin") + "</div><div><b>" + esc(e.logradouro + ", " + e.numero) + "</b><span>" + esc(e.bairro + " · " + e.cidade + " - " + e.uf + " · CEP " + e.cep) + "</span></div><span class=\"go\">" + icon("chevR") + "</span></a>";
+  const cards = document.querySelectorAll("#contact-cards .contact-card"); if (cards.length % 2) cards[cards.length - 1].classList.add("span2");
 });
 </script>
 </body>

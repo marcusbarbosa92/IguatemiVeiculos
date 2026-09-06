@@ -52,7 +52,7 @@ const estoqueHtml = fs.readFileSync(path.join(ROOT, 'estoque.html'), 'utf8');
 check((estoqueHtml.match(/href="v\/\d+\.html"/g) || []).length === list.length, 'estoque.html: a lista estática de links não bate com o estoque (rode npm run pages)');
 // HTML da raiz: nenhuma tag com aspas desbalanceadas (atributo sem fechar quebra ids, classes e o JS que depende deles)
 for (const f of fs.readdirSync(ROOT).filter((x) => x.endsWith('.html'))) {
-  const html = fs.readFileSync(path.join(ROOT, f), 'utf8');
+  const html = fs.readFileSync(path.join(ROOT, f), 'utf8').replace(/<script[\s\S]*?<\/script>/g, ''); // o JS embutido monta HTML em strings; só o HTML de verdade é conferido
   for (const m of html.matchAll(/<[a-zA-Z][^<>]*>/g)) {
     if ((m[0].match(/"/g) || []).length % 2) check(false, `${f}: tag com aspas desbalanceadas: ${m[0].slice(0, 80)}`);
   }

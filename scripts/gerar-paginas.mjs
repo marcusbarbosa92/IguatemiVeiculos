@@ -26,7 +26,7 @@ const ROOT = path.resolve(opt('--root', path.resolve(path.dirname(fileURLToPath(
 for (const f of ['veiculo.html', 'assets/js/store.js', 'data']) {
   if (!fs.existsSync(path.join(ROOT, f))) throw new Error(`--root não parece uma cópia do site (sem ${f}): ${ROOT}`);
 }
-const SITE_URL = normalizarSiteUrl(opt('--site-url', 'https://marcusbarbosa92.github.io/IguatemiVeiculos/'));
+const SITE_URL = normalizarSiteUrl(opt('--site-url', 'https://iguatemi-veiculos.vercel.app/'));
 const DATA = path.resolve(ROOT, opt('--data', 'data/vehicles.json'));
 const OUT_DIR = path.join(ROOT, 'v');
 // dados da loja lidos de assets/js/store.js (única fonte)

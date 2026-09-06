@@ -2,24 +2,32 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<!-- O 404 do GitHub Pages é servido de qualquer caminho: os links usam o prefixo do site (troque em domínio próprio). -->
-<base href="/IguatemiVeiculos/">
+<!-- O 404 é servido de qualquer caminho: o <base> (ajustado por scripts/gerar-paginas.mjs a partir do endereço do site) faz os links relativos funcionarem. -->
+<base href="/">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Página não encontrada · Iguatemi Automóveis</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#0b0b0c">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="no-bottom-nav">
+<body>
+<a class="skip-link" href="#main">Ir para o conteúdo</a>
+<header id="site-header"></header>
 <main id="main">
   <div class="not-found">
     <svg class="ic ic-big" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17h14M6 11l1.6-4.4A2 2 0 0 1 9.5 5h5a2 2 0 0 1 1.9 1.6L18 11M3 13a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4H3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></svg>
     <h1>Página não encontrada</h1>
     <p class="muted">O endereço pode estar errado ou o veículo já foi vendido.</p>
-    <a class="btn btn-primary btn-lg" href="index.html">Ir para o início</a>
-    <a class="btn btn-outline" href="estoque.html">Ver estoque</a>
+    <a class="btn btn-primary btn-lg" href="estoque.html">Ver estoque</a>
+    <a class="btn btn-wa" data-wa-link="Olá! Cheguei por um link do site que não abriu. Podem me ajudar a achar o veículo?" href="#">Falar no WhatsApp</a>
+    <a class="link u" href="index.html">Ir para o início</a>
   </div>
 </main>
+<footer id="site-footer"></footer>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/analytics.js" defer></script>
 </body>
 </html>

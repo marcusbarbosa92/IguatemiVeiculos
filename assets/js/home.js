@@ -10,8 +10,8 @@
     $("#link-waze").href = S.links.waze;
     $("#store-info").innerHTML =
       '<div class="info-row"><div class="fi">' + icon("pin") + "</div><div><b>" + esc(e.logradouro + ", " + e.numero) + "</b><span>" + esc(e.bairro + " · " + e.cidade + " - " + e.uf + " · CEP " + e.cep) + "</span></div></div>" +
-      '<div class="info-row"><div class="fi">' + icon("clock") + "</div><div><b>Horário de atendimento <span class=\"open-now" + (st.open ? "" : " closed") + '">' + esc(st.label) + "</span></b><span>" + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</span></div></div>" +
-      '<div class="info-row"><div class="fi">' + icon("phone") + '</div><div><b><a href="' + A.telLink + '">' + esc(S.telefone.exibicao) + '</a></b><span>WhatsApp <a href="' + A.waLink() + '" target="_blank" rel="noopener">' + esc(S.whatsapp.exibicao) + "</a></span></div></div>" +
+      '<div class="info-row"><div class="fi">' + icon("clock") + "</div><div><b>Horário de atendimento <span class=\"open-now" + (st.open ? "" : " closed") + '">' + esc(st.label + (!st.open && st.proxima ? " · " + st.proxima : "")) + "</span></b><span>" + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</span></div></div>" +
+      '<div class="info-row"><div class="fi">' + icon("phone") + '</div><div><b><a href="' + A.telLink + '">' + esc(S.telefone.exibicao) + '</a></b><span>WhatsApp ' + esc(S.whatsapp.exibicao) + "</span></div></div>" +
       '<a class="btn btn-wa btn-block" href="' + A.waLink() + '" target="_blank" rel="noopener">' + icon("whatsapp") + " Falar com um consultor</a>";
     $("#features").innerHTML = S.garantias.map((g, i) => '<div class="feature"><div class="fi">' + icon(["shield", "doc", "star", "lock"][i] || "check") + "</div><div><h3>" + esc(g.titulo) + "</h3><p>" + esc(g.texto) + "</p></div></div>").join("");
   }
