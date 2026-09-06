@@ -1,8 +1,46 @@
 {
- "_como_preencher": "Copie do perfil da loja no Google (link abaixo) a nota média, o total de avaliações e as avaliações que quer destacar. Use só avaliações reais, com o texto como está no Google. Enquanto 'nota' for null ou 'avaliacoes' estiver vazio, a seção não aparece no site.",
+ "_como_preencher": "Copie do perfil da loja no Google (link abaixo) a nota média, o total de avaliações (como o Google mostra, ex.: \"1,1 mil\") e as avaliações que quer destacar. Use só avaliações reais, com o texto exatamente como está no Google. 'quando' é o texto relativo que o Google mostra na data da captura ('atualizadoEm'); o site só o exibe enquanto a captura for recente. Enquanto 'nota' for null ou 'avaliacoes' estiver vazio, a seção não aparece.",
  "linkGoogle": "https://share.google/vTeglaWUinRUkXE20",
- "atualizadoEm": null,
- "nota": null,
- "totalAvaliacoes": null,
- "avaliacoes": []
+ "atualizadoEm": "2026-09-06",
+ "nota": 4.8,
+ "totalAvaliacoes": 1100,
+ "totalExibicao": "1,1 mil",
+ "avaliacoes": [
+  {
+   "nome": "Daniel Tay Santos",
+   "estrelas": 5,
+   "quando": "2 meses atrás",
+   "texto": "Entrei em contato com a loja através do WebMotors, pouco tempo depois recebi o contato do João Castilho no whatsapp, que muito atencioso escutou minha proposta e fez de tudo para viabilizar o negócio que queríamos. Saímos de SP Capital para ir ver o carro ao vivo e chegando lá nos separamos com uma loja incrível, grande, cheia de opções e com carros muito conservados, bem acima da média do que estou acostumado a ver nas lojas aqui na capital, e de quebra o valor competitivo. Lavaram o carro para vermos, explicaram os detalhes, avaliaram muito bem meu carro e fechamos negócio na hora! O Sérgio e o Maurício, proprietários da loja foram muito atenciosos, simpáticos nos trataram muito bem assim como o João Castilho, conversamos bastante conhecemos toda loja, tomamos um café gostoso lá e saímos absurdamente felizes e satisfeitos, dificilmente irei fazer negócio em outro local, daqui pra frente é só ver o estoque no Instagram, mandar mensagem para o João e fechar negócio a distância mesmo, tenho a comprovação de que os produtos lá serão sempre acima da média! Recomendo de olhos fechados, obrigado a todos pela solução, negócio e confiança, vocês são incríveis!!!!"
+  },
+  {
+   "nome": "Cristiane Marques",
+   "estrelas": 5,
+   "quando": "2 meses atrás",
+   "texto": "Quero deixar registrado o excelente atendimento da Amanda. Eu estava bastante insegura na hora de comprar um carro, porque tive uma experiência ruim na compra anterior e tinha muito medo de passar por isso novamente. Desde o primeiro contato, ela me atendeu com muita paciência, transparência e profissionalismo.\nTodas as minhas dúvidas foram esclarecidas com atenção, sem pressa e sem pressão, o que me trouxe muita confiança durante todo o processo. A Amanda foi extremamente prestativa, educada e cuidadosa, tornando uma decisão que estava sendo difícil em uma experiência tranquila e segura.\nSaio muito satisfeita com a compra e, principalmente, com a forma como fui atendida. Nunca fui tão bem atendida em uma negociação. Recomendo a loja e agradeço especialmente à Amanda pelo carinho, dedicação e comprometimento."
+  },
+  {
+   "nome": "Miguel Vieira",
+   "estrelas": 5,
+   "quando": "5 meses atrás",
+   "texto": "O vendedor Henrique foi 5 estrelas, desde o atendimento online , até ao presencial, 100% eficácia e agilidade , recomendo de verdade"
+  },
+  {
+   "nome": "Luz Florais",
+   "estrelas": 5,
+   "quando": "10 meses atrás",
+   "texto": "E a segunda vez que troco meu carro no Iguatemi Automoveis.\nConfio muito na loja, nunca tive nenhum problema com os carros , tanto que até demoro para trocar eles, por esse motivo.\nAtendimento impecável do melhor vendedor que é o Rodrigo ( procurem muito por ele) , extremamente sincero sempre, educado, gentil, atencioso, resolve tudo e facilita demais a negociação e os trâmites.\nNão troco mais de loja e vendedor !!!\nParabéns aos proprietários pela loja, treinamento dos funcionários e pelos carros selecionados, sempre impecáveis !!"
+  },
+  {
+   "nome": "Carvalho Consultoria",
+   "estrelas": 5,
+   "quando": "um ano atrás",
+   "texto": "A transparência é o diferencial! O vendedor Joao Castilho me passou confiança, explicando com total clareza como fizeram a avaliação do meu carro e todos os processos para efetuar a compra. Com certeza é o primeiro de muitos negócios que fecharemos!"
+  },
+  {
+   "nome": "Steffani Bueno",
+   "estrelas": 5,
+   "quando": "um ano atrás",
+   "texto": "Tive uma experiência excelente na loja. Desde o atendimento até a qualidade dos produtos, tudo superou minhas expectativas. A Amanda foi incrível muito atenciosa, prestativa e me ajudou em cada detalhe. Dá para perceber o cuidado e a dedicação no atendimento. Recomendo de olhos fechados, tanto a loja quanto a vendedora. Com certeza voltarei outras vezes."
+  }
+ ]
 }

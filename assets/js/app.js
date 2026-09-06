@@ -291,7 +291,7 @@
   const loadReviews = () => loadJSON("data/avaliacoes.json").then((d) => (d && typeof d.nota === "number" && d.nota > 0 && d.nota <= 5 ? Object.assign(d, { linkGoogle: safeHttp(d.linkGoogle) }) : null)).catch(() => null);
   const stars = (n) => '<span class="stars" role="img" aria-label="' + esc(Number(n) || 0) + ' de 5 estrelas">' + [1, 2, 3, 4, 5].map((i) => icon("star", i <= Math.round(n) ? "ic-fill" : "ic-fill off")).join("") + "</span>";
   const fmtNota = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-  const googleBadge = (d) => '<a class="google-badge" href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">' + stars(d.nota) + "<span>" + fmtNota(d.nota) + " no Google" + (d.totalAvaliacoes ? " · " + fmtNum(d.totalAvaliacoes) + " avaliações" : "") + "</span></a>";
+  const googleBadge = (d) => '<a class="google-badge" href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">' + stars(d.nota) + "<span>" + fmtNota(d.nota) + " no Google" + (d.totalExibicao || d.totalAvaliacoes ? " · " + esc(d.totalExibicao || fmtNum(d.totalAvaliacoes)) + " avaliações" : "") + "</span></a>";
 
   /* ---------- Toast ---------- */
   let toastTimer;

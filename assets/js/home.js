@@ -1,7 +1,7 @@
 /* home.js — página inicial */
 (function () {
   "use strict";
-  const A = window.App, S = window.STORE, $ = A.$, esc = A.esc, icon = A.icon;
+  const A = window.App, S = window.STORE, $ = A.$, $$ = A.$$, esc = A.esc, icon = A.icon;
 
   function setupStore() {
     const e = S.endereco, st = A.openStatus();
@@ -75,9 +75,13 @@
   async function setupReviews() {
     const d = await A.loadReviews();
     if (!d) return;
-    $("#rating-card").innerHTML = '<div class="big">' + A.fmtNota(d.nota) + '</div><div class="meta">' + A.stars(d.nota) + "<span>" + (d.totalAvaliacoes ? A.fmtNum(d.totalAvaliacoes) + " avaliações no Google" : "Avaliações no Google") + (d.atualizadoEm ? " · em " + esc(d.atualizadoEm.split("-").reverse().join("/")) : "") + '</span><a href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">Ver todas no Google →</a></div>';
+    const total = d.totalExibicao || (d.totalAvaliacoes ? A.fmtNum(d.totalAvaliacoes) : "");
+    $("#rating-card").innerHTML = '<div class="big">' + A.fmtNota(d.nota) + '</div><div class="meta">' + A.stars(d.nota) + "<span>" + (total ? esc(total) + " avaliações no Google" : "Avaliações no Google") + (d.atualizadoEm ? " · em " + esc(d.atualizadoEm.split("-").reverse().join("/")) : "") + '</span><a href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">Ver todas no Google →</a></div>';
     const list = (d.avaliacoes || []).filter((r) => r && r.texto && r.nome);
-    $("#avaliacoes").innerHTML = list.map((r) => '<article class="review-card">' + A.stars(r.estrelas || 5) + "<blockquote>“" + esc(r.texto) + "”</blockquote><footer><b>" + esc(r.nome) + "</b>" + (r.data ? " · " + esc(r.data) : "") + " · Google</footer></article>").join("");
+    // "2 meses atrás" é o que o Google mostrava na captura: só vale enquanto ela for recente (45 dias); depois fica só o nome
+    const recente = d.atualizadoEm && (Date.now() - new Date(d.atualizadoEm + "T12:00:00-03:00").getTime()) < 45 * 864e5;
+    $("#avaliacoes").innerHTML = list.map((r) => '<article class="review-card' + (r.texto.length > 260 ? " has-more" : "") + '">' + A.stars(r.estrelas || 5) + "<blockquote>“" + esc(r.texto) + "”</blockquote>" + (r.texto.length > 260 ? '<button class="read-more" type="button" aria-expanded="false">Ler mais</button>' : "") + "<footer><b>" + esc(r.nome) + "</b>" + (r.data ? " · " + esc(r.data) : recente && r.quando ? " · " + esc(r.quando) : "") + " · Google</footer></article>").join("");
+    $$(".review-card .read-more").forEach((b) => b.addEventListener("click", () => { const c = b.closest(".review-card"); const on = c.classList.toggle("expanded"); b.setAttribute("aria-expanded", on ? "true" : "false"); b.textContent = on ? "Ler menos" : "Ler mais"; }));
     $("#avaliacoes").hidden = !list.length;
     $("#avaliacoes-section").hidden = false;
   }

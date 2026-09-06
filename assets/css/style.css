@@ -346,6 +346,8 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .review-card .stars .ic { width: 15px; height: 15px; }
 .review-card blockquote { margin: 0; font-size: .92rem; color: var(--ink-2); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
 .review-card footer { margin-top: auto; font-size: .8rem; color: var(--muted); }
+.review-card.expanded blockquote { display: block; -webkit-line-clamp: unset; overflow: visible; }
+.review-card .read-more { align-self: flex-start; background: none; border: 0; padding: 0; font: inherit; font-size: .82rem; font-weight: 700; color: var(--red-700); cursor: pointer; }
 .review-card footer b { color: var(--ink); }
 .google-badge { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700; color: var(--ink-2); }
 .google-badge .stars .ic { width: 15px; height: 15px; }
@@ -594,6 +596,7 @@ body.no-bottom-nav .cookie-notice { bottom: calc(76px + var(--safe-b)); }
   .side-title b { font-size: 1.35rem; line-height: 1.1; }
   .side-title span:last-child { font-size: .85rem; color: var(--ink-2); }
   .h-scroll > :nth-child(n+5) { display: none; }
+  #avaliacoes > :nth-child(n+5) { display: flex; } /* as avaliações aparecem todas (duas linhas de 4) */
   .chips:not(.wrap) { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
   .gallery { border-radius: var(--radius); overflow: hidden; }
   .gallery .g-nav { display: flex; position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(0,0,0,.55); color: #fff; align-items: center; justify-content: center; }

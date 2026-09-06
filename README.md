@@ -88,14 +88,15 @@ A home tem a seção "O que dizem nossos clientes" e a página do veículo mostr
  "linkGoogle": "https://share.google/vTeglaWUinRUkXE20",
  "atualizadoEm": "2026-09-06",
  "nota": 4.8,
- "totalAvaliacoes": 120,
+ "totalAvaliacoes": 1100,
+ "totalExibicao": "1,1 mil",
  "avaliacoes": [
-  { "nome": "Nome como aparece no Google", "estrelas": 5, "data": "ago. de 2026", "texto": "Texto da avaliação, sem alterações." }
+  { "nome": "Nome como aparece no Google", "estrelas": 5, "quando": "2 meses atrás", "texto": "Texto da avaliação, sem alterações." }
  ]
 }
 ```
 
-Use apenas avaliações reais e o texto como está publicado. Enquanto `nota` for `null` ou a lista estiver vazia, nada aparece.
+Use apenas avaliações reais e o texto como está publicado. `totalExibicao` é o total como o Google mostra ("1,1 mil"); `quando` é a data relativa que o Google mostrava no dia de `atualizadoEm` e só aparece no site enquanto essa captura tiver menos de 45 dias. Enquanto `nota` for `null` ou a lista estiver vazia, nada aparece. Preenchido em 06/09/2026 com 4,8 ★, 1,1 mil avaliações e seis avaliações.
 
 ## Testes
 
