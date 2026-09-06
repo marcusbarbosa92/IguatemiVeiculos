@@ -557,7 +557,7 @@ body.has-sticky-cta { padding-bottom: calc(76px + var(--safe-b)); }
 .photo-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
 .photo-grid figure { margin: 0; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
 .photo-grid img { width: 100%; height: auto; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
-.photo-grid .wide img { aspect-ratio: 16 / 9; }
+.photo-grid .wide img { aspect-ratio: 1600 / 583; }
 .photo-grid figcaption { padding: 10px 14px; font-size: .85rem; color: var(--ink-2); font-weight: 600; }
 .store-photo { margin: 0; position: relative; }
 .store-photo img { width: 100%; height: auto; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
