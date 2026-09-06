@@ -274,6 +274,33 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .open-now.closed { background: #f3f3f5; color: var(--muted); }
 .open-now::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 
+/* ---------- Avaliações do Google e Instagram ---------- */
+.rating-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; display: flex; align-items: center; gap: 14px; }
+.rating-card .big { font-size: 2.4rem; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
+.rating-card .meta { display: grid; gap: 4px; min-width: 0; }
+.rating-card .meta > span:not(.stars) { font-size: .85rem; color: var(--muted); }
+.rating-card .meta a { font-size: .85rem; font-weight: 700; color: var(--red-700); }
+.stars { display: inline-flex; gap: 2px; color: #f5a623; }
+.stars .ic { width: 18px; height: 18px; }
+.stars .ic.off { color: #d9d9de; }
+.review-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.review-card .stars .ic { width: 15px; height: 15px; }
+.review-card blockquote { margin: 0; font-size: .92rem; color: var(--ink-2); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+.review-card footer { margin-top: auto; font-size: .8rem; color: var(--muted); }
+.review-card footer b { color: var(--ink); }
+.google-badge { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700; color: var(--ink-2); }
+.google-badge .stars .ic { width: 15px; height: 15px; }
+.insta-strip { background: var(--black); color: #fff; border-radius: var(--radius); padding: 20px 18px; display: grid; gap: 12px; }
+.insta-strip h2 { font-size: 1.25rem; }
+.insta-strip p { color: rgba(255,255,255,.72); margin: 0; font-size: .92rem; }
+.insta-strip .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.insta-strip .btn-insta { background: linear-gradient(45deg, #f58529, #dd2a7b 55%, #8134af); color: #fff; }
+.contact-card.insta .fi { background: #fbe9f2; color: #c1275f; }
+@media (min-width: 900px) {
+  .social-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .insta-strip .row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
 /* ---------- Página: Estoque ---------- */
 .toolbar { position: sticky; top: var(--header-h); z-index: 40; background: var(--bg); padding: 10px 0 8px; }
 .toolbar .row { display: flex; gap: 8px; }

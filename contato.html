@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("contact-cards").innerHTML =
     '<a class="contact-card wa" href="' + A.waLink() + '" target="_blank" rel="noopener"><div class="fi">' + icon("whatsapp") + "</div><div><b>WhatsApp</b><span>" + esc(S.whatsapp.exibicao) + "</span></div><span class=\"go\">" + icon("chevR") + "</span></a>" +
     '<a class="contact-card" href="' + A.telLink + '"><div class="fi">' + icon("phone") + "</div><div><b>Telefone</b><span>" + esc(S.telefone.exibicao) + "</span></div><span class=\"go\">" + icon("chevR") + "</span></a>" +
+    '<a class="contact-card insta" href="' + esc(S.links.instagram) + '" target="_blank" rel="noopener"><div class="fi">' + icon("instagram") + "</div><div><b>Instagram</b><span>@iguatemiautomoveis</span></div><span class=\"go\">" + icon("chevR") + "</span></a>" +
     '<a class="contact-card" href="mailto:' + esc(S.email) + '"><div class="fi">' + icon("mail") + "</div><div><b>E-mail</b><span>" + esc(S.email) + "</span></div><span class=\"go\">" + icon("chevR") + "</span></a>" +
     '<a class="contact-card" href="' + esc(S.links.googleMaps) + '" target="_blank" rel="noopener"><div class="fi">' + icon("pin") + "</div><div><b>" + esc(e.logradouro + ", " + e.numero) + "</b><span>" + esc(e.bairro + " · " + e.cidade + " - " + e.uf + " · CEP " + e.cep) + "</span></div><span class=\"go\">" + icon("chevR") + "</span></a>";
 });

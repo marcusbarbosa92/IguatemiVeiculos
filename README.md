@@ -56,6 +56,24 @@ As fotos dos veículos continuam hospedadas em `www.autocerto.com` (mesmo servid
 
 Se for usar um domínio próprio, troque as URLs absolutas de `og:image`/`canonical` nos HTML (hoje apontam para o endereço acima) e o prefixo `/IguatemiVeiculos/` em `404.html`.
 
+## Avaliações do Google
+
+A home tem a seção "O que dizem nossos clientes" e a página do veículo mostra a nota, mas só quando `data/avaliacoes.json` estiver preenchido. O Google não permite ler as avaliações automaticamente sem uma chave da API do Places, então o preenchimento é manual, copiando do perfil da loja no Google:
+
+```json
+{
+ "linkGoogle": "https://share.google/vTeglaWUinRUkXE20",
+ "atualizadoEm": "2026-09-06",
+ "nota": 4.8,
+ "totalAvaliacoes": 120,
+ "avaliacoes": [
+  { "nome": "Nome como aparece no Google", "estrelas": 5, "data": "ago. de 2026", "texto": "Texto da avaliação, sem alterações." }
+ ]
+}
+```
+
+Use apenas avaliações reais e o texto como está publicado. Enquanto `nota` for `null` ou a lista estiver vazia, nada aparece.
+
 ## Rodar localmente
 
 ```bash

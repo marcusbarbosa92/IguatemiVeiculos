@@ -80,13 +80,30 @@
     const s = document.createElement("script"); s.type = "application/ld+json"; s.textContent = JSON.stringify(data); document.head.appendChild(s);
   }
 
+  async function setupReviews() {
+    const d = await A.loadReviews();
+    if (!d) return;
+    $("#rating-card").innerHTML = '<div class="big">' + A.fmtNota(d.nota) + '</div><div class="meta">' + A.stars(d.nota) + "<span>" + (d.totalAvaliacoes ? A.fmtNum(d.totalAvaliacoes) + " avaliações no Google" : "Avaliações no Google") + (d.atualizadoEm ? " · em " + esc(d.atualizadoEm.split("-").reverse().join("/")) : "") + '</span><a href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">Ver todas no Google →</a></div>';
+    const list = (d.avaliacoes || []).filter((r) => r && r.texto && r.nome);
+    $("#avaliacoes").innerHTML = list.map((r) => '<article class="review-card">' + A.stars(r.estrelas || 5) + "<blockquote>“" + esc(r.texto) + "”</blockquote><footer><b>" + esc(r.nome) + "</b>" + (r.data ? " · " + esc(r.data) : "") + " · Google</footer></article>").join("");
+    $("#avaliacoes").hidden = !list.length;
+    $("#avaliacoes-section").hidden = false;
+    reviews = d; renderStats();
+  }
+  let reviews = null, inv = null;
+  function renderStats() {
+    const third = reviews ? "<b>" + A.fmtNota(reviews.nota) + " ★</b><span>no Google</span>" : "<b>100%</b><span>laudo aprovado</span>";
+    $("#hero-stats").innerHTML = "<div><b>" + (inv ? inv.total : "—") + "</b><span>veículos</span></div><div><b>" + (inv ? inv.marcas : "—") + "</b><span>marcas</span></div><div>" + third + "</div>";
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     setupStore();
+    setupReviews();
     try {
       const data = await A.loadIndex();
       const list = data.veiculos;
       const marcas = new Set(list.map((v) => v.marca));
-      $("#hero-stats").innerHTML = "<div><b>" + list.length + "</b><span>veículos</span></div><div><b>" + marcas.size + "</b><span>marcas</span></div><div><b>100%</b><span>laudo aprovado</span></div>";
+      inv = { total: list.length, marcas: marcas.size }; renderStats();
       setupSearch(list); setupChips(list); setupBrands(list);
       const nov = list.slice().sort((a, b) => b.id - a.id).slice(0, 8);
       $("#novidades").innerHTML = nov.map((v, i) => A.vehicleCard(v, { eager: i < 2 })).join("");

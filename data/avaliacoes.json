@@ -1,0 +1,8 @@
+{
+ "_como_preencher": "Copie do perfil da loja no Google (link abaixo) a nota média, o total de avaliações e as avaliações que quer destacar. Use só avaliações reais, com o texto como está no Google. Enquanto 'nota' for null ou 'avaliacoes' estiver vazio, a seção não aparece no site.",
+ "linkGoogle": "https://share.google/vTeglaWUinRUkXE20",
+ "atualizadoEm": null,
+ "nota": null,
+ "totalAvaliacoes": null,
+ "avaliacoes": []
+}

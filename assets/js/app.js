@@ -57,7 +57,8 @@
   const fmtNum = (n) => new Intl.NumberFormat("pt-BR").format(n);
   const fmtKm = (n) => fmtNum(n) + " km";
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const titleCase = (s) => String(s).toLowerCase().replace(/(^|[\s\-\/])([a-zà-ú])/g, (m, p, c) => p + c.toUpperCase());
+  const SIGLAS = new Set(["BMW", "BYD", "GWM", "RAM", "MINI", "JAC", "GM"]);
+  const titleCase = (s) => String(s).split(/(\s+|-)/).map((w) => (SIGLAS.has(w.toUpperCase()) ? w.toUpperCase() : w.toLowerCase().replace(/^([a-zà-ú])/, (c) => c.toUpperCase()))).join("");
   const vehName = (v) => v.marca + " " + v.modelo + (v.versao ? " " + v.versao : "") + " " + v.anoFabricacao + "/" + v.anoModelo;
   const vehShort = (v) => v.marca + " " + v.modelo + " " + v.anoFabricacao + "/" + v.anoModelo;
   const vehUrl = (v) => "v/" + v.id + ".html";
@@ -216,6 +217,12 @@
     return api;
   }
 
+  /* ---------- Avaliações do Google (data/avaliacoes.json, preenchido à mão) ---------- */
+  const loadReviews = () => loadJSON("data/avaliacoes.json").then((d) => (d && typeof d.nota === "number" && d.nota > 0 ? d : null)).catch(() => null);
+  const stars = (n) => '<span class="stars" aria-label="' + n + ' de 5 estrelas">' + [1, 2, 3, 4, 5].map((i) => icon("star", i <= Math.round(n) ? "ic-fill" : "ic-fill off")).join("") + "</span>";
+  const fmtNota = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const googleBadge = (d) => '<a class="google-badge" href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">' + stars(d.nota) + "<span>" + fmtNota(d.nota) + " no Google" + (d.totalAvaliacoes ? " · " + fmtNum(d.totalAvaliacoes) + " avaliações" : "") + "</span></a>";
+
   /* ---------- Toast ---------- */
   let toastTimer;
   function toast(msg) {
@@ -260,7 +267,7 @@
     });
   }
 
-  window.App = { $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
+  window.App = { $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
 
   document.addEventListener("DOMContentLoaded", () => {
     renderChrome();
