@@ -5,6 +5,7 @@
  * Re-scrapes the dealership website (AutoCerto platform) and regenerates
  *   data/vehicles.json  – full vehicle records
  *   data/index.json     – lightweight listing index
+ *   (both carry "destaques": ids of the home page's "Últimas novidades", in the store's order)
  *
  * Zero dependencies: Node >= 22 built-ins only (fetch, fs, path, url).
  *
@@ -33,6 +34,7 @@ import { fileURLToPath } from 'node:url';
 const BASE_URL = 'https://iguatemiautomoveis.com.br';
 const LISTING_URL = `${BASE_URL}/Veiculos`;
 const MOTO_LISTING_URL = `${BASE_URL}/Veiculos?tipoveiculo=2`;
+const HOME_URL = `${BASE_URL}/`; // "Últimas novidades" da home (ordem definida pela loja)
 const USER_AGENT =
   'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Mobile Safari/537.36';
 
@@ -190,6 +192,13 @@ function parseListing(html) {
 }
 
 /** Any listing page -> Set of vehicle ids found in it. */
+function parseHomeHighlights(html) {
+  // ids dos cartões de "ÚLTIMAS NOVIDADES" na ordem em que aparecem (cada cartão tem 2 links; dedup mantém a ordem)
+  const ids = [];
+  for (const m of html.matchAll(/href="\/Veiculo\/[^"]+\/(\d+)\/detalhes"/g)) { const id = Number(m[1]); if (!ids.includes(id)) ids.push(id); }
+  return ids;
+}
+
 function parseListingIds(html) {
   return new Set([...html.matchAll(new RegExp(HREF_RE.source, 'g'))].map((m) => parseInt(m[3], 10)));
 }
@@ -362,6 +371,7 @@ function liveSource() {
     name: LISTING_URL,
     listing: () => fetchText(LISTING_URL),
     motoListing: () => fetchText(MOTO_LISTING_URL),
+    home: () => fetchText(HOME_URL),
     detail: (item) => fetchText(BASE_URL + item.url),
     delayMs: DELAY_MS,
   };
@@ -373,6 +383,7 @@ function dirSource(dir) {
     name: dir,
     listing: async () => read(path.join(dir, 'Veiculos.html')),
     motoListing: async () => read(path.join(dir, 'motos.html')),
+    home: async () => read(path.join(dir, 'home.html')),
     detail: async (item) => read(path.join(dir, 'detail', `${item.id}.html`)),
     delayMs: 0,
   };
@@ -444,6 +455,11 @@ async function main() {
     if (!listing.some((it) => it.id === id)) console.error(`  warning: moto id ${id} is not present on the main listing`);
   }
 
+  // "Últimas novidades" da home da fonte: só ids que existem na listagem, na ordem da loja
+  const destaques = parseHomeHighlights(await source.home()).filter((id) => listing.some((it) => it.id === id));
+  console.error(`Home highlights: ${destaques.length} ids (${destaques.join(', ') || 'none'})`);
+  if (destaques.length === 0) console.error('  warning: no highlights found on the home page');
+
   const { results, failures } = await mapWithWorkers(listing, CONCURRENCY, source.delayMs, async (item) => {
     const html = await source.detail(item);
     const vehicle = parseDetail(html, item, motoIds.has(item.id) ? 'moto' : 'carro');
@@ -465,8 +481,8 @@ async function main() {
 
   vehicles.sort(compareVehicles);
 
-  const vehiclesDoc = { atualizadoEm: date, fonte: LISTING_URL, total: vehicles.length, veiculos: vehicles };
-  const indexDoc = { atualizadoEm: date, total: vehicles.length, veiculos: vehicles.map(toIndexEntry) };
+  const vehiclesDoc = { atualizadoEm: date, fonte: LISTING_URL, total: vehicles.length, destaques, veiculos: vehicles };
+  const indexDoc = { atualizadoEm: date, total: vehicles.length, destaques, veiculos: vehicles.map(toIndexEntry) };
 
   fs.mkdirSync(outDir, { recursive: true });
   const vehiclesPath = path.join(outDir, 'vehicles.json');

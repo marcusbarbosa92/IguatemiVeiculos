@@ -7,7 +7,7 @@ window.STORE = {
   slogan: "O melhor preço, com a qualidade e procedência que você merece.",
   descricao: "Compre seu veículo de forma rápida e segura, com garantia de qualidade e atendimento especializado na Iguatemi Automóveis, em Campinas.",
   sobre: [
-    "Contamos com uma década de história, com mais de 150 veículos em estoque e nossas plataformas atualizadas diariamente.",
+    "Contamos com uma década de história, com um estoque amplo e nossas plataformas atualizadas diariamente.",
     "Todos os nossos carros são vistoriados e com laudo cautelar aprovado sem restrições ou observações. Nossos veículos são de qualidade e procedência, compostos pelas principais marcas do mercado: Mercedes-Benz, BMW, Audi, Jeep, Volvo, Honda, Volkswagen, Chevrolet, Mitsubishi, Fiat, Toyota, Hyundai, Land Rover, Ford, Citroën, Jaguar e outras, sempre buscando oferecer uma grande variedade de carros para a escolha de nossos clientes.",
     "Realizamos avaliação dos carros na hora e temos os preços mais competitivos do mercado. Venha conhecer a nossa loja e o nosso estoque!"
   ],

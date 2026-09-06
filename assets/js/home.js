@@ -105,8 +105,11 @@
       const marcas = new Set(list.map((v) => v.marca));
       inv = { total: list.length, marcas: marcas.size }; renderStats();
       setupSearch(list); setupChips(list); setupBrands(list);
-      const nov = list.slice().sort((a, b) => b.id - a.id).slice(0, 8);
-      $("#novidades").innerHTML = nov.map((v, i) => A.vehicleCard(v, { eager: i < 2 })).join("");
+      // "Últimas novidades" = destaques da home da loja (ordem definida por ela, capturada pelo sync)
+      const byId = new Map(list.map((v) => [v.id, v]));
+      const nov = (data.destaques || []).map((id) => byId.get(id)).filter(Boolean).slice(0, 8);
+      if (nov.length) $("#novidades").innerHTML = nov.map((v, i) => A.vehicleCard(v, { eager: i < 2 })).join("");
+      else $("#novidades").closest("section").hidden = true;
       jsonLd(list);
     } catch (err) {
       $("#novidades").innerHTML = '<div class="empty" style="grid-column:1/-1">' + icon("info") + "<b>Não foi possível carregar o estoque agora.</b><span>" + esc(err.message) + '</span><a class="btn btn-wa" href="' + A.waLink() + '" target="_blank" rel="noopener">Falar no WhatsApp</a></div>';

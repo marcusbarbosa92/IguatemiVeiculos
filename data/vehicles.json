@@ -2,6 +2,16 @@
  "atualizadoEm": "2026-09-06",
  "fonte": "https://iguatemiautomoveis.com.br/Veiculos",
  "total": 140,
+ "destaques": [
+  5466483,
+  5466645,
+  3910459,
+  5465979,
+  5466833,
+  5462666,
+  5466929,
+  5467093
+ ],
  "veiculos": [
   {
    "id": 4602754,
@@ -13,7 +23,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2021,
    "km": 108638,
-   "preco": 105990.0,
+   "preco": 105990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -114,7 +124,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 81753,
-   "preco": 174990.0,
+   "preco": 174990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -218,7 +228,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 86500,
-   "preco": 129490.0,
+   "preco": 129490,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -316,7 +326,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 70000,
-   "preco": 159890.0,
+   "preco": 159890,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -417,7 +427,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 30100,
-   "preco": 239990.0,
+   "preco": 239990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -518,7 +528,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2019,
    "km": 107739,
-   "preco": 209990.0,
+   "preco": 209990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -616,7 +626,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2018,
    "km": 85960,
-   "preco": 79990.0,
+   "preco": 79990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -703,7 +713,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 64377,
-   "preco": 193980.0,
+   "preco": 193980,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -797,7 +807,7 @@
    "anoFabricacao": 2017,
    "anoModelo": 2018,
    "km": 94761,
-   "preco": 96890.0,
+   "preco": 96890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -886,7 +896,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2019,
    "km": 95464,
-   "preco": 118890.0,
+   "preco": 118890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -986,7 +996,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 62000,
-   "preco": 248990.0,
+   "preco": 248990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -1080,7 +1090,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2019,
    "km": 79482,
-   "preco": 120990.0,
+   "preco": 120990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -1170,7 +1180,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2019,
    "km": 53268,
-   "preco": 164890.0,
+   "preco": 164890,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -1273,7 +1283,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 17611,
-   "preco": 684990.0,
+   "preco": 684990,
    "cambio": "Automático",
    "combustivel": "Gasolina e Elétrico",
    "caracteristicas": [
@@ -1381,7 +1391,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2026,
    "km": 9555,
-   "preco": 235990.0,
+   "preco": 235990,
    "cambio": "Automático",
    "combustivel": "Gasolina e Elétrico",
    "caracteristicas": [
@@ -1487,7 +1497,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 63102,
-   "preco": 112890.0,
+   "preco": 112890,
    "cambio": "CVT",
    "combustivel": "Gasolina e Elétrico",
    "caracteristicas": [
@@ -1597,7 +1607,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 70120,
-   "preco": 133990.0,
+   "preco": 133990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -1705,7 +1715,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 62479,
-   "preco": 159990.0,
+   "preco": 159990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -1817,7 +1827,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 89159,
-   "preco": 153890.0,
+   "preco": 153890,
    "cambio": "Automático",
    "combustivel": "Gasolina e Elétrico",
    "caracteristicas": [
@@ -1929,7 +1939,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2019,
    "km": 122519,
-   "preco": 94890.0,
+   "preco": 94890,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -2010,7 +2020,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2019,
    "km": 112518,
-   "preco": 98990.0,
+   "preco": 98990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -2113,7 +2123,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 37642,
-   "preco": 107890.0,
+   "preco": 107890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2215,7 +2225,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 85968,
-   "preco": 94990.0,
+   "preco": 94990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2318,7 +2328,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 66109,
-   "preco": 98490.0,
+   "preco": 98490,
    "cambio": "CVT",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2420,7 +2430,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 93819,
-   "preco": 93490.0,
+   "preco": 93490,
    "cambio": "CVT",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2518,7 +2528,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 44329,
-   "preco": 99490.0,
+   "preco": 99490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2601,7 +2611,7 @@
    "anoFabricacao": 2026,
    "anoModelo": 2026,
    "km": 2911,
-   "preco": 164990.0,
+   "preco": 164990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2707,7 +2717,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 50381,
-   "preco": 110890.0,
+   "preco": 110890,
    "cambio": "CVT",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2805,7 +2815,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2023,
    "km": 89725,
-   "preco": 103890.0,
+   "preco": 103890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2896,7 +2906,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 92044,
-   "preco": 93990.0,
+   "preco": 93990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -2985,7 +2995,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2022,
    "km": 98010,
-   "preco": 109490.0,
+   "preco": 109490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -3089,7 +3099,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2021,
    "km": 101853,
-   "preco": 89890.0,
+   "preco": 89890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -3183,7 +3193,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2025,
    "km": 41414,
-   "preco": 157890.0,
+   "preco": 157890,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -3287,7 +3297,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 28246,
-   "preco": 147990.0,
+   "preco": 147990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -3391,7 +3401,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2020,
    "km": 167676,
-   "preco": 92990.0,
+   "preco": 92990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -3498,7 +3508,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2021,
    "km": 96681,
-   "preco": 124490.0,
+   "preco": 124490,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -3608,7 +3618,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2025,
    "km": 14897,
-   "preco": 195990.0,
+   "preco": 195990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -3713,7 +3723,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2023,
    "km": 86885,
-   "preco": 144490.0,
+   "preco": 144490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -3809,7 +3819,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2020,
    "km": 154898,
-   "preco": 149990.0,
+   "preco": 149990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -3917,7 +3927,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2021,
    "km": 142350,
-   "preco": 158990.0,
+   "preco": 158990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -4020,7 +4030,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 73774,
-   "preco": 110990.0,
+   "preco": 110990,
    "cambio": "Automático",
    "combustivel": "Elétrico",
    "caracteristicas": [
@@ -4120,7 +4130,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2025,
    "km": 12000,
-   "preco": 121990.0,
+   "preco": 121990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4222,7 +4232,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 136257,
-   "preco": 96990.0,
+   "preco": 96990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4320,7 +4330,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 79050,
-   "preco": 109990.0,
+   "preco": 109990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4419,7 +4429,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2020,
    "km": 137197,
-   "preco": 76990.0,
+   "preco": 76990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4508,7 +4518,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 74277,
-   "preco": 89990.0,
+   "preco": 89990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4606,7 +4616,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 94436,
-   "preco": 132990.0,
+   "preco": 132990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4706,7 +4716,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2024,
    "km": 46825,
-   "preco": 153490.0,
+   "preco": 153490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4805,7 +4815,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 38660,
-   "preco": 152990.0,
+   "preco": 152990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -4913,7 +4923,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 55715,
-   "preco": 148490.0,
+   "preco": 148490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -5024,7 +5034,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2023,
    "km": 68000,
-   "preco": 130990.0,
+   "preco": 130990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -5135,7 +5145,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 84518,
-   "preco": 143890.0,
+   "preco": 143890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -5237,7 +5247,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 38393,
-   "preco": 179990.0,
+   "preco": 179990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -5336,7 +5346,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 24638,
-   "preco": 178990.0,
+   "preco": 178990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -5443,7 +5453,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2022,
    "km": 70184,
-   "preco": 144890.0,
+   "preco": 144890,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -5560,7 +5570,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2023,
    "km": 70419,
-   "preco": 157990.0,
+   "preco": 157990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -5661,7 +5671,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 104773,
-   "preco": 142490.0,
+   "preco": 142490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -5766,7 +5776,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 73550,
-   "preco": 154890.0,
+   "preco": 154890,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -5883,7 +5893,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2023,
    "km": 78011,
-   "preco": 154890.0,
+   "preco": 154890,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -5991,7 +6001,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 36910,
-   "preco": 198490.0,
+   "preco": 198490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -6095,7 +6105,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 62718,
-   "preco": 129990.0,
+   "preco": 129990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6193,7 +6203,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 56273,
-   "preco": 124990.0,
+   "preco": 124990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6296,7 +6306,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2023,
    "km": 87569,
-   "preco": 108890.0,
+   "preco": 108890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6391,7 +6401,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 97610,
-   "preco": 105990.0,
+   "preco": 105990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6486,7 +6496,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 93416,
-   "preco": 102890.0,
+   "preco": 102890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6586,7 +6596,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2023,
    "km": 84679,
-   "preco": 107890.0,
+   "preco": 107890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6669,7 +6679,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 97492,
-   "preco": 111990.0,
+   "preco": 111990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6767,7 +6777,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2025,
    "km": 35531,
-   "preco": 119990.0,
+   "preco": 119990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -6854,7 +6864,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2019,
    "km": 129000,
-   "preco": 88990.0,
+   "preco": 88990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -6953,7 +6963,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2021,
    "km": 103172,
-   "preco": 104990.0,
+   "preco": 104990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7049,7 +7059,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2018,
    "km": 108392,
-   "preco": 98490.0,
+   "preco": 98490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7151,7 +7161,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2021,
    "km": 96640,
-   "preco": 97990.0,
+   "preco": 97990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7256,7 +7266,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2021,
    "km": 99800,
-   "preco": 97490.0,
+   "preco": 97490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7350,7 +7360,7 @@
    "anoFabricacao": 2017,
    "anoModelo": 2017,
    "km": 104698,
-   "preco": 79990.0,
+   "preco": 79990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7444,7 +7454,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 139000,
-   "preco": 94990.0,
+   "preco": 94990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7544,7 +7554,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2021,
    "km": 137800,
-   "preco": 106990.0,
+   "preco": 106990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7654,7 +7664,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 77241,
-   "preco": 108490.0,
+   "preco": 108490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -7754,7 +7764,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2021,
    "km": 104385,
-   "preco": 104890.0,
+   "preco": 104890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -7848,7 +7858,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 66832,
-   "preco": 97490.0,
+   "preco": 97490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -7941,7 +7951,7 @@
    "anoFabricacao": 2017,
    "anoModelo": 2017,
    "km": 122954,
-   "preco": 77890.0,
+   "preco": 77890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8029,7 +8039,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2018,
    "km": 97649,
-   "preco": 82890.0,
+   "preco": 82890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8113,7 +8123,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2020,
    "km": 106712,
-   "preco": 86490.0,
+   "preco": 86490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8206,7 +8216,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 33226,
-   "preco": 169980.0,
+   "preco": 169980,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -8303,7 +8313,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 101917,
-   "preco": 119990.0,
+   "preco": 119990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -8389,7 +8399,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2024,
    "km": 72805,
-   "preco": 90490.0,
+   "preco": 90490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8477,7 +8487,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2026,
    "km": 12317,
-   "preco": 119890.0,
+   "preco": 119890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8569,7 +8579,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2022,
    "km": 60587,
-   "preco": 107990.0,
+   "preco": 107990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8669,7 +8679,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2022,
    "km": 80192,
-   "preco": 85990.0,
+   "preco": 85990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8762,7 +8772,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 38705,
-   "preco": 138990.0,
+   "preco": 138990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8870,7 +8880,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 103742,
-   "preco": 72990.0,
+   "preco": 72990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -8968,7 +8978,7 @@
    "anoFabricacao": 2015,
    "anoModelo": 2016,
    "km": 123083,
-   "preco": 58990.0,
+   "preco": 58990,
    "cambio": "Manual",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -9059,7 +9069,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2021,
    "km": 90646,
-   "preco": 89490.0,
+   "preco": 89490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -9150,7 +9160,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2018,
    "km": 141492,
-   "preco": 98890.0,
+   "preco": 98890,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -9241,7 +9251,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2020,
    "km": 99693,
-   "preco": 138990.0,
+   "preco": 138990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -9329,7 +9339,7 @@
    "anoFabricacao": 2017,
    "anoModelo": 2017,
    "km": 63524,
-   "preco": 169990.0,
+   "preco": 169990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -9419,7 +9429,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 49141,
-   "preco": 258990.0,
+   "preco": 258990,
    "cambio": "Automático",
    "combustivel": "Gasolina e Elétrico",
    "caracteristicas": [
@@ -9510,7 +9520,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 159644,
-   "preco": 159990.0,
+   "preco": 159990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -9608,7 +9618,7 @@
    "anoFabricacao": 2016,
    "anoModelo": 2017,
    "km": 100190,
-   "preco": 184890.0,
+   "preco": 184890,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -9706,7 +9716,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 19759,
-   "preco": 479990.0,
+   "preco": 479990,
    "cambio": "Automático",
    "combustivel": "Gasolina e Elétrico",
    "caracteristicas": [
@@ -9805,7 +9815,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2019,
    "km": 70700,
-   "preco": 133890.0,
+   "preco": 133890,
    "cambio": "Automático",
    "combustivel": "Gasolina e Elétrico",
    "caracteristicas": [
@@ -9899,7 +9909,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 69938,
-   "preco": 124890.0,
+   "preco": 124890,
    "cambio": "CVT",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -10006,7 +10016,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 39943,
-   "preco": 167990.0,
+   "preco": 167990,
    "cambio": "CVT",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -10104,7 +10114,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 87225,
-   "preco": 179990.0,
+   "preco": 179990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -10206,7 +10216,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2024,
    "km": 32345,
-   "preco": 299490.0,
+   "preco": 299490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -10308,7 +10318,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2026,
    "km": 30533,
-   "preco": 266490.0,
+   "preco": 266490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -10419,7 +10429,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 54808,
-   "preco": 169890.0,
+   "preco": 169890,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -10505,7 +10515,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 118427,
-   "preco": 174490.0,
+   "preco": 174490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -10608,7 +10618,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 160601,
-   "preco": 174490.0,
+   "preco": 174490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -10704,7 +10714,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 122980,
-   "preco": 175890.0,
+   "preco": 175890,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -10808,7 +10818,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2026,
    "km": 10780,
-   "preco": 153990.0,
+   "preco": 153990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -10912,7 +10922,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 36553,
-   "preco": 117490.0,
+   "preco": 117490,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11014,7 +11024,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2022,
    "km": 12,
-   "preco": 59990.0,
+   "preco": 59990,
    "cambio": "Manual",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11064,7 +11074,7 @@
    "anoFabricacao": 2011,
    "anoModelo": 2012,
    "km": 216257,
-   "preco": 176890.0,
+   "preco": 176890,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -11161,7 +11171,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 79133,
-   "preco": 164490.0,
+   "preco": 164490,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11273,7 +11283,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2024,
    "km": 16776,
-   "preco": 182990.0,
+   "preco": 182990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11382,7 +11392,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2026,
    "km": 12993,
-   "preco": 208990.0,
+   "preco": 208990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11485,7 +11495,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2024,
    "km": 36513,
-   "preco": 168490.0,
+   "preco": 168490,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11595,7 +11605,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2025,
    "km": 42387,
-   "preco": 190990.0,
+   "preco": 190990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -11683,7 +11693,7 @@
    "anoFabricacao": 2021,
    "anoModelo": 2021,
    "km": 112625,
-   "preco": 72990.0,
+   "preco": 72990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -11765,7 +11775,7 @@
    "anoFabricacao": 2014,
    "anoModelo": 2015,
    "km": 23404,
-   "preco": 33990.0,
+   "preco": 33990,
    "cambio": "Manual",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11815,7 +11825,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 66400,
-   "preco": 89990.0,
+   "preco": 89990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -11903,7 +11913,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2025,
    "km": 34733,
-   "preco": 144490.0,
+   "preco": 144490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -11997,7 +12007,7 @@
    "anoFabricacao": 2016,
    "anoModelo": 2017,
    "km": 94787,
-   "preco": 83490.0,
+   "preco": 83490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -12091,7 +12101,7 @@
    "anoFabricacao": 2025,
    "anoModelo": 2026,
    "km": 36400,
-   "preco": 146990.0,
+   "preco": 146990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -12184,7 +12194,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 52543,
-   "preco": 142890.0,
+   "preco": 142890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -12282,7 +12292,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 47302,
-   "preco": 132990.0,
+   "preco": 132990,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -12385,7 +12395,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 75799,
-   "preco": 149890.0,
+   "preco": 149890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -12483,7 +12493,7 @@
    "anoFabricacao": 2024,
    "anoModelo": 2025,
    "km": 60119,
-   "preco": 157890.0,
+   "preco": 157890,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -12595,7 +12605,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2022,
    "km": 77613,
-   "preco": 244990.0,
+   "preco": 244990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -12691,7 +12701,7 @@
    "anoFabricacao": 2023,
    "anoModelo": 2024,
    "km": 74568,
-   "preco": 339490.0,
+   "preco": 339490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -12799,7 +12809,7 @@
    "anoFabricacao": 2022,
    "anoModelo": 2023,
    "km": 104904,
-   "preco": 267490.0,
+   "preco": 267490,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -12911,7 +12921,7 @@
    "anoFabricacao": 2026,
    "anoModelo": 2026,
    "km": 323,
-   "preco": 69990.0,
+   "preco": 69990,
    "cambio": "Manual",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -12963,7 +12973,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 47501,
-   "preco": 239990.0,
+   "preco": 239990,
    "cambio": "Automático",
    "combustivel": "Diesel",
    "caracteristicas": [
@@ -13054,7 +13064,7 @@
    "anoFabricacao": 1996,
    "anoModelo": 1996,
    "km": 71098,
-   "preco": 39990.0,
+   "preco": 39990,
    "cambio": "Manual",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -13111,7 +13121,7 @@
    "anoFabricacao": 2015,
    "anoModelo": 2015,
    "km": 94000,
-   "preco": 74990.0,
+   "preco": 74990,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -13194,7 +13204,7 @@
    "anoFabricacao": 2016,
    "anoModelo": 2017,
    "km": 158135,
-   "preco": 79890.0,
+   "preco": 79890,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [
@@ -13286,7 +13296,7 @@
    "anoFabricacao": 2020,
    "anoModelo": 2020,
    "km": 100535,
-   "preco": 69490.0,
+   "preco": 69490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -13365,7 +13375,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 117670,
-   "preco": 91490.0,
+   "preco": 91490,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -13455,7 +13465,7 @@
    "anoFabricacao": 2019,
    "anoModelo": 2020,
    "km": 104654,
-   "preco": 111790.0,
+   "preco": 111790,
    "cambio": "Automático",
    "combustivel": "Flex",
    "caracteristicas": [
@@ -13564,7 +13574,7 @@
    "anoFabricacao": 2018,
    "anoModelo": 2019,
    "km": 100500,
-   "preco": 129490.0,
+   "preco": 129490,
    "cambio": "Automático",
    "combustivel": "Gasolina",
    "caracteristicas": [

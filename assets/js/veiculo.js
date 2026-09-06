@@ -39,7 +39,7 @@
       '<aside class="v-side">' +
       '<div class="price-box"><div><div class="p"><small>R$</small>' + A.fmtBRL(v.preco).replace(/^R\$\s?/, "") + '</div><div class="lbl">Valor do veículo</div></div><button class="btn btn-icon btn-outline" type="button" id="btn-share" aria-label="Compartilhar">' + icon("share") + "</button></div>" +
       '<div class="cta-row"><a class="btn btn-wa btn-lg" href="' + wa + '" target="_blank" rel="noopener">' + icon("whatsapp") + ' Tenho interesse</a><a class="btn btn-dark btn-lg" href="' + A.telLink + '">' + icon("phone") + " Ligar agora</a>" +
-      '<div class="row2"><button class="btn btn-outline" type="button" id="btn-sim">' + icon("calc") + ' Simular financiamento</button><a class="btn btn-outline" href="venda-seu-veiculo.html">' + icon("tag") + " Usar meu carro na troca</a></div></div>" +
+      '<div class="row2"><button class="btn btn-outline" type="button" id="btn-sim">' + icon("calc") + ' Simular financiamento</button><a class="btn btn-outline" href="venda-seu-veiculo.html">' + icon("tag") + " Vender meu carro</a></div></div>" +
       '<section class="block"><h2>Compra segura</h2><ul class="opt-grid" style="grid-template-columns:1fr">' + S.garantias.filter((g) => !/garantia/i.test(g.titulo)).map((g) => "<li>" + icon("shield") + "<span><b>" + esc(g.titulo) + "</b><br>" + esc(g.texto) + "</span></li>").join("") + "</ul></section>" +
       "</aside></div>";
 

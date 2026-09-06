@@ -14,14 +14,14 @@
     state = {
       q: p.get("q") || "", tipo: p.get("tipo") || "", marca: p.get("marca") || "", modelo: p.get("modelo") || "",
       precoMin: p.get("precoMin") || "", precoMax: p.get("precoMax") || "", anoMin: p.get("anoMin") || "", kmMax: p.get("kmMax") || "",
-      cambio: p.getAll("cambio"), combustivel: p.getAll("combustivel"), tag: p.getAll("tag"), ordem: p.get("ordem") || "novidades"
+      cambio: p.getAll("cambio"), combustivel: p.getAll("combustivel"), tag: p.getAll("tag"), ordem: p.get("ordem") || "marca"
     };
   }
   function writeState() {
     const p = new URLSearchParams();
     ["q", "tipo", "marca", "modelo", "precoMin", "precoMax", "anoMin", "kmMax"].forEach((k) => { if (state[k]) p.set(k, state[k]); });
     ["cambio", "combustivel", "tag"].forEach((k) => state[k].forEach((v) => p.append(k, v)));
-    if (state.ordem && state.ordem !== "novidades") p.set("ordem", state.ordem);
+    if (state.ordem && state.ordem !== "marca") p.set("ordem", state.ordem);
     const qs = p.toString();
     history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
   }
@@ -48,8 +48,7 @@
       s === "preco-desc" ? b.preco - a.preco :
       s === "ano" ? (b.anoModelo - a.anoModelo) || (a.km - b.km) :
       s === "km" ? a.km - b.km :
-      s === "marca" ? (a.marca + " " + a.modelo + " " + a.versao).localeCompare(b.marca + " " + b.modelo + " " + b.versao) :
-      b.id - a.id);
+      (a.marca + " " + a.modelo + " " + a.versao).localeCompare(b.marca + " " + b.modelo + " " + b.versao) || a.id - b.id);
     shown = 0;
     $("#results").innerHTML = "";
     renderMore();
