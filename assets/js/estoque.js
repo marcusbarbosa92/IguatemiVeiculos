@@ -92,7 +92,7 @@
     if (state.precoMin) out.push(["precoMin", "", "de " + A.fmtBRL(+state.precoMin)]);
     if (state.precoMax) out.push(["precoMax", "", "até " + A.fmtBRL(+state.precoMax)]);
     if (state.anoMin) out.push(["anoMin", "", "a partir de " + state.anoMin]);
-    if (state.kmMax) out.push(["kmMax", "", "até " + A.fmtKm(+state.kmMax)]);
+    if (state.kmMax) out.push(["kmMax", "", "Até " + (+state.kmMax % 1000 === 0 ? (+state.kmMax / 1000) + " mil km" : A.fmtKm(+state.kmMax))]);
     state.cambio.forEach((v) => out.push(["cambio", v, v]));
     state.combustivel.forEach((v) => out.push(["combustivel", v, v]));
     state.tag.forEach((v) => out.push(["tag", v, v]));

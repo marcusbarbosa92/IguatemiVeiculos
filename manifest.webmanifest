@@ -1,7 +1,7 @@
 {
   "name": "Iguatemi Automóveis",
   "short_name": "Iguatemi",
-  "description": "Seminovos com procedência comprovada em Campinas - SP.",
+  "description": "Carros e motos com procedência comprovada em Campinas - SP.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

@@ -333,7 +333,7 @@
     let ok = false; try { ok = localStorage.getItem("cookies-ok") === "1"; } catch (e) { /* sem storage */ }
     if (ok) return;
     const n = document.createElement("div"); n.className = "cookie-notice"; n.setAttribute("role", "region"); n.setAttribute("aria-label", "Aviso de cookies");
-    n.innerHTML = '<p>Usamos cookies para medir o uso do site e melhorar o atendimento. Veja a <a href="politica-de-privacidade.html">política de privacidade</a>.</p><button class="btn btn-dark btn-sm" type="button">Entendi</button>';
+    n.innerHTML = '<p>Usamos cookies para medir o uso do site e mostrar anúncios da loja no Google e na Meta. Veja a <a href="politica-de-privacidade.html">política de privacidade</a>.</p><button class="btn btn-dark btn-sm" type="button">Entendi</button>';
     n.querySelector("button").addEventListener("click", () => { try { localStorage.setItem("cookies-ok", "1"); } catch (e) { /* ignora */ } n.remove(); });
     document.body.appendChild(n);
   }

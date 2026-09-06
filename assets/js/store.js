@@ -5,7 +5,7 @@ window.STORE = {
   razaoSocial: "Iguatemi Automoveis Intermediacao de Veiculos Ltda",
   cnpj: "25.189.123/0001-43",
   slogan: "O melhor preço, com a qualidade e procedência que você merece.",
-  descricao: "Compre seu veículo de forma rápida e segura, com garantia de qualidade e atendimento especializado na Iguatemi Automóveis, em Campinas.",
+  descricao: "Compre seu veículo de forma rápida e segura, com qualidade, procedência e atendimento especializado na Iguatemi Automóveis, em Campinas.",
   sobre: [
     "Contamos com uma década de história, com um estoque amplo e nossas plataformas atualizadas diariamente.",
     "Todos os nossos carros são vistoriados e com laudo cautelar aprovado sem restrições ou observações. Nossos veículos são de qualidade e procedência, compostos pelas principais marcas do mercado: Mercedes-Benz, BMW, Audi, Jeep, Volvo, Honda, Volkswagen, Chevrolet, Mitsubishi, Fiat, Toyota, Hyundai, Land Rover, Ford, Citroën, Jaguar e outras, sempre buscando oferecer uma grande variedade de carros para a escolha de nossos clientes.",
@@ -36,7 +36,7 @@ window.STORE = {
   garantias: [
     { titulo: "Procedência comprovada", texto: "Não trabalhamos com veículos de leilão ou seguradora." },
     { titulo: "Laudo cautelar 100% aprovado", texto: "Todos os veículos possuem laudo cautelar aprovado, sem restrições ou apontamentos." },
-    { titulo: "Garantia opcional de 1 ano", texto: "Em seguradora terceirizada, não inclusa no preço e contratada à parte. Consulte condições." },
+    { titulo: "Avaliação do seu carro na hora", texto: "Realizamos a avaliação dos carros na hora, com os preços mais competitivos do mercado." },
     { titulo: "Pagamento seguro", texto: "Pagamentos exclusivamente no CNPJ da Iguatemi Automóveis, garantindo total segurança na negociação." }
   ],
   avisoLegal: "Reservamo-nos o direito de corrigir eventuais erros de digitação, valores e opcionais dos veículos, sem aviso prévio.",
