@@ -5,7 +5,8 @@
     "sync": "node scripts/sync-inventory.mjs && node scripts/gerar-paginas.mjs && python3 scripts/gerar-miniaturas.py",
     "pages": "node scripts/gerar-paginas.mjs",
     "thumbs": "python3 scripts/gerar-miniaturas.py",
-    "test": "node tests/validar-dados.mjs && node tests/parser.test.mjs && node tests/smoke.mjs",
-    "test:dados": "node tests/validar-dados.mjs && node tests/parser.test.mjs"
+    "build": "node scripts/build-vercel.mjs",
+    "test": "node tests/validar-dados.mjs && node tests/parser.test.mjs && node tests/build.test.mjs && node tests/smoke.mjs",
+    "test:dados": "node tests/validar-dados.mjs && node tests/parser.test.mjs && node tests/build.test.mjs"
   }
 }

@@ -1,6 +1,6 @@
 # Iguatemi Automóveis — site mobile
 
-Site estático, mobile-first, para a Iguatemi Automóveis (Campinas - SP). Sem framework e sem etapa de build: HTML, CSS e JavaScript puros, publicáveis em qualquer hospedagem estática (GitHub Pages, Vercel, Netlify, etc.).
+Site estático, mobile-first, para a Iguatemi Automóveis (Campinas - SP). Sem framework: HTML, CSS e JavaScript puros, publicáveis em qualquer hospedagem estática. A hospedagem prevista é o **Vercel** (`vercel.json`), com o GitHub Pages como alternativa.
 
 Todos os dados do site são reais e foram extraídos de [iguatemiautomoveis.com.br](https://iguatemiautomoveis.com.br/) em 06/09/2026 (140 veículos, telefones, endereço, horários, redes sociais). O CNPJ do rodapé foi conferido na Receita Federal (BrasilAPI).
 
@@ -36,7 +36,9 @@ assets/thumbs/, assets/fotos/, assets/og/, assets/marcas/, assets/video/   image
 sw.js                     service worker (mude VERSAO para descartar o cache dos visitantes)
 tests/                    validação de dados, parser do sync (fixtures reais) e fumaça no Chromium
 scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
-scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo) e sitemap.xml
+scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo), sitemap.xml e ajusta as URLs absolutas (canonical, Open Graph, robots.txt, 404.html)
+scripts/build-vercel.mjs    build do Vercel: copia só o que é público para dist/ e regenera as páginas com o domínio do projeto
+vercel.json               configuração do Vercel (build, pasta publicada, cabeçalhos de cache e segurança)
 scripts/gerar-miniaturas.py gera assets/thumbs (capa 800 px), assets/fotos (cada foto em 160 px + as 6 primeiras em 640 px), assets/og (capa JPEG para a prévia do WhatsApp) e baixa assets/marcas
 v/                        páginas geradas (não edite à mão: mude veiculo.html e rode npm run pages)
 ```
@@ -49,19 +51,31 @@ O estoque vem do site atual (plataforma AutoCerto). Para sincronizar:
 npm run sync        # ou: node scripts/sync-inventory.mjs
 ```
 
-Requer Node 22+ e Python 3 com Pillow (`pip install pillow`) para as miniaturas. O primeiro script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes). O segundo regenera `v/*.html` e `sitemap.xml` (apaga as páginas de veículos que saíram do estoque). O terceiro gera as imagens locais; os nomes carregam a identidade da foto de origem, então uma capa trocada na loja vira uma miniatura nova automaticamente. Um anúncio com problema (sem fotos, preço ilegível) é pulado com aviso em `data/vehicles.json` (`avisos`), sem travar o resto. Se o site for publicado em outro domínio, rode `node scripts/gerar-paginas.mjs --site-url https://seu-dominio/`.
+Requer Node 22+ e Python 3 com Pillow (`pip install pillow`) para as miniaturas. O primeiro script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes). O segundo regenera `v/*.html` e `sitemap.xml` (apaga as páginas de veículos que saíram do estoque). O terceiro gera as imagens locais; os nomes carregam a identidade da foto de origem, então uma capa trocada na loja vira uma miniatura nova automaticamente. Um anúncio com problema (sem fotos, preço ilegível) é pulado com aviso em `data/vehicles.json` (`avisos`), sem travar o resto. As URLs absolutas (canonical, Open Graph, `robots.txt`, `<base>` do `404.html`) seguem a opção `--site-url`; no Vercel isso é recalculado a cada deploy com o domínio do projeto, sem mexer no repositório.
 
-O workflow `.github/workflows/sync-estoque.yml` faz isso automaticamente todo dia às 06:00 (Brasília) e também pode ser disparado manualmente em **Actions → Sincronizar estoque → Run workflow**. Ele commita as mudanças no branch padrão, o que dispara a publicação.
+O workflow `.github/workflows/sync-estoque.yml` faz isso automaticamente todo dia às 06:00 (Brasília) e também pode ser disparado manualmente em **Actions → Sincronizar estoque → Run workflow**. Ele commita as mudanças no branch padrão; o Vercel reage ao push e publica o estoque novo sozinho.
 
 Os cartões, a faixa de miniaturas e as seis primeiras fotos da galeria usam imagens locais (`assets/thumbs`, `assets/fotos`), com a foto original como reserva se faltarem; as demais fotos da galeria só são baixadas quando o visitante mexe na galeria e chega perto delas, e a tela cheia usa as originais. As fotos grandes continuam hospedadas em `www.autocerto.com` (mesmo servidor usado pelo site atual). Se a loja deixar a AutoCerto, as fotos precisam ser copiadas para outro lugar e o campo `fotos` ajustado.
 
-## Publicar no GitHub Pages
+## Publicar no Vercel
 
-1. O repositório nasceu vazio, então o primeiro branch enviado (`claude/car-sales-mobile-site-m0ixyw`) virou o padrão. **Renomeie-o para `main`** em **Settings → Branches** (é nele que a sincronização diária vai commitar).
-2. Em **Settings → Pages**, escolha **Source: GitHub Actions**.
-3. Todo push em `main` roda `.github/workflows/pages.yml` e publica o site em `https://marcusbarbosa92.github.io/IguatemiVeiculos/`. Também dá para disparar manualmente em **Actions → Publicar no GitHub Pages → Run workflow**, escolhendo o branch.
+O repositório já está pronto: `vercel.json` define o build (`node scripts/build-vercel.mjs`) e a pasta publicada (`dist/`). Não há dependências a instalar. Só falta conectar o repositório a um projeto no Vercel, o que exige a conta do dono:
 
-Se for usar um domínio próprio: (1) crie a variável de repositório `SITE_URL` com a URL final, usada pelo sync ao gerar `v/*.html` e `sitemap.xml`; (2) troque as URLs absolutas de `canonical`/`og:image` nos HTML da raiz e o prefixo `/IguatemiVeiculos/` em `404.html`; (3) só então `robots.txt` e a diretiva `Sitemap` passam a valer, porque robôs só leem `robots.txt` na raiz do domínio (no GitHub Pages em subcaminho ele é ignorado; envie o sitemap pelo Search Console).
+1. Em [vercel.com/new](https://vercel.com/new), entre com a conta do GitHub e importe `marcusbarbosa92/IguatemiVeiculos` (na primeira vez o Vercel pede para instalar o app dele no GitHub e dar acesso ao repositório).
+2. Não altere as configurações sugeridas: o `vercel.json` já cobre framework, build e pasta de saída. Clique em **Deploy**.
+3. O site fica em `https://<nome-do-projeto>.vercel.app`. Cada push no branch de produção (o branch padrão do repositório, incluindo os commits da sincronização diária) gera um deploy novo; pushes em outros branches geram pré-visualizações com `noindex`.
+4. Domínio próprio: **Settings → Domains** no projeto. As URLs absolutas do site passam a usar esse domínio no deploy seguinte, sem nenhuma alteração no código (o build lê `VERCEL_PROJECT_PRODUCTION_URL`). Para forçar outro endereço, defina a variável de ambiente `SITE_URL` no projeto.
+
+O build copia para `dist/` apenas o que é público (páginas, `assets/`, `data/`, `v/`, `sw.js`, manifest, `robots.txt`, `sitemap.xml`), regenera `v/*.html` e o sitemap com o domínio do projeto e confere o resultado antes de publicar. `dist/` não vai para o Git. Para reproduzir localmente: `VERCEL_PROJECT_PRODUCTION_URL=meusite.vercel.app npm run build` e depois `SMOKE_ROOT=dist node tests/smoke.mjs`.
+
+**Plano do Vercel:** as [diretrizes de uso justo](https://vercel.com/docs/limits/fair-use-guidelines) restringem o plano Hobby (gratuito) a uso pessoal e não comercial; anunciar a venda de produtos ou serviços conta como uso comercial. Para o site da loja, o plano indicado é o Pro.
+
+### GitHub Pages (alternativa)
+
+1. O repositório nasceu vazio, então o primeiro branch enviado (`claude/car-sales-mobile-site-m0ixyw`) virou o padrão. Renomeie-o para `main` em **Settings → Branches** se quiser usar `pages.yml` no push.
+2. Em **Settings → Pages**, escolha **Source: GitHub Actions** (o token do Actions não consegue ativar o Pages sozinho).
+3. Publique em **Actions → Publicar no GitHub Pages → Run workflow** (ou a cada push em `main`). O site fica em `https://marcusbarbosa92.github.io/IguatemiVeiculos/`.
+4. Para a sincronização diária também publicar no Pages, crie a variável de repositório `PUBLICAR_GITHUB_PAGES` = `true` (**Settings → Secrets and variables → Actions → Variables**). Em domínio próprio, defina também `SITE_URL` com a URL final: o sync regenera as URLs absolutas com ela. No subcaminho do GitHub Pages, `robots.txt` é ignorado pelos robôs (só vale na raiz do domínio); envie o sitemap pelo Search Console.
 
 ## Avaliações do Google
 
@@ -84,11 +98,11 @@ Use apenas avaliações reais e o texto como está publicado. Enquanto `nota` fo
 ## Testes
 
 ```bash
-npm run test:dados   # consistência de data/*.json, v/*.html, sitemap, categorias e miniaturas + parser do sync contra fixtures reais
+npm run test:dados   # consistência de data/*.json, v/*.html, sitemap, categorias e miniaturas + parser do sync contra fixtures reais + build do Vercel
 npm test             # o anterior + teste de fumaça no Chromium (precisa de `npm i --no-save playwright@1.56.1` e `npx playwright install chromium`)
 ```
 
-O workflow `.github/workflows/testes.yml` roda os dois a cada push.
+O workflow `.github/workflows/testes.yml` roda tudo a cada push. `tests/build.test.mjs` roda o build do Vercel com um domínio de exemplo e confere que só o público vai para `dist/`, que as URLs absolutas seguem o domínio e que o repositório não é alterado.
 
 ## Rodar localmente
 

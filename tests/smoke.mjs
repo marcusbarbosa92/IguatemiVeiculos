@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 /* Teste de fumaça no Chromium (Playwright): sobe um servidor estático, abre as páginas no celular e no desktop,
    confere erros de JS, recursos locais quebrados, overflow horizontal e alguns fluxos.
-   Local: NODE_PATH=/caminho/para/node_modules node tests/smoke.mjs   (CI instala playwright) */
+   Local: NODE_PATH=/caminho/para/node_modules node tests/smoke.mjs   (CI instala playwright)
+   SMOKE_ROOT=dist node tests/smoke.mjs testa a pasta gerada por npm run build */
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+// SMOKE_ROOT=dist testa a saída do build do Vercel em vez do repositório
+const ROOT = process.env.SMOKE_ROOT ? path.resolve(REPO, process.env.SMOKE_ROOT) : REPO;
+if (!fs.existsSync(path.join(ROOT, 'index.html'))) { console.error(`smoke: não achei index.html em ${ROOT}`); process.exit(1); }
 const MIME = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.webm': 'video/webm', '.xml': 'application/xml', '.txt': 'text/plain', '.webmanifest': 'application/manifest+json' };
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(new URL(req.url, 'http://x').pathname); if (p.endsWith('/')) p += 'index.html';

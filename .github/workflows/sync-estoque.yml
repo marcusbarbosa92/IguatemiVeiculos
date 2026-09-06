@@ -1,11 +1,12 @@
 name: Sincronizar estoque
 
 # Atualiza data/*.json, v/*.html, sitemap.xml e assets/thumbs a partir de iguatemiautomoveis.com.br
-# e publica o site em seguida. Roda todo dia às 06:00 (Brasília) ou manualmente em
-# Actions > Sincronizar estoque > Run workflow.
+# e faz commit. Roda todo dia às 06:00 (Brasília) ou manualmente em Actions > Sincronizar estoque > Run workflow.
 #
-# Domínio próprio: crie a variável de repositório SITE_URL (Settings > Secrets and variables >
-# Actions > Variables) com a URL final, ex.: https://www.seudominio.com.br/
+# Publicação: o Vercel (vercel.json) faz o deploy sozinho a cada push, inclusive este commit, e recalcula
+# as URLs absolutas com o domínio do projeto. O job "publicar" (GitHub Pages) só roda se a variável de
+# repositório PUBLICAR_GITHUB_PAGES for "true" (Settings > Secrets and variables > Actions > Variables).
+# Nesse caso, defina também SITE_URL com a URL final, ex.: https://www.seudominio.com.br/
 on:
   workflow_dispatch:
   schedule:
@@ -42,21 +43,22 @@ jobs:
         id: commit
         run: |
           # ignora linhas que mudam todo dia (data de atualização e lastmod do sitemap)
-          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml assets/thumbs assets/fotos assets/og assets/marcas \
+          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml robots.txt '*.html' assets/thumbs assets/fotos assets/og assets/marcas \
              && [ -z "$(git ls-files --others --exclude-standard -- v assets/thumbs assets/fotos assets/og assets/marcas)" ]; then
             echo "Estoque sem mudanças."; git checkout -- . ; echo "mudou=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data v sitemap.xml assets/thumbs assets/fotos assets/og assets/marcas
+          git add data v sitemap.xml robots.txt '*.html' assets/thumbs assets/fotos assets/og assets/marcas
           git commit -m "chore: sincroniza estoque ($(date -u +%Y-%m-%d))"
           git push
           echo "mudou=true" >> "$GITHUB_OUTPUT"
 
-  # Pushes feitos com o GITHUB_TOKEN não disparam outros workflows, então a publicação acontece aqui mesmo.
+  # GitHub Pages (opcional): pushes feitos com o GITHUB_TOKEN não disparam outros workflows, então a
+  # publicação acontece aqui mesmo. O Vercel não precisa disso: ele reage ao push por conta própria.
   publicar:
     needs: sync
-    if: needs.sync.outputs.mudou == 'true'
+    if: needs.sync.outputs.mudou == 'true' && vars.PUBLICAR_GITHUB_PAGES == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

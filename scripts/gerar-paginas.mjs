@@ -5,21 +5,25 @@
  * Gera uma página estática por veículo em v/<id>.html (a partir do modelo veiculo.html)
  * com <title>, meta description, Open Graph (foto de capa, preço) e JSON-LD próprios,
  * para que links compartilhados no WhatsApp/Instagram/Google mostrem a prévia certa.
- * Também gera sitemap.xml. Sem dependências (Node >= 18).
+ * Também gera sitemap.xml e ajusta as URLs absolutas que dependem do endereço do site:
+ * canonical/og:url/og:image das páginas da raiz, a diretiva Sitemap do robots.txt e o
+ * <base href> do 404.html. Sem dependências (Node >= 18).
  *
  * Uso:
- *   node scripts/gerar-paginas.mjs [--site-url https://dominio/] [--data data/vehicles.json]
+ *   node scripts/gerar-paginas.mjs [--site-url https://dominio/] [--data data/vehicles.json] [--root pasta]
  *
+ * --root aponta para uma cópia do site (ex.: dist/ no build do Vercel); por padrão é a raiz do repositório.
  * Roda depois de scripts/sync-inventory.mjs (npm run sync faz os dois).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const opt = (name, def) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : def; };
+const ROOT = path.resolve(opt('--root', path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')));
 const SITE_URL = opt('--site-url', 'https://marcusbarbosa92.github.io/IguatemiVeiculos/').replace(/\/?$/, '/');
+if (!/^https?:\/\/[^/]+\//.test(SITE_URL)) throw new Error(`--site-url inválida: ${SITE_URL} (use https://dominio/ ou https://dominio/subpasta/)`);
 const DATA = path.resolve(ROOT, opt('--data', 'data/vehicles.json'));
 const OUT_DIR = path.join(ROOT, 'v');
 // dados da loja lidos de assets/js/store.js (única fonte)
@@ -107,4 +111,27 @@ const urls = estaticas.map((p) => `  <url><loc>${esc(SITE_URL + p)}</loc><lastmo
   .concat(doc.veiculos.map((v) => `  <url><loc>${esc(SITE_URL + 'v/' + v.id + '.html')}</loc><lastmod>${lastmod}</lastmod><changefreq>daily</changefreq><image:image><image:loc>${esc(v.capa)}</image:loc><image:title>${esc(nome(v))}</image:title></image:image></url>`));
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`);
 
-console.log(`Geradas ${doc.veiculos.length} páginas em v/ (${removidas} removidas), sitemap.xml com ${urls.length} URLs. Base: ${SITE_URL}`);
+// URLs absolutas que dependem do endereço do site (páginas da raiz, robots.txt, 404.html)
+const ajustar = (arquivo, fn) => {
+  const f = path.join(ROOT, arquivo);
+  if (!fs.existsSync(f)) return false;
+  const antes = fs.readFileSync(f, 'utf8'), depois = fn(antes);
+  if (depois !== antes) fs.writeFileSync(f, depois);
+  return depois !== antes;
+};
+let ajustados = 0;
+for (const f of fs.readdirSync(ROOT)) {
+  if (!/\.html$/.test(f) || f === '404.html') continue;
+  const url = SITE_URL + (f === 'index.html' ? '' : f);
+  const mudou = ajustar(f, (h) => h
+    .replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="${esc(url)}">`)
+    .replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${esc(url)}">`)
+    .replace(/<meta property="og:image" content="[^"]*\/assets\/img\/og\.png">/, `<meta property="og:image" content="${esc(SITE_URL + 'assets/img/og.png')}">`));
+  if (mudou) ajustados++;
+}
+// robots.txt só vale na raiz do domínio; a diretiva Sitemap precisa da URL completa
+if (ajustar('robots.txt', (t) => t.replace(/^Sitemap: .*$/m, `Sitemap: ${SITE_URL}sitemap.xml`))) ajustados++;
+// o 404 é servido de qualquer caminho, então os links relativos precisam do prefixo do site ("/" em domínio próprio ou no Vercel)
+if (ajustar('404.html', (h) => h.replace(/<base href="[^"]*">/, `<base href="${esc(new URL(SITE_URL).pathname)}">`))) ajustados++;
+
+console.log(`Geradas ${doc.veiculos.length} páginas em v/ (${removidas} removidas), sitemap.xml com ${urls.length} URLs, ${ajustados} arquivo(s) da raiz com URLs ajustadas. Base: ${SITE_URL}`);

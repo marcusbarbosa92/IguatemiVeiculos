@@ -16,6 +16,8 @@ jobs:
         run: node tests/validar-dados.mjs
       - name: Parser do sync (fixtures reais da AutoCerto)
         run: node tests/parser.test.mjs
+      - name: Build do Vercel (dist/ com as URLs do projeto)
+        run: node tests/build.test.mjs
       - name: Instala Playwright
         run: npm i --no-save playwright@1.56.1 && npx playwright install --with-deps chromium
       - name: Fumaça no Chromium
