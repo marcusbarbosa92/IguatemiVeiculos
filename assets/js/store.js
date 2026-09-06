@@ -25,6 +25,7 @@ window.STORE = {
   links: {
     siteAtual: "https://iguatemiautomoveis.com.br/",
     instagram: "https://www.instagram.com/iguatemiautomoveis/",
+    instagramDirect: "https://ig.me/m/iguatemiautomoveis", // link oficial da Meta para abrir uma conversa no Direct (mesmo @ do perfil)
     facebook: "https://www.facebook.com/iguatemiautomoveis/",
     tiktok: "https://www.tiktok.com/@iguatemi.automoveis",
     youtube: "https://www.youtube.com/@IguatemiAutomoveis",

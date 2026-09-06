@@ -5,7 +5,12 @@
   const TAG_STYLE = { "Blindado": "red", "Único Dono": "soft", "7 lugares": "soft", "Garantia de Fábrica": "soft" };
   const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='3'%3E%3C/svg%3E";
   // Parágrafos institucionais que a AutoCerto repete em todos os anúncios: já aparecem em "Compra segura" e no rodapé.
-  const PADRAO = [/^ve[ií]culos de proced[êe]ncia comprovada/i, /^n[ãa]o trabalhamos com ve[ií]culos de leil[ãa]o/i, /^todos os ve[ií]culos possuem laudo cautelar/i, /^pagamentos exclusivamente no cnpj/i, /^reservamo-nos o direito de corrigir/i];
+  const PADRAO = [/^ve[ií]culos de proced[êe]ncia comprovada/i, /^n[ãa]o trabalhamos com ve[ií]culos de leil[ãa]o/i, /^todos os ve[ií]culos possuem laudo cautelar/i, /^pagamentos exclusivamente no cnpj/i, /^reservamo-nos o direito de corrigir/i, /^1 ano de garantia opcional/i];
+  // frases de garantia que a loja escreve na descrição (viram item de "Compra segura" e selo, sem inventar nada)
+  const GARANTIA_INCLUSA = /1 ano de garantia cobrindo/i, GARANTIA_OPCIONAL = /^1 ano de garantia opcional/i;
+  // opcionais que pesam na decisão aparecem antes dos itens de série que a AutoCerto lista primeiro (ar quente, porta copos...)
+  const OPC_PRIORIDADE = ["Teto solar", "Câmera de ré", "Câmera 360", "Tração 4x4", "Bancos de Couro", "Farol de LED", "Sensor de estacionamento", "Alerta de ponto cego", "Piloto automático", "Chave presencial", "Start Stop", "Multimídia", "Apple CarPlay", "Android Auto", "Ar condicionado dual zone", "Ar condicionado Digital", "Carregador por indução", "Porta-malas elétrico", "Bancos elétricos", "Faróis de xenon", "Freio de mão elétrico", "Controle de estabilidade", "Controle de tração", "ISOFIX", "Capota Marítima", "Protetor de Caçamba"].map((o) => o.toLowerCase());
+  const ordenarOpcionais = (lista) => lista.map((o, i) => { const k = OPC_PRIORIDADE.indexOf(String(o).toLowerCase()); return { o, i, k: k < 0 ? 1e6 : k }; }).sort((a, b) => a.k - b.k || a.i - b.i).map((x) => x.o);
 
   function notFound(msg) {
     document.title = "Veículo não encontrado · " + S.nome;
@@ -24,8 +29,14 @@
     const has = (c) => Object.prototype.hasOwnProperty.call(TAG_STYLE, c);
     const tags = (v.caracteristicas || []).filter(has);
     const chars = (v.caracteristicas || []).filter((c) => !has(c));
-    const especificas = (v.descricao || []).filter((p) => !PADRAO.some((re) => re.test(p.trim())));
+    const descr = (v.descricao || []).map((p) => String(p).trim());
+    const especificas = descr.filter((p) => !PADRAO.some((re) => re.test(p)));
+    const garantiaInclusa = descr.some((p) => GARANTIA_INCLUSA.test(p)), garantiaOpcional = descr.some((p) => GARANTIA_OPCIONAL.test(p));
+    const opcionais = ordenarOpcionais(v.opcionais || []);
     const n = v.fotos.length;
+    const st = A.openStatus();
+    const waTroca = A.waLink("Olá! Tenho interesse no " + name + " (" + A.fmtBRL(v.preco) + ") e tenho um carro para dar na troca. Posso mandar os dados?\n" + A.absUrl(A.vehUrl(v)));
+    const waFotos = A.waLink("Olá! Vi o " + name + " (anúncio " + v.id + ") no site e ele tem só " + n + (n === 1 ? " foto" : " fotos") + ". Podem me mandar mais fotos?\n" + A.absUrl(A.vehUrl(v)));
     const GAL_N = 6; // as 6 primeiras fotos têm versão local de 640 px (scripts/gerar-miniaturas.py)
     const slideSrc = (f, i) => (f === v.capa ? A.thumbUrl(v) : (i < GAL_N ? A.fotoThumbUrl(v, f).replace(/\.webp$/, "-640.webp") : f));
 
@@ -35,11 +46,12 @@
       '<div class="gallery" id="gallery" role="region" aria-label="Fotos do veículo"><div class="track" id="g-track">' + v.fotos.map((f, i) => { const src = slideSrc(f, i); return '<button type="button" tabindex="-1" data-i="' + i + '" aria-label="Abrir foto ' + (i + 1) + ' em tela cheia"><img ' + (i === 0 ? 'src="' + src + '" fetchpriority="high"' : 'src="' + PLACEHOLDER + '" data-src="' + esc(src) + '"') + ' data-fallback="' + esc(f) + '" alt="' + esc(name) + " — foto " + (i + 1) + '" decoding="async"></button>'; }).join("") + "</div>" +
       '<button class="g-nav prev" type="button" id="g-prev" aria-label="Foto anterior">' + icon("chevL") + '</button><button class="g-nav next" type="button" id="g-next" aria-label="Próxima foto">' + icon("chevR") + "</button>" +
       '<div class="g-top"><div class="counter" id="g-counter" aria-live="polite" aria-atomic="true">1/' + n + "</div>" +
-      '<button class="btn btn-sm btn-outline-light g-full" type="button" id="g-full">' + icon("image") + " Ver todas</button></div></div>" +
+      '<button class="btn btn-sm btn-outline-light g-full" type="button" id="g-full">' + icon("image") + " Ver todas</button>" + (v.video ? '<button class="btn btn-sm btn-outline-light g-video" type="button" id="g-video">' + icon("play") + " Vídeo</button>" : "") + "</div></div>" +
       '<div class="thumbs" id="thumbs" role="group" aria-label="Miniaturas">' + v.fotos.map((f, i) => '<button type="button" data-i="' + i + '"' + (i === 0 ? ' class="on" aria-current="true" tabindex="0"' : ' tabindex="-1"') + ' aria-label="Foto ' + (i + 1) + ' de ' + n + '"><img src="' + A.fotoThumbUrl(v, f) + '" data-fallback="' + esc(f) + '" alt="" loading="lazy" decoding="async" width="64" height="48"></button>').join("") + "</div>" +
+      (n <= 3 ? '<p class="few-photos small">Este anúncio ainda tem ' + (n === 1 ? "só uma foto" : "poucas fotos") + '. <a href="' + waFotos + '" target="_blank" rel="noopener">Peça mais fotos pelo WhatsApp</a>.</p>' : "") +
       '<div class="v-head"><nav class="breadcrumb" aria-label="Você está em"><a href="estoque.html">Estoque</a><span aria-hidden="true">›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + '">' + esc(v.marca) + '</a><span aria-hidden="true">›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + "&modelo=" + encodeURIComponent(v.modelo) + '" aria-current="page">' + esc(v.modelo) + "</a></nav>" +
       '<h1><img class="brand-logo" src="' + A.brandLogo(v.marca, v.tipo) + '" alt="" width="44" height="44" onerror="this.remove()"><small>' + esc(v.marca) + " </small>" + esc(v.modelo) + "</h1>" + (v.versao ? '<div class="version">' + esc(v.versao) + "</div>" : "") +
-      '<div class="tags">' + tags.map((t) => '<span class="badge ' + TAG_STYLE[t] + '">' + esc(t) + "</span>").join("") + chars.map((t) => '<span class="badge gray">' + esc(t) + "</span>").join("") + "</div></div>" +
+      '<div class="tags">' + (garantiaInclusa ? '<span class="badge soft">Garantia de 1 ano inclusa</span>' : "") + tags.map((t) => '<span class="badge ' + TAG_STYLE[t] + '">' + esc(t) + "</span>").join("") + chars.map((t) => '<span class="badge gray">' + esc(t) + "</span>").join("") + "</div></div>" +
       '<div class="specs">' + [["calendar", "Ano", v.anoFabricacao + "/" + v.anoModelo], ["gauge", "Km", A.fmtNum(v.km)], ["gear", "Câmbio", v.cambio], ["fuel", "Combustível", v.combustivel]].map((s) => '<div class="spec"><div class="fi">' + icon(s[0]) + "</div><div><span>" + s[1] + "</span><b>" + esc(s[2]) + "</b></div></div>").join("") + "</div>" +
       "</div>" +
       '<aside class="v-side">' +
@@ -47,12 +59,16 @@
       '<div class="side-title" aria-hidden="true"><span class="v-brand">' + esc(v.marca) + "</span><b>" + esc(v.modelo) + "</b>" + (v.versao ? "<span>" + esc(v.versao) + "</span>" : "") + "</div>" +
       '<div class="price-box"><div><div class="p"><small>R$</small>' + A.fmtBRL(v.preco).replace(/^R\$\s?/, "") + '</div><div class="lbl">Valor do veículo</div></div><div class="price-actions">' + A.Fav.button(v.id, "btn btn-icon btn-outline") + '<button class="btn btn-icon btn-outline" type="button" id="btn-share" aria-label="Compartilhar">' + icon("share") + "</button></div></div>" +
       '<div class="cta-row"><a class="btn btn-wa btn-lg" href="' + wa + '" target="_blank" rel="noopener">' + icon("whatsapp") + ' Tenho interesse</a><a class="btn btn-dark btn-lg" href="' + A.telLink + '">' + icon("phone") + " Ligar agora</a>" +
-      '<div class="row2"><button class="btn btn-outline" type="button" id="btn-sim">' + icon("calc") + ' Proposta de financiamento</button><a class="btn btn-outline" href="venda-seu-veiculo.html">' + icon("tag") + " Vender meu veículo</a></div></div>" +
+      '<div class="row2"><button class="btn btn-outline" type="button" id="btn-sim">' + icon("calc") + ' Proposta de financiamento</button><a class="btn btn-outline" href="' + waTroca + '" target="_blank" rel="noopener">' + icon("tag") + " Tenho carro na troca</a></div></div>" +
+      // números escritos (quem quer ligar de outro aparelho ou anotar) e horário: fora do expediente, a ligação não é atendida
+      '<p class="contact-line small"><a href="' + wa + '" target="_blank" rel="noopener">WhatsApp ' + esc(S.whatsapp.exibicao) + '</a><span aria-hidden="true"> · </span><a href="' + A.telLink + '">Telefone ' + esc(S.telefone.exibicao) + "</a></p>" +
+      '<p class="open-line small ' + (st.open ? "is-open" : "is-closed") + '"><span class="dot" aria-hidden="true"></span>' + esc(st.label) + (st.open ? "" : (st.proxima ? " · " + esc(st.proxima) : "") + ". Deixe sua mensagem no WhatsApp.") + "</p>" +
       "</div>" +
-      '<section class="block trust" id="trust"><h2>Compra segura</h2><ul class="opt-grid" style="grid-template-columns:1fr">' + S.garantias.filter((g) => !/garantia/i.test(g.titulo)).map((g) => "<li>" + icon("shield") + "<span><b>" + esc(g.titulo) + "</b><br>" + esc(g.texto) + "</span></li>").join("") + "</ul></section>" +
+      '<section class="block trust" id="trust"><h2>Compra segura</h2><ul class="opt-grid" style="grid-template-columns:1fr">' + S.garantias.filter((g) => !/garantia/i.test(g.titulo)).map((g) => "<li>" + icon("shield") + "<span><b>" + esc(g.titulo) + "</b><br>" + esc(g.texto) + "</span></li>").join("") +
+      (garantiaInclusa ? "<li>" + icon("shield") + "<span><b>Garantia de 1 ano inclusa</b><br>Cobre mais de 70 itens mecânicos e eletrônicos, em parceria com a Gestauto.</span></li>" : garantiaOpcional ? "<li>" + icon("shield") + "<span><b>Garantia opcional de 1 ano</b><br>Em seguradora terceirizada, não inclusa no preço. Consulte condições.</span></li>" : "") + "</ul></section>" +
       "</aside>" +
       '<div class="v-main-rest">' +
-      (v.opcionais && v.opcionais.length ? '<section class="block"><h2>Opcionais <span class="muted small">(' + v.opcionais.length + ')</span></h2><ul class="opt-grid' + (v.opcionais.length > 10 ? " collapsed" : "") + '" id="opt-list">' + v.opcionais.map((o) => "<li>" + icon("check") + esc(o) + "</li>").join("") + "</ul>" + (v.opcionais.length > 10 ? '<button class="expand" type="button" id="opt-toggle" aria-expanded="false">Ver todos os opcionais ' + icon("chevD") + "</button>" : "") + "</section>" : "") +
+      (opcionais.length ? '<section class="block"><h2>Opcionais <span class="muted small">(' + opcionais.length + ')</span></h2><ul class="opt-grid' + (opcionais.length > 10 ? " collapsed" : "") + '" id="opt-list">' + opcionais.map((o) => "<li>" + icon("check") + esc(o) + "</li>").join("") + "</ul>" + (opcionais.length > 10 ? '<button class="expand" type="button" id="opt-toggle" aria-expanded="false">Ver todos os opcionais ' + icon("chevD") + "</button>" : "") + "</section>" : "") +
       (especificas.length ? '<section class="block desc"><h2>Informações do veículo</h2>' + especificas.map((p) => "<p>" + esc(p) + "</p>").join("") + "</section>" : "") +
       (v.video ? '<section class="block"><h2>Vídeo</h2><div class="yt" id="yt"><img src="https://i.ytimg.com/vi/' + esc(v.video) + '/hqdefault.jpg" alt="Vídeo do ' + esc(A.vehShort(v)) + '" loading="lazy"><button class="play" type="button" id="yt-play" aria-label="Reproduzir vídeo"><span>' + icon("play") + "</span></button></div></section>" : "") +
       '<p class="small muted" style="margin-top:14px">Anúncio nº ' + v.id + ". Valores e opcionais sujeitos a confirmação com a loja.</p>" +
@@ -125,9 +141,12 @@
     const tg = $("#opt-toggle");
     if (tg) tg.addEventListener("click", () => { const c = $("#opt-list").classList.toggle("collapsed"); tg.setAttribute("aria-expanded", c ? "false" : "true"); tg.innerHTML = (c ? "Ver todos os opcionais " : "Ver menos ") + icon("chevD"); });
 
-    /* vídeo */
+    /* vídeo: o botão da galeria leva até o player e já dá play (mesmo gesto do visitante, então o autoplay é permitido) */
     const yp = $("#yt-play");
-    if (yp) yp.addEventListener("click", () => { $("#yt").innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + esc(v.video) + '?autoplay=1&rel=0" title="Vídeo do veículo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'; });
+    const playVideo = () => { if (!$("#yt-play")) return; $("#yt").innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + esc(v.video) + '?autoplay=1&rel=0" title="Vídeo do veículo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'; document.dispatchEvent(new CustomEvent("veiculo:video", { detail: { id: v.id } })); };
+    if (yp) yp.addEventListener("click", playVideo);
+    const gv = $("#g-video");
+    if (gv) gv.addEventListener("click", () => { playVideo(); const yt = $("#yt"); if (yt) yt.scrollIntoView({ block: "center", behavior: "smooth" }); });
 
     /* compartilhar */
     $("#btn-share").addEventListener("click", async () => {

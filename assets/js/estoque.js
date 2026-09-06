@@ -79,6 +79,18 @@
     renderSavedChip();
     renderActive();
     writeState();
+    waContexto();
+  }
+  // WhatsApp do cabeçalho/barra/rodapé conta em que ponto da busca o visitante está; na lista de salvos, manda os veículos
+  function waContexto() {
+    if (state.salvos && filtered.length) {
+      const itens = filtered.slice(0, 10).map((v) => "- " + A.vehShort(v) + " · " + A.fmtBRL(v.preco) + "\n  " + A.absUrl(A.vehUrl(v)));
+      A.setWaMsg("Olá! Separei estes veículos no site:\n" + itens.join("\n") + (filtered.length > 10 ? "\n(e mais " + (filtered.length - 10) + ")" : "") + "\nPodem me ajudar?");
+      return;
+    }
+    const rot = activeList().filter((a) => a[0] !== "q").map((a) => a[2]);
+    if (state.q) rot.unshift("busca por “" + state.q + "”");
+    A.setWaMsg("Olá! Estou vendo o estoque no site" + (rot.length ? " (" + rot.join(", ") + ")" : "") + ". Podem me ajudar a escolher?");
   }
   function renderMore() {
     const slice = filtered.slice(shown, shown + PAGE);

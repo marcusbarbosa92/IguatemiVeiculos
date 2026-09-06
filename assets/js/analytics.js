@@ -1,5 +1,5 @@
 /* analytics.js — GA4 + Meta Pixel (IDs em store.js) e eventos de contato.
-   Eventos enviados: contato_whatsapp, contato_telefone, contato_email, clique_instagram, clique_rede_social,
+   Eventos enviados: contato_whatsapp, contato_telefone, contato_email, contato_instagram (Direct), clique_instagram, clique_rede_social, play_video,
    envio_formulario, view_item (página do veículo). Respeita Do Not Track / Global Privacy Control. */
 (function () {
   "use strict";
@@ -65,6 +65,7 @@
     if (/wa\.me|api\.whatsapp\.com|whatsapp:/.test(h)) track("contato_whatsapp", o, "Contact");
     else if (h.indexOf("tel:") === 0) track("contato_telefone", o, "Contact");
     else if (h.indexOf("mailto:") === 0) track("contato_email", o, "Contact");
+    else if (/ig\.me\/m\//.test(h)) track("contato_instagram", o, "Contact");
     else if (/instagram\.com/.test(h)) track("clique_instagram", o);
     else if (/facebook\.com|youtube\.com|tiktok\.com/.test(h)) track("clique_rede_social", Object.assign({ rede: (h.match(/(facebook|youtube|tiktok)/) || [])[1] }, o));
   }, true);
@@ -74,6 +75,7 @@
     if (f.checkValidity && !f.checkValidity()) return;
     track("envio_formulario", { formulario: f.getAttribute("data-wa-form") }, "Lead");
   }, true);
+  document.addEventListener("veiculo:video", function (e) { track("play_video", { content_ids: [String(e.detail && e.detail.id)] }); });
   document.addEventListener("fav:change", function (e) { track(e.detail && e.detail.on ? "salvar_veiculo" : "remover_salvo", { veiculo_salvo: e.detail && e.detail.id, total_salvos: e.detail && e.detail.total }); });
   // visualização de veículo só quando a página renderizou de fato (id inexistente = "não encontrado", não conta)
   document.addEventListener("veiculo:render", function (e) { var id = String(e.detail && e.detail.id || vid); track("view_item", { content_ids: [id], content_type: "product" }, "ViewContent"); });

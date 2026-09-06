@@ -71,8 +71,11 @@
   const absUrl = (rel) => new URL(rel, document.baseURI).href;
 
   /* ---------- WhatsApp / telefone ---------- */
-  const waLink = (msg) => "https://wa.me/" + S.whatsapp.numero + "?text=" + encodeURIComponent(msg || S.whatsapp.mensagemPadrao);
+  // Sem mensagem explícita, usa a da página (<body data-wa-msg>, ex.: "quero vender", "estou vendo SUVs até 100 mil") ou a padrão da loja
+  const waLink = (msg) => "https://wa.me/" + S.whatsapp.numero + "?text=" + encodeURIComponent(msg || document.body.dataset.waMsg || S.whatsapp.mensagemPadrao);
   const waVehicleMsg = (v) => "Olá! Tenho interesse no " + vehName(v) + " (" + fmtBRL(v.preco) + ") que vi no site. Ainda está disponível?\n" + absUrl(vehUrl(v));
+  // Troca a mensagem genérica dos links do cabeçalho, gaveta, barra inferior e rodapé (páginas em que o contexto muda depois do carregamento, como o estoque com filtros)
+  function setWaMsg(msg) { if (msg) document.body.dataset.waMsg = msg; else delete document.body.dataset.waMsg; $$("a[data-wa-generic]").forEach((a) => { a.href = waLink(); }); }
   const telLink = "tel:" + S.telefone.e164;
 
   /* ---------- Horário: aberto agora? ---------- */
@@ -83,8 +86,20 @@
     const get = (t) => (parts.find((p) => p.type === t) || {}).value;
     const d = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday")), mins = (+get("hour") % 24) * 60 + +get("minute");
     const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
+    const hora = (t) => t.replace(/^0/, "").replace(":00", "h").replace(":", "h");
     for (const h of S.horario) {
-      if (h.diasSemana.includes(d) && mins >= toMin(h.abre) && mins < toMin(h.fecha)) return { open: true, label: "Aberto agora · até " + h.fecha.replace(":00", "h").replace(":", "h") };
+      if (h.diasSemana.includes(d) && mins >= toMin(h.abre) && mins < toMin(h.fecha)) return { open: true, label: "Aberto agora · até " + hora(h.fecha), fecha: h.fecha };
+    }
+    // próxima abertura: hoje mais tarde, amanhã ou no próximo dia com expediente
+    const DIAS = ["domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado"];
+    for (let k = 0; k <= 7; k++) {
+      const dia = (d + k) % 7;
+      const hs = S.horario.filter((h) => h.diasSemana.includes(dia)).sort((a, b) => toMin(a.abre) - toMin(b.abre));
+      for (const h of hs) {
+        if (k === 0 && mins >= toMin(h.abre)) continue;
+        const quando = k === 0 ? "hoje" : k === 1 ? "amanhã" : DIAS[dia];
+        return { open: false, label: "Fechado agora", proxima: "abre " + quando + " às " + hora(h.abre), proximaDia: dia, proximaHora: h.abre };
+      }
     }
     return { open: false, label: "Fechado agora" };
   }
@@ -113,7 +128,7 @@
       '<a class="card-link" href="' + vehUrl(v) + '" aria-label="' + esc(vehName(v)) + '"></a>' +
       '<div class="v-img"><img src="' + thumbUrl(v) + '" data-fallback="' + esc(v.capa) + '" alt="' + esc(vehName(v)) + '" loading="' + (opts.eager ? "eager" : "lazy") + '" decoding="async" width="640" height="480">' +
       '<div class="v-badges">' + tags.map((t) => '<span class="badge ' + (TAGS[t] || "") + '">' + esc(t) + "</span>").join("") + "</div>" +
-      (v.nFotos ? '<span class="v-photos" aria-label="' + v.nFotos + ' fotos">' + icon("image") + v.nFotos + "</span>" : "") + Fav.button(v.id, "fav-card") + "</div>" +
+      (v.nFotos ? '<span class="v-photos" aria-label="' + v.nFotos + ' fotos' + (v.video ? ' e vídeo' : '') + '">' + icon("image") + v.nFotos + (v.video ? '<span class="v-video">' + icon("play") + "</span>" : "") + "</span>" : "") + Fav.button(v.id, "fav-card") + "</div>" +
       '<div class="v-body">' +
       '<div class="v-brand">' + esc(v.marca) + "</div>" +
       '<div class="v-title">' + esc(v.modelo) + "</div>" +
@@ -150,7 +165,7 @@
         '<a class="brand" href="index.html" aria-label="' + esc(S.nome) + ' — início"><img src="assets/img/logo.png" alt="' + esc(S.nome) + '" width="340" height="90"></a>' +
         '<nav class="top-nav" aria-label="Principal">' + NAV.map((n) => '<a href="' + n[0] + '"' + cur(n[0]) + ">" + n[1] + "</a>").join("") + "</nav>" +
         '<a class="hdr-btn phone" href="' + telLink + '" aria-label="Ligar para ' + esc(S.telefone.exibicao) + '">' + icon("phone") + "</a>" +
-        '<a class="btn btn-wa hdr-wa" href="' + waLink() + '" target="_blank" rel="noopener">' + icon("whatsapp") + " " + esc(S.whatsapp.exibicao) + "</a>" +
+        '<a class="btn btn-wa hdr-wa" data-wa-generic href="' + waLink() + '" target="_blank" rel="noopener">' + icon("whatsapp") + " " + esc(S.whatsapp.exibicao) + "</a>" +
         "</div>";
       const skip = document.createElement("a"); skip.className = "skip-link"; skip.href = location.href.split("#")[0] + "#main"; /* com <base href="../"> nas páginas v/, "#main" iria para a home */ skip.textContent = "Pular para o conteúdo"; document.body.prepend(skip);
       const drawer = document.createElement("div");
@@ -159,7 +174,7 @@
         '<div class="drawer-top"><img src="assets/img/logo.png" alt="' + esc(S.nome) + '"><button class="hdr-btn" type="button" id="menu-close" aria-label="Fechar menu">' + icon("close") + "</button></div>" +
         '<nav class="drawer-nav" aria-label="Menu principal">' + NAV.map((n) => '<a href="' + n[0] + '"' + cur(n[0]) + ">" + icon(n[2]) + n[1] + "</a>").join("") + "</nav>" +
         '<div class="drawer-contact">' +
-        '<a class="btn btn-wa" href="' + waLink() + '" target="_blank" rel="noopener">' + icon("whatsapp") + " WhatsApp " + esc(S.whatsapp.exibicao) + "</a>" +
+        '<a class="btn btn-wa" data-wa-generic href="' + waLink() + '" target="_blank" rel="noopener">' + icon("whatsapp") + " WhatsApp " + esc(S.whatsapp.exibicao) + "</a>" +
         '<a class="btn btn-outline-light" href="' + telLink + '">' + icon("phone") + " " + esc(S.telefone.exibicao) + "</a>" +
         '<div class="drawer-hours"><strong>Horário</strong><br>' + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</div>" +
         socialRow() + "</div></aside>";
@@ -180,7 +195,7 @@
       bn.innerHTML =
         '<a href="index.html"' + cur("index.html") + ">" + icon("home") + "<span>Início</span></a>" +
         '<a href="estoque.html"' + cur("estoque.html") + ">" + icon("car") + "<span>Estoque</span></a>" +
-        '<a class="bn-wa" href="' + waLink() + '" target="_blank" rel="noopener"><span class="bn-wa-circle">' + icon("whatsapp") + "</span><span>WhatsApp</span></a>" +
+        '<a class="bn-wa" data-wa-generic href="' + waLink() + '" target="_blank" rel="noopener"><span class="bn-wa-circle">' + icon("whatsapp") + "</span><span>WhatsApp</span></a>" +
         '<a href="venda-seu-veiculo.html"' + cur("venda-seu-veiculo.html") + ">" + icon("tag") + "<span>Vender</span></a>" +
         '<a href="contato.html"' + cur("contato.html") + ">" + icon("pin") + "<span>Contato</span></a>";
       document.body.appendChild(bn);
@@ -196,7 +211,7 @@
         "<li>" + icon("clock") + "<span>" + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</span></li>" +
         "</ul></div>" +
         "<div><h2>Fale conosco</h2><ul class=\"f-list\">" +
-        "<li>" + icon("whatsapp") + '<a href="' + waLink() + '" target="_blank" rel="noopener">WhatsApp ' + esc(S.whatsapp.exibicao) + "</a></li>" +
+        "<li>" + icon("whatsapp") + '<a data-wa-generic href="' + waLink() + '" target="_blank" rel="noopener">WhatsApp ' + esc(S.whatsapp.exibicao) + "</a></li>" +
         "<li>" + icon("phone") + '<a href="' + telLink + '">' + esc(S.telefone.exibicao) + "</a></li>" +
         "<li>" + icon("mail") + '<a href="mailto:' + esc(S.email) + '">' + esc(S.email) + "</a></li>" +
         "</ul></div>" +
@@ -303,8 +318,14 @@
           const label = f.dataset.label || (form.querySelector('label[for="' + f.id + '"]') || {}).textContent || f.name;
           lines.push(label.replace(/[*:]+$/, "").trim() + ": " + val);
         });
-        window.open(waLink(lines.join("\n")), "_blank", "noopener");
+        const texto = lines.join("\n"), href = waLink(texto);
+        window.open(href, "_blank", "noopener");
         toast("Abrindo o WhatsApp…");
+        // aba bloqueada ou WhatsApp Web sem login: o pedido não pode se perder; fica um link fixo, e-mail com o mesmo texto e telefone
+        let alt = form.querySelector(".wa-alt");
+        if (!alt) { alt = document.createElement("p"); alt.className = "wa-alt small"; alt.setAttribute("role", "status"); const btn = form.querySelector('[type="submit"]'); (btn && btn.parentElement === form ? btn : form).insertAdjacentElement(btn && btn.parentElement === form ? "afterend" : "beforeend", alt); }
+        const mail = "mailto:" + S.email + "?subject=" + encodeURIComponent(title + " · site") + "&body=" + encodeURIComponent(texto.replace(/\*/g, ""));
+        alt.innerHTML = 'Se o WhatsApp não abriu: <a href="' + href + '" target="_blank" rel="noopener">abrir de novo</a> · <a href="' + mail + '">enviar por e-mail</a> · <a href="' + telLink + '">ligar ' + esc(S.telefone.exibicao) + "</a>";
         const sh = form.closest(".sheet");
         if (sh) { const c = sh.querySelector("[data-close]"); if (c) c.click(); }
       });
@@ -330,7 +351,7 @@
     });
   }
 
-  window.App = { Fav, Consent, $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, thumbUrl, fotoThumbUrl, brandKey, brandLogo, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
+  window.App = { Fav, Consent, $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, thumbUrl, fotoThumbUrl, brandKey, brandLogo, absUrl, waLink, waVehicleMsg, setWaMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
 
   // imagens aparecem com fade (classe .is-loaded) em vez de "pipocar"
   document.addEventListener("load", (e) => { const t = e.target; if (t && t.tagName === "IMG") t.classList.add("is-loaded"); }, true);
