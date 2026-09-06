@@ -44,11 +44,10 @@
   }
 
   function setupChips(list) {
-    const year = new Date().getFullYear();
     const defs = [
       ["Carros", (v) => v.tipo === "carro", "tipo=carro", "car"],
       ["Motos", (v) => v.tipo === "moto", "tipo=moto", null],
-      ["0 km", (v) => v.km < 1000 && v.anoModelo >= year, "km=0", null],
+      ["Até 15 mil km", (v) => v.km <= 15000, "kmMax=15000", "gauge"],
       ["Blindados", (v) => v.caracteristicas.includes("Blindado"), "tag=Blindado", "shield"],
       ["7 lugares", (v) => v.caracteristicas.includes("7 lugares"), "tag=7%20lugares", "users"],
       ["Único dono", (v) => v.caracteristicas.includes("Único Dono"), "tag=%C3%9Anico%20Dono", "key"],

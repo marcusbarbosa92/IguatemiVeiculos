@@ -71,7 +71,10 @@
   /* ---------- Horário: aberto agora? ---------- */
   function openStatus(now) {
     now = now || new Date();
-    const d = now.getDay(), mins = now.getHours() * 60 + now.getMinutes();
+    // horário da loja (America/Sao_Paulo), independente do fuso do visitante
+    const parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/Sao_Paulo", weekday: "short", hour: "numeric", minute: "numeric", hour12: false }).formatToParts(now);
+    const get = (t) => (parts.find((p) => p.type === t) || {}).value;
+    const d = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(get("weekday")), mins = (+get("hour") % 24) * 60 + +get("minute");
     const toMin = (t) => { const [h, m] = t.split(":").map(Number); return h * 60 + m; };
     for (const h of S.horario) {
       if (h.diasSemana.includes(d) && mins >= toMin(h.abre) && mins < toMin(h.fecha)) return { open: true, label: "Aberto agora · até " + h.fecha.replace(":00", "h").replace(":", "h") };
@@ -95,11 +98,10 @@
   function vehicleCard(v, opts) {
     opts = opts || {};
     const tags = (v.caracteristicas || []).filter((c) => c in TAGS).slice(0, 2);
-    const isNew = v.anoModelo >= new Date().getFullYear() && v.km < 1000;
     return '<article class="v-card">' +
       '<a class="card-link" href="' + vehUrl(v) + '" aria-label="' + esc(vehName(v)) + '"></a>' +
       '<div class="v-img"><img src="' + esc(v.capa) + '" alt="' + esc(vehName(v)) + '" loading="' + (opts.eager ? "eager" : "lazy") + '" decoding="async" width="800" height="600">' +
-      '<div class="v-badges">' + (isNew ? '<span class="badge red">0 km</span>' : "") + tags.map((t) => '<span class="badge ' + (TAGS[t] || "") + '">' + esc(t) + "</span>").join("") + "</div>" +
+      '<div class="v-badges">' + tags.map((t) => '<span class="badge ' + (TAGS[t] || "") + '">' + esc(t) + "</span>").join("") + "</div>" +
       (v.nFotos ? '<span class="v-photos">' + icon("image") + v.nFotos + "</span>" : "") + "</div>" +
       '<div class="v-body">' +
       '<div class="v-brand">' + esc(v.marca) + "</div>" +

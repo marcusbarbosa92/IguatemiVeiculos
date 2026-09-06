@@ -13,13 +13,13 @@
     const p = new URLSearchParams(location.search);
     state = {
       q: p.get("q") || "", tipo: p.get("tipo") || "", marca: p.get("marca") || "", modelo: p.get("modelo") || "",
-      precoMin: p.get("precoMin") || "", precoMax: p.get("precoMax") || "", anoMin: p.get("anoMin") || "", km: p.get("km") || "",
+      precoMin: p.get("precoMin") || "", precoMax: p.get("precoMax") || "", anoMin: p.get("anoMin") || "", kmMax: p.get("kmMax") || "",
       cambio: p.getAll("cambio"), combustivel: p.getAll("combustivel"), tag: p.getAll("tag"), ordem: p.get("ordem") || "novidades"
     };
   }
   function writeState() {
     const p = new URLSearchParams();
-    ["q", "tipo", "marca", "modelo", "precoMin", "precoMax", "anoMin", "km"].forEach((k) => { if (state[k]) p.set(k, state[k]); });
+    ["q", "tipo", "marca", "modelo", "precoMin", "precoMax", "anoMin", "kmMax"].forEach((k) => { if (state[k]) p.set(k, state[k]); });
     ["cambio", "combustivel", "tag"].forEach((k) => state[k].forEach((v) => p.append(k, v)));
     if (state.ordem && state.ordem !== "novidades") p.set("ordem", state.ordem);
     const qs = p.toString();
@@ -27,7 +27,6 @@
   }
 
   function apply() {
-    const year = new Date().getFullYear();
     const q = norm(state.q).split(/\s+/).filter(Boolean);
     filtered = ALL.filter((v) => {
       if (state.tipo && v.tipo !== state.tipo) return false;
@@ -36,7 +35,7 @@
       if (state.precoMin && v.preco < +state.precoMin) return false;
       if (state.precoMax && v.preco > +state.precoMax) return false;
       if (state.anoMin && v.anoModelo < +state.anoMin) return false;
-      if (state.km === "0" && !(v.km < 1000 && v.anoModelo >= year)) return false;
+      if (state.kmMax && v.km > +state.kmMax) return false;
       if (state.cambio.length && !state.cambio.includes(v.cambio)) return false;
       if (state.combustivel.length && !state.combustivel.includes(v.combustivel)) return false;
       if (state.tag.length && !state.tag.every((t) => v.caracteristicas.includes(t))) return false;
@@ -71,11 +70,10 @@
     $("#load-more").hidden = shown >= filtered.length;
     if (shown < filtered.length) $("#btn-more").textContent = "Carregar mais (" + (filtered.length - shown) + " restantes)";
   }
-  function clearAll() { state = { q: "", tipo: "", marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", km: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; syncControls(); apply(); }
+  function clearAll() { state = { q: "", tipo: "", marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", kmMax: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; syncControls(); apply(); }
 
   function activeList() {
     const out = [];
-    const year = new Date().getFullYear();
     if (state.q) out.push(["q", "", "“" + state.q + "”"]);
     if (state.tipo) out.push(["tipo", "", state.tipo === "moto" ? "Motos" : "Carros"]);
     if (state.marca) out.push(["marca", "", A.titleCase(state.marca)]);
@@ -83,7 +81,7 @@
     if (state.precoMin) out.push(["precoMin", "", "de " + A.fmtBRL(+state.precoMin)]);
     if (state.precoMax) out.push(["precoMax", "", "até " + A.fmtBRL(+state.precoMax)]);
     if (state.anoMin) out.push(["anoMin", "", "a partir de " + state.anoMin]);
-    if (state.km === "0") out.push(["km", "", "0 km"]);
+    if (state.kmMax) out.push(["kmMax", "", "até " + A.fmtKm(+state.kmMax)]);
     state.cambio.forEach((v) => out.push(["cambio", v, v]));
     state.combustivel.forEach((v) => out.push(["combustivel", v, v]));
     state.tag.forEach((v) => out.push(["tag", v, v]));
@@ -144,12 +142,11 @@
     updateApplyCount();
   }
   function updateApplyCount() {
-    const year = new Date().getFullYear();
     const q = norm(state.q).split(/\s+/).filter(Boolean);
     const n = ALL.filter((v) =>
       (!state.tipo || v.tipo === state.tipo) && (!state.marca || v.marca === state.marca) && (!state.modelo || v.modelo === state.modelo) &&
       (!state.precoMin || v.preco >= +state.precoMin) && (!state.precoMax || v.preco <= +state.precoMax) && (!state.anoMin || v.anoModelo >= +state.anoMin) &&
-      (state.km !== "0" || (v.km < 1000 && v.anoModelo >= year)) &&
+      (!state.kmMax || v.km <= +state.kmMax) &&
       (!state.cambio.length || state.cambio.includes(v.cambio)) && (!state.combustivel.length || state.combustivel.includes(v.combustivel)) &&
       (!state.tag.length || state.tag.every((t) => v.caracteristicas.includes(t))) &&
       (!q.length || q.every((w) => norm(v.marca + " " + v.modelo + " " + v.versao + " " + v.anoModelo + " " + v.combustivel + " " + v.cambio).includes(w)))).length;
