@@ -307,14 +307,19 @@
   /* ---------- Máscara simples de telefone ---------- */
   function maskPhone(input) {
     input.addEventListener("input", () => {
+      // quantos dígitos existem antes do cursor, para devolvê-lo ao mesmo lugar depois de formatar
+      const antes = (input.value.slice(0, input.selectionStart || 0).match(/\d/g) || []).length;
       let d = input.value.replace(/\D/g, "");
       if ((d.length === 12 || d.length === 13) && d.startsWith("55")) d = d.slice(2); // colado com +55
       d = d.slice(0, 11);
       input.setCustomValidity(d.length === 0 || d.length >= 10 ? "" : "Informe o DDD e o número completo");
-      if (d.length > 6) d = "(" + d.slice(0, 2) + ") " + d.slice(2, d.length > 10 ? 7 : 6) + "-" + d.slice(d.length > 10 ? 7 : 6);
-      else if (d.length > 2) d = "(" + d.slice(0, 2) + ") " + d.slice(2);
-      else if (d.length > 0) d = "(" + d;
-      input.value = d;
+      let f = d;
+      if (d.length > 6) f = "(" + d.slice(0, 2) + ") " + d.slice(2, d.length > 10 ? 7 : 6) + "-" + d.slice(d.length > 10 ? 7 : 6);
+      else if (d.length > 2) f = "(" + d.slice(0, 2) + ") " + d.slice(2);
+      else if (d.length > 0) f = "(" + d;
+      input.value = f;
+      let pos = 0, seen = 0; while (pos < f.length && seen < antes) { if (/\d/.test(f[pos])) seen++; pos++; }
+      if (document.activeElement === input) { try { input.setSelectionRange(pos, pos); } catch (e) { /* tipo tel sem seleção em alguns navegadores */ } }
     });
   }
 
@@ -331,6 +336,10 @@
     n.innerHTML = '<p>Usamos cookies para medir o uso do site e melhorar o atendimento. Veja a <a href="politica-de-privacidade.html">política de privacidade</a>.</p><button class="btn btn-dark btn-sm" type="button">Entendi</button>';
     n.querySelector("button").addEventListener("click", () => { try { localStorage.setItem("cookies-ok", "1"); } catch (e) { /* ignora */ } n.remove(); });
     document.body.appendChild(n);
+  }
+
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    window.addEventListener("load", () => { navigator.serviceWorker.register(new URL("sw.js", document.baseURI).pathname).catch(() => { /* sem SW */ }); });
   }
 
   document.addEventListener("DOMContentLoaded", () => {

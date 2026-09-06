@@ -182,6 +182,7 @@
     $("#q-clear").addEventListener("click", () => { $("#q").value = ""; state.q = ""; $("#q-clear").hidden = true; apply(); $("#q").focus(); });
     $("#ordem").addEventListener("change", () => { state.ordem = $("#ordem").value; ordemLabel(); apply(); });
     $("#btn-more").addEventListener("click", renderMore);
+    if ("IntersectionObserver" in window) { new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting) && !$("#load-more").hidden && shown > 0) renderMore(); }, { rootMargin: "600px 0px" }).observe($("#load-more")); }
     $("#saved-chip").addEventListener("click", () => { state.salvos = !state.salvos; apply(); });
     document.addEventListener("fav:change", () => { if (state.salvos) apply(); else renderSavedChip(); });
     try {
