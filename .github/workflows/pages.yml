@@ -3,7 +3,7 @@ name: Publicar no GitHub Pages
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  workflow_dispatch:   # também pode ser disparado manualmente em qualquer branch (Actions > Publicar no GitHub Pages > Run workflow)
 
 permissions:
   contents: read
@@ -23,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
