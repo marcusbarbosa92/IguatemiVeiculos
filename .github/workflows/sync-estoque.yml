@@ -43,13 +43,13 @@ jobs:
         id: commit
         run: |
           # ignora linhas que mudam todo dia (data de atualização e lastmod do sitemap)
-          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml robots.txt '*.html' assets/thumbs assets/fotos assets/og assets/marcas \
+          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml robots.txt ':(glob)*.html' assets/thumbs assets/fotos assets/og assets/marcas \
              && [ -z "$(git ls-files --others --exclude-standard -- v assets/thumbs assets/fotos assets/og assets/marcas)" ]; then
             echo "Estoque sem mudanças."; git checkout -- . ; echo "mudou=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data v sitemap.xml robots.txt '*.html' assets/thumbs assets/fotos assets/og assets/marcas
+          git add data v sitemap.xml robots.txt ':(glob)*.html' assets/thumbs assets/fotos assets/og assets/marcas
           git commit -m "chore: sincroniza estoque ($(date -u +%Y-%m-%d))"
           git push
           echo "mudou=true" >> "$GITHUB_OUTPUT"

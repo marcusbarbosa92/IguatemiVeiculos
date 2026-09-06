@@ -20,7 +20,8 @@ self.addEventListener("fetch", (e) => {
   // fotos da AutoCerto e outros terceiros ficam com o cache HTTP do navegador (respostas opacas consomem cota demais)
   if (!mesmaOrigem && !fonte) return;
   if (fonte || (mesmaOrigem && IMG.test(url.pathname))) {
-    // responde do cache e atualiza em segundo plano (stale-while-revalidate): uma imagem trocada no deploy chega na visita seguinte
+    // responde do cache e atualiza em segundo plano (stale-while-revalidate), respeitando o cache HTTP do navegador:
+    // uma imagem trocada no deploy chega quando o Cache-Control dela vence (ou logo, se o nome do arquivo mudou)
     e.respondWith(caches.open(CACHE).then(async (c) => {
       const hit = await c.match(req);
       const rede = fetch(req).then(async (res) => { if (res && res.ok) { try { await c.put(req, res.clone()); } catch (err) { /* cota cheia */ } } return res; }).catch(() => null);

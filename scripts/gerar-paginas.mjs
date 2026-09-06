@@ -12,18 +12,21 @@
  * Uso:
  *   node scripts/gerar-paginas.mjs [--site-url https://dominio/] [--data data/vehicles.json] [--root pasta]
  *
- * --root aponta para uma cópia do site (ex.: dist/ no build do Vercel); por padrão é a raiz do repositório.
- * Roda depois de scripts/sync-inventory.mjs (npm run sync faz os dois).
+ * --root aponta para uma cópia do site (ex.: dist/ no build do Vercel), relativo ao diretório atual;
+ * por padrão é a raiz do repositório. Roda depois de scripts/sync-inventory.mjs (npm run sync faz os dois).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { normalizarSiteUrl } from './site-url.mjs';
 
 const args = process.argv.slice(2);
 const opt = (name, def) => { const i = args.indexOf(name); return i >= 0 && args[i + 1] ? args[i + 1] : def; };
 const ROOT = path.resolve(opt('--root', path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')));
-const SITE_URL = opt('--site-url', 'https://marcusbarbosa92.github.io/IguatemiVeiculos/').replace(/\/?$/, '/');
-if (!/^https?:\/\/[^/]+\//.test(SITE_URL)) throw new Error(`--site-url inválida: ${SITE_URL} (use https://dominio/ ou https://dominio/subpasta/)`);
+for (const f of ['veiculo.html', 'assets/js/store.js', 'data']) {
+  if (!fs.existsSync(path.join(ROOT, f))) throw new Error(`--root não parece uma cópia do site (sem ${f}): ${ROOT}`);
+}
+const SITE_URL = normalizarSiteUrl(opt('--site-url', 'https://marcusbarbosa92.github.io/IguatemiVeiculos/'));
 const DATA = path.resolve(ROOT, opt('--data', 'data/vehicles.json'));
 const OUT_DIR = path.join(ROOT, 'v');
 // dados da loja lidos de assets/js/store.js (única fonte)

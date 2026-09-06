@@ -22,3 +22,5 @@ jobs:
         run: npm i --no-save playwright@1.56.1 && npx playwright install --with-deps chromium
       - name: Fumaça no Chromium
         run: node tests/smoke.mjs
+      - name: Fumaça no Chromium sobre o build do Vercel (dist/)
+        run: npm run build -- --site-url https://exemplo.vercel.app/ && SMOKE_ROOT=dist node tests/smoke.mjs

@@ -75,12 +75,42 @@ try {
   }
 }
 
+// casos que precisam FALHAR ou ser normalizados
+const rodar = (argv, env) => spawnSync(process.execPath, ['scripts/build-vercel.mjs', ...argv], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, SITE_URL: '', VERCEL_PROJECT_PRODUCTION_URL: '', VERCEL_URL: '', ...env } });
+{
+  const semUrl = rodar(['--out', `dist-teste-${process.pid}-c`], {});
+  check(semUrl.status !== 0 && /Enable access to System Environment Variables/.test(semUrl.stderr), 'sem SITE_URL/VERCEL_PROJECT_PRODUCTION_URL o build deveria falhar com instrução clara');
+  check(!fs.existsSync(path.join(ROOT, `dist-teste-${process.pid}-c`)), 'build sem endereço não deveria criar a pasta de saída');
+  for (const ruim of ['v', 'assets', '.git', 'scripts', 'data/x', '.', 'distribuicao']) {
+    const r = rodar(['--out', ruim, '--site-url', 'https://ex.test/'], {});
+    check(r.status !== 0 && /--out precisa ser/.test(r.stderr), `--out ${ruim} deveria ser recusado`);
+  }
+  check(fs.existsSync(path.join(ROOT, 'v', 'index.html')) === false && fs.readdirSync(path.join(ROOT, 'v')).length > 100, 'a pasta v/ do repositório foi tocada pelo teste de --out');
+  for (const invalida of ['ftp://ex.test/', 'ex.test', 'https://', 'https://ex.test/a&b/']) {
+    const r = rodar(['--out', `dist-teste-${process.pid}-d`, '--site-url', invalida], {});
+    check(r.status !== 0 && /URL do site/.test(r.stderr), `--site-url ${invalida} deveria ser recusada`);
+  }
+  const OUT3 = path.join(ROOT, `dist-teste-${process.pid}-e`);
+  const r3 = rodar(['--out', path.basename(OUT3)], { SITE_URL: 'https://ex.test//loja//?x=1#y' });
+  check(r3.status === 0, `SITE_URL com barras repetidas deveria ser normalizada: ${r3.stderr}`);
+  try {
+    check(fs.readFileSync(path.join(OUT3, '404.html'), 'utf8').includes('<base href="/loja/">'), '404.html: barras repetidas em SITE_URL não foram colapsadas');
+    check(fs.readFileSync(path.join(OUT3, 'index.html'), 'utf8').includes('<link rel="canonical" href="https://ex.test/loja/">'), 'canonical: SITE_URL não foi normalizada (query/hash/barras)');
+  } finally { fs.rmSync(OUT3, { recursive: true, force: true }); }
+  const OUT4 = path.join(ROOT, `dist-teste-${process.pid}-f`);
+  const r4 = rodar(['--out', path.basename(OUT4), '--site-url', 'https://local.test'], { SITE_URL: 'https://ignorada.test/' });
+  check(r4.status === 0 && fs.existsSync(OUT4) && fs.readFileSync(path.join(OUT4, 'robots.txt'), 'utf8').includes('Sitemap: https://local.test/sitemap.xml'), '--site-url deveria ter prioridade sobre SITE_URL e ganhar barra final');
+  fs.rmSync(OUT4, { recursive: true, force: true });
+}
+
 // vercel.json precisa ser JSON válido e apontar para o build
 const vj = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
 check(vj.buildCommand === 'node scripts/build-vercel.mjs', 'vercel.json: buildCommand inesperado');
 check(vj.outputDirectory === 'dist', 'vercel.json: outputDirectory deveria ser dist');
 check(vj.framework === null, 'vercel.json: framework deveria ser null (preset "Other")');
 check(!('public' in vj) && !('builds' in vj), 'vercel.json: propriedades legadas (public/builds) quebram o deploy');
+for (const h of vj.headers) for (const kv of h.headers) check(!/stale-while-revalidate|s-maxage/.test(kv.value), `vercel.json: ${h.source} usa diretiva que o CDN do Vercel remove antes do navegador`);
+check(!vj.headers.some((h) => /css|js\b|\.html/.test(h.source) && h.headers.some((kv) => /max-age=[1-9]/.test(kv.value))), 'vercel.json: CSS/JS/HTML não são versionados, não podem ter cache longo');
 check(fs.readFileSync(path.join(ROOT, '.gitignore'), 'utf8').includes('dist/'), '.gitignore sem dist/');
 
 if (falhas.length) { console.error(`build.test: ${falhas.length} falha(s)\n- ` + falhas.join('\n- ')); process.exit(1); }
