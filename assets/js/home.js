@@ -2,7 +2,6 @@
 (function () {
   "use strict";
   const A = window.App, S = window.STORE, $ = A.$, esc = A.esc, icon = A.icon;
-  const PRICES = [30000, 50000, 75000, 100000, 150000, 200000, 300000, 500000, 700000];
 
   function setupStore() {
     const e = S.endereco, st = A.openStatus();
@@ -17,29 +16,13 @@
     $("#features").innerHTML = S.garantias.map((g, i) => '<div class="feature"><div class="fi">' + icon(["shield", "doc", "star", "lock"][i] || "check") + "</div><div><h3>" + esc(g.titulo) + "</h3><p>" + esc(g.texto) + "</p></div></div>").join("");
   }
 
-  function setupSearch(list) {
-    const byBrand = {};
-    list.forEach((v) => { (byBrand[v.marca] = byBrand[v.marca] || []).push(v); });
-    const marcas = Object.keys(byBrand).sort();
-    const mSel = $("#hs-marca"), moSel = $("#hs-modelo"), pSel = $("#hs-precoMax"), aSel = $("#hs-anoMin");
-    marcas.forEach((m) => { const o = document.createElement("option"); o.value = m; o.textContent = A.titleCase(m) + " (" + byBrand[m].length + ")"; mSel.appendChild(o); });
-    const fillModels = () => {
-      moSel.innerHTML = '<option value="">Todos</option>';
-      const src = mSel.value ? byBrand[mSel.value] : list;
-      const cnt = {};
-      src.forEach((v) => { cnt[v.modelo] = (cnt[v.modelo] || 0) + 1; });
-      Object.keys(cnt).sort().forEach((m) => { const o = document.createElement("option"); o.value = m; o.textContent = m + " (" + cnt[m] + ")"; moSel.appendChild(o); });
-    };
-    mSel.addEventListener("change", fillModels); fillModels();
-    PRICES.forEach((p) => { const o = document.createElement("option"); o.value = p; o.textContent = A.fmtBRL(p); pSel.appendChild(o); });
-    const anos = Array.from(new Set(list.map((v) => v.anoModelo))).sort((a, b) => b - a);
-    anos.forEach((y) => { const o = document.createElement("option"); o.value = y; o.textContent = y; aSel.appendChild(o); });
-    $("#home-search").addEventListener("submit", (e) => {
-      // remove campos vazios da URL
+  function setupSearch() {
+    // busca simples: manda para o estoque com ?q= (o filtro completo fica lá); sem texto, abre o estoque inteiro
+    const f = $("#quick-search");
+    f.addEventListener("submit", (e) => {
       e.preventDefault();
-      const p = new URLSearchParams();
-      ["marca", "modelo", "precoMax", "anoMin"].forEach((k) => { const el = $("#hs-" + k); if (el.value) p.set(k, el.value); });
-      location.href = "estoque.html" + (p.toString() ? "?" + p.toString() : "");
+      const q = f.elements.q.value.trim();
+      location.href = "estoque.html" + (q ? "?q=" + encodeURIComponent(q) : "");
     });
   }
 
@@ -101,8 +84,13 @@
   }
   let reviews = null, inv = null;
   function renderStats() {
-    const third = reviews ? "<b>" + A.fmtNota(reviews.nota) + " ★</b><span>no Google</span>" : "<b>100%</b><span>laudo aprovado</span>";
-    $("#hero-stats").innerHTML = "<div><b>" + (inv ? inv.total : "—") + "</b><span>veículos</span></div><div><b>" + (inv ? inv.marcas : "—") + "</b><span>marcas</span></div><div>" + third + "</div>";
+    // linha de prova discreta sob os botões: números reais do estoque + nota do Google (quando preenchida) ou laudo/procedência
+    const itens = [];
+    if (inv) itens.push("<b>" + inv.total + "</b>veículos", "<b>" + inv.marcas + "</b>marcas");
+    if (reviews) itens.push("<b>" + A.fmtNota(reviews.nota) + " ★</b>no Google");
+    itens.push("Laudo cautelar 100% aprovado");
+    if (!reviews) itens.push("Sem veículos de leilão ou seguradora");
+    $("#hero-proof").innerHTML = itens.map((t) => "<span>" + t + "</span>").join("");
   }
 
   function setupVideo() {
@@ -124,7 +112,7 @@
       const list = data.veiculos;
       const marcas = new Set(list.map((v) => v.marca));
       inv = { total: list.length, marcas: marcas.size }; renderStats();
-      setupSearch(list); setupChips(list); setupBrands(list);
+      setupSearch(); setupChips(list); setupBrands(list);
       // "Últimas novidades" = destaques da home da loja (ordem definida por ela, capturada pelo sync)
       const byId = new Map(list.map((v) => [v.id, v]));
       const nov = (data.destaques || []).map((id) => byId.get(id)).filter(Boolean).slice(0, 8);
