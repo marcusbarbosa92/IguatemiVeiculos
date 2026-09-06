@@ -399,7 +399,6 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .insta-strip h2 { font-size: 1.15rem; margin: 0; overflow-wrap: anywhere; }
 .insta-strip h2 a { color: #fff; text-decoration: none; }
 .insta-strip p { color: rgba(255,255,255,.72); margin: 2px 0 0; font-size: .88rem; }
-.insta-head .btn-insta { grid-column: 1 / -1; }
 .insta-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
 .insta-grid a { position: relative; display: block; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #1c1c20; }
 .insta-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -415,13 +414,11 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
   .social-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
   .insta-strip { padding: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); grid-template-areas: "head grid" "row grid"; gap: 16px 24px; align-items: start; }
   .insta-head { grid-area: head; grid-template-columns: auto minmax(0, 1fr); }
-  .insta-head .btn-insta { grid-column: 1 / -1; justify-self: start; min-width: 200px; }
   .insta-grid { grid-area: grid; gap: 6px; }
   .insta-grid[hidden] { display: none; }
   .insta-strip .row { grid-area: row; grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: end; }
   .insta-strip.sem-grid { grid-template-columns: minmax(0, 1.4fr) auto; grid-template-areas: "head row"; align-items: center; max-width: none; }
-  .insta-strip.sem-grid .insta-head .btn-insta { grid-column: auto; }
-  .insta-strip.sem-grid .row { grid-template-columns: auto; align-self: center; }
+  .insta-strip.sem-grid .row { grid-template-columns: auto auto; align-self: center; }
 }
 
 /* ---------- Página: Estoque ---------- */
