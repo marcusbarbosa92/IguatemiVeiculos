@@ -20,7 +20,7 @@
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css">
 <title>Quem somos · Iguatemi Automóveis</title>
-<meta name="description" content="Conheça a Iguatemi Automóveis: uma década em Campinas, loja com showroom coberto na Av. José Bonifácio, estoque atualizado diariamente e laudo cautelar aprovado em todos os veículos.">
+<meta name="description" content="Uma década em Campinas, loja com showroom coberto na Av. José Bonifácio, estoque atualizado diariamente e laudo cautelar aprovado em todos os veículos.">
 <meta property="og:title" content="Quem somos · Iguatemi Automóveis">
 <meta property="og:description" content="Uma década de história, veículos vistoriados e laudo cautelar aprovado. Conheça a Iguatemi Automóveis, em Campinas.">
 </head>
@@ -41,7 +41,7 @@
   </section>
 
   <section class="section"><div class="container">
-    <div class="stat-row stat-links" id="stats" aria-live="polite"></div>
+    <div class="stat-row stat-links" id="stats"></div>
     <div class="content-split mt">
       <div class="prose" id="sobre"></div>
       <div class="stack">
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     '<div class="info-row"><div class="fi">' + icon("pin") + "</div><div><b>" + esc(e.logradouro + ", " + e.numero) + "</b><span>" + esc(e.bairro + " · " + e.cidade + " - " + e.uf + " · CEP " + e.cep) + "</span></div></div>" +
     '<div class="info-row"><div class="fi">' + icon("clock") + '</div><div><b>Horário de atendimento <span class="open-now' + (st.open ? "" : " closed") + '">' + esc(st.label + (!st.open && st.proxima ? " · " + st.proxima : "")) + "</span></b><span>" + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</span></div></div>" +
     '<div class="info-row"><div class="fi">' + icon("phone") + '</div><div><b><a href="' + A.telLink + '">' + esc(S.telefone.exibicao) + '</a></b><span>WhatsApp <a href="' + A.waLink() + '" target="_blank" rel="noopener">' + esc(S.whatsapp.exibicao) + "</a></span></div></div>";
-  const soc = document.getElementById("social"); soc.innerHTML = A.socialRow(); soc.querySelectorAll(".social-row a").forEach((a) => { a.style.background = "#17171a"; });
+  const soc = document.getElementById("social"); soc.innerHTML = A.socialRow(); soc.querySelector(".social-row").classList.add("dark");
   // números reais: estoque de hoje e nota do Google (quando preenchida)
   const stats = document.getElementById("stats"); const itens = [];
   try { const d = await A.loadIndex(); itens.push(["<b>" + d.veiculos.length + "</b>", "veículos hoje"], ["<b>" + new Set(d.veiculos.map((v) => v.marca)).size + "</b>", "marcas"]); } catch (err) { /* sem índice */ }

@@ -122,7 +122,15 @@
       document.removeEventListener("keydown", teclas);
       if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
     };
-    const teclas = (e) => { if (e.key === "Escape") fechar(); if (e.key === "Tab") { e.preventDefault(); btn.focus(); } };
+    // Esc fecha; Tab alterna entre o player e o fechar, sem sair do diálogo
+    const teclas = (e) => {
+      if (e.key === "Escape") { fechar(); return; }
+      if (e.key !== "Tab") return;
+      e.preventDefault();
+      const alvos = [btn, frame.querySelector("iframe")].filter(Boolean);
+      const i = alvos.indexOf(document.activeElement);
+      alvos[(i + (e.shiftKey ? -1 : 1) + alvos.length) % alvos.length].focus();
+    };
     const abrir = () => {
       if (document.querySelector(".sheet.open, .drawer.open")) return;
       aberto = true; ultimoFoco = document.activeElement;
@@ -138,8 +146,10 @@
     };
     btn.addEventListener("click", fechar);
     pop.addEventListener("click", (e) => { if (e.target === pop) fechar(); });
-    // só depois de a página assentar
-    setTimeout(abrir, 1400);
+    // só depois de a página assentar; na primeira visita, só depois de o aviso de cookies ser respondido (uma janela de cada vez)
+    const agendar = () => setTimeout(abrir, 1400);
+    if (document.querySelector(".cookie-notice")) document.addEventListener("consent:change", agendar, { once: true });
+    else agendar();
   }
 
   function setupVideo() {

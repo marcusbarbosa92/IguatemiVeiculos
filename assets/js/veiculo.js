@@ -56,7 +56,6 @@
       "</div>" +
       '<aside class="v-side">' +
       '<div class="cta-block">' +
-      '<div class="side-title" aria-hidden="true"><span class="v-brand">' + esc(v.marca) + "</span><b>" + esc(v.modelo) + "</b>" + (v.versao ? "<span>" + esc(v.versao) + "</span>" : "") + "</div>" +
       '<div class="price-box"><div><div class="p"><small>R$</small>' + A.fmtBRL(v.preco).replace(/^R\$\s?/, "") + '</div><div class="lbl">Valor do veículo</div></div><div class="price-actions">' + A.Fav.button(v.id, "btn btn-icon btn-outline") + '<button class="btn btn-icon btn-outline" type="button" id="btn-share" aria-label="Compartilhar">' + icon("share") + "</button></div></div>" +
       '<div class="cta-row"><a class="btn btn-wa btn-lg" href="' + wa + '" target="_blank" rel="noopener">' + icon("whatsapp") + ' Tenho interesse</a><a class="btn btn-dark btn-lg" href="' + A.telLink + '">' + icon("phone") + " Ligar agora</a>" +
       '<div class="row2"><button class="btn btn-outline" type="button" id="btn-sim">' + icon("calc") + ' Proposta de financiamento</button><a class="btn btn-outline" href="' + waTroca + '" target="_blank" rel="noopener">' + icon("tag") + " Tenho carro na troca</a></div></div>" +
@@ -66,15 +65,17 @@
       '<p class="contact-line small"><a href="' + wa + '" target="_blank" rel="noopener">WhatsApp ' + esc(S.whatsapp.exibicao) + '</a><span aria-hidden="true"> · </span><a href="' + A.telLink + '">Telefone ' + esc(S.telefone.exibicao) + "</a></p>" +
       '<p class="open-line small ' + (st.open ? "is-open" : "is-closed") + '"><span class="dot" aria-hidden="true"></span>' + esc(st.label) + (st.open ? "" : (st.proxima ? " · " + esc(st.proxima) : "") + ". Deixe sua mensagem no WhatsApp.") + "</p>" +
       "</div>" +
-      '<section class="block trust" id="trust"><h2>Compra segura</h2><ul class="opt-grid" style="grid-template-columns:1fr">' + S.garantias.filter((g) => !/garantia/i.test(g.titulo)).map((g) => "<li>" + icon("shield") + "<span><b>" + esc(g.titulo) + "</b><br>" + esc(g.texto) + "</span></li>").join("") +
+      '<section class="block trust" id="trust"><h2>Compra segura</h2><ul class="opt-grid trust-list">' + S.garantias.filter((g) => !/garantia/i.test(g.titulo)).map((g) => "<li>" + icon("shield") + "<span><b>" + esc(g.titulo) + "</b><br>" + esc(g.texto) + "</span></li>").join("") +
       (garantiaInclusa ? "<li>" + icon("shield") + "<span><b>Garantia de 1 ano inclusa</b><br>Cobre mais de 70 itens mecânicos e eletrônicos, em parceria com a Gestauto.</span></li>" : garantiaOpcional ? "<li>" + icon("shield") + "<span><b>Garantia opcional de 1 ano</b><br>Em seguradora terceirizada, não inclusa no preço. Consulte condições.</span></li>" : "") + "</ul></section>" +
       "</aside>" +
       '<div class="v-main-rest">' +
       (opcionais.length ? '<section class="block"><h2>Opcionais <span class="muted small">(' + opcionais.length + ')</span></h2><ul class="opt-grid' + (opcionais.length > 10 ? " collapsed" : "") + '" id="opt-list">' + opcionais.map((o) => "<li>" + icon("check") + esc(o) + "</li>").join("") + "</ul>" + (opcionais.length > 10 ? '<button class="expand" type="button" id="opt-toggle" aria-expanded="false">Ver todos os opcionais ' + icon("chevD") + "</button>" : "") + "</section>" : "") +
       (especificas.length ? '<section class="block desc"><h2>Informações do veículo</h2>' + especificas.map((p) => "<p>" + esc(p) + "</p>").join("") + "</section>" : "") +
       (v.video ? '<section class="block"><h2>Vídeo</h2><div class="yt" id="yt"><img src="https://i.ytimg.com/vi/' + esc(v.video) + '/hqdefault.jpg" alt="Vídeo do ' + esc(A.vehShort(v)) + '" loading="lazy"><button class="play" type="button" id="yt-play" aria-label="Reproduzir vídeo"><span>' + icon("play") + "</span></button></div></section>" : "") +
-      '<p class="small muted" style="margin-top:14px">Anúncio nº ' + v.id + ". Valores e opcionais sujeitos a confirmação com a loja.</p>" +
-      "</div></div>";
+      "</div>" +
+      // nota legal por último, depois de "Compra segura" (no desktop, numa linha de largura total)
+      '<p class="legal-note small muted">Anúncio nº ' + v.id + ". Valores e opcionais sujeitos a confirmação com a loja.</p>" +
+      "</div>";
 
     $("#sticky-cta").hidden = false;
     $("#sticky-cta").setAttribute("role", "region"); $("#sticky-cta").setAttribute("aria-label", "Contato rápido");

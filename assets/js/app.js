@@ -313,10 +313,13 @@
           const campo = f.closest(".field"); if (!campo) return;
           const ok = f.checkValidity();
           campo.classList.toggle("is-invalid", !ok);
-          let msg = campo.querySelector(".erro"); if (!msg) { msg = document.createElement("span"); msg.className = "erro"; campo.appendChild(msg); }
+          let msg = campo.querySelector(".erro"); if (!msg) { msg = document.createElement("span"); msg.className = "erro"; msg.id = (f.id || f.name || "campo") + "-erro"; campo.appendChild(msg); }
           msg.textContent = ok ? "" : (f.validity.valueMismatch || f.validity.patternMismatch ? "Confira o valor informado." : "Preencha este campo.");
+          // leitor de tela: o campo é anunciado como inválido, com a mensagem
+          f.setAttribute("aria-invalid", ok ? "false" : "true");
+          if (ok) f.removeAttribute("aria-describedby"); else f.setAttribute("aria-describedby", msg.id);
           if (!ok && !primeiroErro) primeiroErro = f;
-          f.addEventListener("input", () => { if (f.checkValidity()) { campo.classList.remove("is-invalid"); } }, { once: true });
+          f.addEventListener("input", () => { if (f.checkValidity()) { campo.classList.remove("is-invalid"); f.removeAttribute("aria-invalid"); f.removeAttribute("aria-describedby"); } }, { once: true });
         });
         if (primeiroErro) { primeiroErro.focus(); primeiroErro.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
         if (!form.reportValidity()) return;
@@ -386,12 +389,15 @@
   document.addEventListener("DOMContentLoaded", () => {
     renderChrome();
     cookieNotice();
+    // política de privacidade: "Rever minha escolha de cookies" apaga o consentimento e o aviso volta a aparecer
+    $$("[data-consent-reset]").forEach((b) => b.addEventListener("click", () => { try { localStorage.removeItem("consent"); localStorage.removeItem("cookies-ok"); } catch (e) { /* sem storage */ } location.reload(); }));
     bindWaForms();
     $$('input[type="tel"]').forEach(maskPhone);
     // números com separador de milhar (km, valores): só dígitos, formatados em pt-BR
     $$('input[data-mask="numero"]').forEach((i) => i.addEventListener("input", () => { const d = i.value.replace(/\D/g, "").slice(0, 12); i.value = d ? fmtNum(+d) : ""; }));
     $$("[data-wa-link]").forEach((a) => { a.href = waLink(a.getAttribute("data-wa-link") || undefined); a.target = "_blank"; a.rel = "noopener"; });
     $$("[data-tel-link]").forEach((a) => { a.href = telLink; });
+    $$("[data-store-link]").forEach((a) => { const u = S.links && S.links[a.getAttribute("data-store-link")]; if (u) { a.href = u; a.target = "_blank"; a.rel = "noopener"; } });
     $$("[data-store]").forEach((el) => { const path = el.getAttribute("data-store").split("."); let v = S; for (const p of path) v = v && v[p]; if (v != null) el.textContent = v; });
   });
 })();
