@@ -24,7 +24,13 @@
 <body>
 <header id="site-header"></header>
 <main id="main">
-  <section class="hero">
+  <section class="hero has-video">
+    <div class="hero-bg" aria-hidden="true">
+      <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-poster.webp" tabindex="-1">
+        <source src="assets/video/hero.mp4" type="video/mp4">
+        <source src="assets/video/hero.webm" type="video/webm">
+      </video>
+    </div>
     <div class="container hero-grid">
       <div>
         <span class="eyebrow">Seminovos em Campinas</span>

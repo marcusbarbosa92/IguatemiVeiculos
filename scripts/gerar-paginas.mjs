@@ -37,7 +37,17 @@ if (i0 < 0 || i1 < 0) throw new Error('veiculo.html sem os marcadores <!-- meta:
 if (!template.includes('<body class="no-bottom-nav has-sticky-cta">')) throw new Error('veiculo.html: tag <body> inesperada');
 if (!template.includes('<meta charset="utf-8">')) throw new Error('veiculo.html: sem <meta charset>');
 
-function pagina(v) {
+const toIndex = (v) => ({ id: v.id, slug: v.slug, tipo: v.tipo, marca: v.marca, modelo: v.modelo, versao: v.versao, anoFabricacao: v.anoFabricacao, anoModelo: v.anoModelo, km: v.km, preco: v.preco, cambio: v.cambio, combustivel: v.combustivel, capa: v.capa, caracteristicas: v.caracteristicas, nFotos: v.fotos.length, video: !!v.video });
+function semelhantes(v, all) {
+  // mesma regra de veiculo.js: mesmo modelo > mesma marca > preço até 20% de diferença
+  let list = all.filter((x) => x.id !== v.id && x.modelo === v.modelo && x.marca === v.marca);
+  if (list.length < 4) list = list.concat(all.filter((x) => x.id !== v.id && x.marca === v.marca && x.modelo !== v.modelo && x.tipo === v.tipo));
+  if (list.length < 4) list = list.concat(all.filter((x) => x.id !== v.id && x.tipo === v.tipo && !list.includes(x) && Math.abs(x.preco - v.preco) / v.preco <= 0.2).sort((a, b) => Math.abs(a.preco - v.preco) - Math.abs(b.preco - v.preco)));
+  return list.slice(0, 6).map(toIndex);
+}
+const jsonInline = (o) => JSON.stringify(o).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+
+function pagina(v, all) {
   const n = nome(v), preco = brl(v.preco), url = `${SITE_URL}v/${v.id}.html`;
   const desc = `${n} por ${preco}. ${num(v.km)} km, ${v.cambio}, ${v.combustivel}. ${NOME}, Campinas - SP.`;
   const ld = {
@@ -67,6 +77,9 @@ function pagina(v) {
   html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<base href="../">');
   html = html.replace('<body class="no-bottom-nav has-sticky-cta">', `<body class="no-bottom-nav has-sticky-cta" data-vehicle-id="${v.id}">`);
   html = html.replace('<main id="main">', '<main id="main">\n  ' + noscript);
+  // dados embutidos: a página renderiza sem baixar data/vehicles.json
+  html = html.replace('<script src="assets/js/store.js"></script>', '<script>window.__VEICULO__ = ' + jsonInline(v) + ';\nwindow.__SEMELHANTES__ = ' + jsonInline(semelhantes(v, all)) + ';</script>\n<script src="assets/js/store.js"></script>');
+  if (!html.includes('window.__VEICULO__')) throw new Error('veiculo.html: não encontrei a tag do store.js para embutir os dados');
   return html;
 }
 
@@ -75,7 +88,7 @@ fs.mkdirSync(OUT_DIR, { recursive: true });
 const atuais = new Set(doc.veiculos.map((v) => `${v.id}.html`));
 let removidas = 0;
 for (const f of fs.readdirSync(OUT_DIR)) { if (/^\d+\.html$/.test(f) && !atuais.has(f)) { fs.unlinkSync(path.join(OUT_DIR, f)); removidas++; } }
-for (const v of doc.veiculos) fs.writeFileSync(path.join(OUT_DIR, `${v.id}.html`), pagina(v));
+for (const v of doc.veiculos) fs.writeFileSync(path.join(OUT_DIR, `${v.id}.html`), pagina(v, doc.veiculos));
 
 // sitemap
 const estaticas = ['', 'estoque.html', 'venda-seu-veiculo.html', 'financiamento.html', 'quem-somos.html', 'contato.html'];

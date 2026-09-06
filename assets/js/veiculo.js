@@ -10,7 +10,7 @@
     $("#sticky-cta").hidden = true; document.body.classList.remove("has-sticky-cta");
   }
 
-  function render(v, all) {
+  function render(v, all, semelhantesPre) {
     const name = A.vehName(v), wa = A.waLink(A.waVehicleMsg(v));
     document.title = name + " · " + A.fmtBRL(v.preco) + " · " + S.nome;
     const desc = name + " por " + A.fmtBRL(v.preco) + ". " + A.fmtKm(v.km) + ", " + v.cambio + ", " + v.combustivel + ". " + S.nome + ", Campinas - SP.";
@@ -28,7 +28,7 @@
       '<div class="counter" id="g-counter">1/' + v.fotos.length + "</div></div>" +
       '<div class="thumbs" id="thumbs">' + v.fotos.map((f, i) => '<button type="button" data-i="' + i + '"' + (i === 0 ? ' class="on"' : "") + ' aria-label="Ver foto ' + (i + 1) + '"><img src="' + esc(f) + '" alt="" loading="lazy" decoding="async"></button>').join("") + "</div>" +
       '<div class="v-head"><nav class="breadcrumb" aria-label="Você está em"><a href="estoque.html">Estoque</a><span>›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + '">' + esc(A.titleCase(v.marca)) + '</a><span>›</span><a href="estoque.html?marca=' + encodeURIComponent(v.marca) + "&modelo=" + encodeURIComponent(v.modelo) + '">' + esc(v.modelo) + "</a></nav>" +
-      "<h1><small>" + esc(v.marca) + " </small>" + esc(v.modelo) + "</h1>" + (v.versao ? '<div class="version">' + esc(v.versao) + "</div>" : "") +
+      '<h1><img class="brand-logo" src="' + A.brandLogo(v.marca, v.tipo) + '" alt="" width="44" height="44" onerror="this.remove()"><small>' + esc(v.marca) + " </small>" + esc(v.modelo) + "</h1>" + (v.versao ? '<div class="version">' + esc(v.versao) + "</div>" : "") +
       '<div class="tags">' + tags.map((t) => '<span class="badge ' + TAG_STYLE[t] + '">' + esc(t) + "</span>").join("") + chars.map((t) => '<span class="badge gray">' + esc(t) + "</span>").join("") + "</div></div>" +
       '<div class="specs">' + [["calendar", "Ano", v.anoFabricacao + "/" + v.anoModelo], ["gauge", "Km", A.fmtNum(v.km)], ["gear", "Câmbio", v.cambio], ["fuel", "Combustível", v.combustivel]].map((s) => '<div class="spec"><div class="fi">' + icon(s[0]) + "</div><div><span>" + s[1] + "</span><b>" + esc(s[2]) + "</b></div></div>").join("") + "</div>" +
       (v.opcionais && v.opcionais.length ? '<section class="block"><h2>Opcionais <span class="muted small">(' + v.opcionais.length + ')</span></h2><ul class="opt-grid' + (v.opcionais.length > 10 ? " collapsed" : "") + '" id="opt-list">' + v.opcionais.map((o) => "<li>" + icon("check") + esc(o) + "</li>").join("") + "</ul>" + (v.opcionais.length > 10 ? '<button class="expand" type="button" id="opt-toggle" aria-expanded="false">Ver todos os opcionais ' + icon("chevD") + "</button>" : "") + "</section>" : "") +
@@ -91,10 +91,10 @@
     const ent = $("#sim-entrada");
     ent.addEventListener("input", () => { const d = ent.value.replace(/\D/g, ""); ent.value = d ? A.fmtNum(+d) : ""; });
 
-    /* semelhantes */
-    let sim1 = all.filter((x) => x.id !== v.id && x.modelo === v.modelo && x.marca === v.marca);
-    if (sim1.length < 4) sim1 = sim1.concat(all.filter((x) => x.id !== v.id && x.marca === v.marca && x.modelo !== v.modelo && x.tipo === v.tipo));
-    if (sim1.length < 4) sim1 = sim1.concat(all.filter((x) => x.id !== v.id && x.tipo === v.tipo && !sim1.includes(x) && Math.abs(x.preco - v.preco) / v.preco <= 0.2).sort((a, b) => Math.abs(a.preco - v.preco) - Math.abs(b.preco - v.preco)));
+    /* semelhantes (pré-calculados na página gerada, ou pela mesma regra aqui) */
+    let sim1 = semelhantesPre || all.filter((x) => x.id !== v.id && x.modelo === v.modelo && x.marca === v.marca);
+    if (!semelhantesPre && sim1.length < 4) sim1 = sim1.concat(all.filter((x) => x.id !== v.id && x.marca === v.marca && x.modelo !== v.modelo && x.tipo === v.tipo));
+    if (!semelhantesPre && sim1.length < 4) sim1 = sim1.concat(all.filter((x) => x.id !== v.id && x.tipo === v.tipo && !sim1.includes(x) && Math.abs(x.preco - v.preco) / v.preco <= 0.2).sort((a, b) => Math.abs(a.preco - v.preco) - Math.abs(b.preco - v.preco)));
     sim1 = sim1.slice(0, 6);
     if (sim1.length) { $("#similar-wrap").hidden = false; $("#similar").innerHTML = sim1.map((x) => A.vehicleCard({ ...x, nFotos: x.fotos ? x.fotos.length : x.nFotos })).join(""); }
 
@@ -115,6 +115,8 @@
   document.addEventListener("DOMContentLoaded", async () => {
     const id = +(document.body.dataset.vehicleId || new URLSearchParams(location.search).get("id") || 0);
     if (!id) return notFound("Nenhum veículo informado");
+    const pre = window.__VEICULO__;
+    if (pre && pre.id === id) return render(pre, [], window.__SEMELHANTES__ || []);
     try {
       const data = await A.loadAll();
       const v = data.veiculos.find((x) => x.id === id);

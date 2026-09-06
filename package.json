@@ -2,7 +2,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "sync": "node scripts/sync-inventory.mjs && node scripts/gerar-paginas.mjs",
-    "pages": "node scripts/gerar-paginas.mjs"
+    "sync": "node scripts/sync-inventory.mjs && node scripts/gerar-paginas.mjs && python3 scripts/gerar-miniaturas.py",
+    "pages": "node scripts/gerar-paginas.mjs",
+    "thumbs": "python3 scripts/gerar-miniaturas.py"
   }
 }

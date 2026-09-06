@@ -235,7 +235,14 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 /* ---------- Página: Home ---------- */
 .hero { background: radial-gradient(120% 90% at 100% 0%, #2a1010 0%, var(--black) 55%); color: #fff; padding: 28px 0 32px; position: relative; overflow: hidden; }
 .hero::after { content: ""; position: absolute; inset: auto -20% -60% auto; width: 60%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(235,53,49,.28), transparent 70%); pointer-events: none; }
-.hero .container { position: relative; }
+.hero .container { position: relative; z-index: 1; }
+/* vídeo de fundo esmaecido (index.html); reduzido a poster quando o usuário prefere menos movimento */
+.hero-bg { position: absolute; inset: 0; overflow: hidden; background: #0b0b0c url("../video/hero-poster.webp") center / cover no-repeat; }
+.hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,.55) 0%, rgba(11,11,12,.62) 45%, rgba(11,11,12,.9) 100%); }
+.hero-video { width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .55; display: block; }
+.hero.has-video::after { opacity: .5; }
+@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
+@media (min-width: 900px) { .hero-bg::after { background: linear-gradient(90deg, rgba(11,11,12,.85) 0%, rgba(11,11,12,.6) 55%, rgba(11,11,12,.75) 100%); } }
 .hero h1 { font-size: clamp(1.8rem, 6.4vw, 2.8rem); line-height: 1.05; letter-spacing: -.025em; max-width: 14ch; }
 .hero h1 em { font-style: normal; color: var(--red); }
 .hero .lead { color: rgba(255,255,255,.72); margin: 12px 0 18px; max-width: 42ch; font-size: .98rem; }
@@ -247,7 +254,9 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .search-card .row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .quick-links { margin-top: 14px; }
 .brands-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.brand-tile { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 11px 13px; font-weight: 700; font-size: .9rem; }
+.brand-tile { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; padding: 9px 12px; font-weight: 700; font-size: .9rem; min-height: 56px; }
+.brand-tile img { width: 36px; height: 36px; object-fit: contain; flex: none; }
+.brand-tile .name { flex: 1; min-width: 0; font-size: .85rem; line-height: 1.15; }
 .brand-tile:hover { border-color: var(--ink); }
 .brand-tile .n { color: var(--muted); font-size: .78rem; font-weight: 800; }
 .feature-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
@@ -359,7 +368,8 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .v-head { padding: 16px 0 6px; }
 .breadcrumb { display: flex; gap: 6px; font-size: .78rem; color: var(--muted); flex-wrap: wrap; margin-bottom: 10px; }
 .breadcrumb a:hover { color: var(--ink); }
-.v-head h1 { font-size: 1.55rem; line-height: 1.1; }
+.v-head h1 { font-size: 1.55rem; line-height: 1.1; position: relative; padding-right: 56px; }
+.v-head h1 .brand-logo { position: absolute; right: 0; top: 0; width: 44px; height: 44px; object-fit: contain; }
 .v-head h1 small { display: block; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 800; margin-bottom: 4px; }
 .v-head .version { color: var(--ink-2); margin-top: 6px; font-size: .95rem; }
 .v-head .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }

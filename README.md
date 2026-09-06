@@ -31,6 +31,7 @@ data/vehicles.json        estoque completo (usado na página do veículo)
 data/index.json           estoque resumido (usado nas listagens)
 scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
 scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo) e sitemap.xml
+scripts/gerar-miniaturas.py gera assets/thumbs/<id>.webp (capa em 640 px, ~40 KB) e baixa assets/marcas/*.webp
 v/                        páginas geradas (não edite à mão: mude veiculo.html e rode npm run pages)
 ```
 
@@ -42,11 +43,11 @@ O estoque vem do site atual (plataforma AutoCerto). Para sincronizar:
 npm run sync        # ou: node scripts/sync-inventory.mjs
 ```
 
-Requer Node 22+. O primeiro script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes). O segundo regenera `v/*.html` e `sitemap.xml` (apaga as páginas de veículos que saíram do estoque). Se o site for publicado em outro domínio, rode `node scripts/gerar-paginas.mjs --site-url https://seu-dominio/`.
+Requer Node 22+ e Python 3 com Pillow (`pip install pillow`) para as miniaturas. O primeiro script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes). O segundo regenera `v/*.html` e `sitemap.xml` (apaga as páginas de veículos que saíram do estoque). Se o site for publicado em outro domínio, rode `node scripts/gerar-paginas.mjs --site-url https://seu-dominio/`.
 
 O workflow `.github/workflows/sync-estoque.yml` faz isso automaticamente todo dia às 06:00 (Brasília) e também pode ser disparado manualmente em **Actions → Sincronizar estoque → Run workflow**. Ele commita as mudanças no branch padrão, o que dispara a publicação.
 
-As fotos dos veículos continuam hospedadas em `www.autocerto.com` (mesmo servidor usado pelo site atual). Se a loja deixar a AutoCerto, as fotos precisam ser copiadas para outro lugar e o campo `fotos` ajustado.
+Os cartões usam as miniaturas locais (`assets/thumbs`), com a foto original como reserva se a miniatura não existir. As fotos grandes da galeria continuam hospedadas em `www.autocerto.com` (mesmo servidor usado pelo site atual). Se a loja deixar a AutoCerto, as fotos precisam ser copiadas para outro lugar e o campo `fotos` ajustado.
 
 ## Publicar no GitHub Pages
 

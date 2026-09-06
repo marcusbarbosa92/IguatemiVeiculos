@@ -61,10 +61,10 @@
   }
 
   function setupBrands(list) {
-    const cnt = {};
-    list.forEach((v) => { cnt[v.marca] = (cnt[v.marca] || 0) + 1; });
+    const cnt = {}, soMoto = {};
+    list.forEach((v) => { cnt[v.marca] = (cnt[v.marca] || 0) + 1; soMoto[v.marca] = (soMoto[v.marca] !== false) && v.tipo === "moto"; });
     const marcas = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a] || a.localeCompare(b));
-    $("#brands").innerHTML = marcas.map((m) => '<a class="brand-tile" href="estoque.html?marca=' + encodeURIComponent(m) + '">' + esc(A.titleCase(m)) + '<span class="n">' + cnt[m] + "</span></a>").join("");
+    $("#brands").innerHTML = marcas.map((m) => '<a class="brand-tile" href="estoque.html?marca=' + encodeURIComponent(m) + '"><img src="' + A.brandLogo(m, soMoto[m] ? "moto" : "carro") + '" alt="" width="40" height="40" loading="lazy"><span class="name">' + esc(A.titleCase(m)) + '</span><span class="n">' + cnt[m] + "</span></a>").join("");
   }
 
   function jsonLd(list) {
@@ -96,8 +96,18 @@
     $("#hero-stats").innerHTML = "<div><b>" + (inv ? inv.total : "—") + "</b><span>veículos</span></div><div><b>" + (inv ? inv.marcas : "—") + "</b><span>marcas</span></div><div>" + third + "</div>";
   }
 
+  function setupVideo() {
+    const v = $("#hero-video"); if (!v) return;
+    const c = navigator.connection || {};
+    const slow = c.saveData || /(^|[^a-z])2g/.test(c.effectiveType || "");
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (slow || reduce) { v.removeAttribute("autoplay"); v.querySelectorAll("source").forEach((s) => s.remove()); v.load(); v.remove(); return; }
+    const p = v.play && v.play(); if (p && p.catch) p.catch(() => { /* autoplay bloqueado: fica o poster */ });
+  }
+
   document.addEventListener("DOMContentLoaded", async () => {
     setupStore();
+    setupVideo();
     setupReviews();
     try {
       const data = await A.loadIndex();

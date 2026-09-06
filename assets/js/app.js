@@ -62,6 +62,9 @@
   const vehName = (v) => v.marca + " " + v.modelo + (v.versao ? " " + v.versao : "") + " " + v.anoFabricacao + "/" + v.anoModelo;
   const vehShort = (v) => v.marca + " " + v.modelo + " " + v.anoFabricacao + "/" + v.anoModelo;
   const vehUrl = (v) => "v/" + v.id + ".html";
+  const thumbUrl = (v) => "assets/thumbs/" + v.id + ".webp";           // gerado por scripts/gerar-miniaturas.py (fallback: v.capa)
+  const brandKey = (marca, tipo) => String(marca).toLowerCase().replace(/[^a-z0-9]/g, "") + (tipo === "moto" ? "_moto" : "");
+  const brandLogo = (marca, tipo) => "assets/marcas/" + brandKey(marca, tipo) + ".webp";
   const absUrl = (rel) => new URL(rel, document.baseURI).href;
 
   /* ---------- WhatsApp / telefone ---------- */
@@ -101,7 +104,7 @@
     const tags = (v.caracteristicas || []).filter((c) => c in TAGS).slice(0, 2);
     return '<article class="v-card">' +
       '<a class="card-link" href="' + vehUrl(v) + '" aria-label="' + esc(vehName(v)) + '"></a>' +
-      '<div class="v-img"><img src="' + esc(v.capa) + '" alt="' + esc(vehName(v)) + '" loading="' + (opts.eager ? "eager" : "lazy") + '" decoding="async" width="800" height="600">' +
+      '<div class="v-img"><img src="' + thumbUrl(v) + '" data-fallback="' + esc(v.capa) + '" alt="' + esc(vehName(v)) + '" loading="' + (opts.eager ? "eager" : "lazy") + '" decoding="async" width="640" height="480">' +
       '<div class="v-badges">' + tags.map((t) => '<span class="badge ' + (TAGS[t] || "") + '">' + esc(t) + "</span>").join("") + "</div>" +
       (v.nFotos ? '<span class="v-photos">' + icon("image") + v.nFotos + "</span>" : "") + "</div>" +
       '<div class="v-body">' +
@@ -289,7 +292,10 @@
     });
   }
 
-  window.App = { $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
+  window.App = { $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, thumbUrl, brandKey, brandLogo, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
+
+  // imagem com data-fallback: se a miniatura local não existir, usa a foto original
+  document.addEventListener("error", (e) => { const t = e.target; if (t && t.tagName === "IMG" && t.dataset.fallback && t.src !== t.dataset.fallback) { t.src = t.dataset.fallback; delete t.dataset.fallback; } }, true);
 
   document.addEventListener("DOMContentLoaded", () => {
     renderChrome();
