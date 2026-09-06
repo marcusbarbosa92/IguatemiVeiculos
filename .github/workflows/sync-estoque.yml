@@ -1,7 +1,11 @@
 name: Sincronizar estoque
 
-# Atualiza data/vehicles.json e data/index.json a partir de iguatemiautomoveis.com.br.
-# Roda manualmente (Actions > Sincronizar estoque > Run workflow) ou todo dia às 06:00 (horário de Brasília).
+# Atualiza data/*.json, v/*.html, sitemap.xml e assets/thumbs a partir de iguatemiautomoveis.com.br
+# e publica o site em seguida. Roda todo dia às 06:00 (Brasília) ou manualmente em
+# Actions > Sincronizar estoque > Run workflow.
+#
+# Domínio próprio: crie a variável de repositório SITE_URL (Settings > Secrets and variables >
+# Actions > Variables) com a URL final, ex.: https://www.seudominio.com.br/
 on:
   workflow_dispatch:
   schedule:
@@ -9,10 +13,18 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: sync-estoque
+  cancel-in-progress: false
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    outputs:
+      mudou: ${{ steps.commit.outputs.mudou }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,13 +35,38 @@ jobs:
           python-version: "3.12"
       - run: pip install pillow
       - run: node scripts/sync-inventory.mjs
-      - run: node scripts/gerar-paginas.mjs
+      - run: node scripts/gerar-paginas.mjs --site-url "${{ vars.SITE_URL || 'https://marcusbarbosa92.github.io/IguatemiVeiculos/' }}"
       - run: python3 scripts/gerar-miniaturas.py
-      - name: Commit se houver mudanças
+      - name: Commit se o estoque mudou
+        id: commit
         run: |
-          if git diff --quiet -- data v sitemap.xml assets/thumbs assets/marcas && [ -z "$(git ls-files --others --exclude-standard -- v assets/thumbs assets/marcas)" ]; then echo "Estoque sem mudanças."; exit 0; fi
+          # ignora linhas que mudam todo dia (data de atualização e lastmod do sitemap)
+          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml assets/thumbs assets/marcas \
+             && [ -z "$(git ls-files --others --exclude-standard -- v assets/thumbs assets/marcas)" ]; then
+            echo "Estoque sem mudanças."; git checkout -- . ; echo "mudou=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data v sitemap.xml assets/thumbs assets/marcas
           git commit -m "chore: sincroniza estoque ($(date -u +%Y-%m-%d))"
           git push
+          echo "mudou=true" >> "$GITHUB_OUTPUT"
+
+  # Pushes feitos com o GITHUB_TOKEN não disparam outros workflows, então a publicação acontece aqui mesmo.
+  publicar:
+    needs: sync
+    if: needs.sync.outputs.mudou == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -105,7 +105,10 @@ def main():
     print(f"Miniaturas: {len(veiculos)} veículos, {novos} novas, {removidas} removidas, {total_kb} KB no total.")
     print(f"Logos: {len(keys)} marcas, {logos_novos} novos.")
     if erros:
-        print("Erros:\n  " + "\n  ".join(erros))
+        # Uma miniatura que falhe não derruba o sync: o cartão usa a foto original como reserva.
+        print("Avisos (miniaturas não geradas, o site usa a foto original):\n  " + "\n  ".join(erros))
+    if novos == 0 and len(erros) >= len(veiculos):
+        print("Nenhuma miniatura pôde ser gerada; verifique a rede.")
         sys.exit(1)
 
 

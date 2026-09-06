@@ -8,8 +8,8 @@ Todos os dados do site são reais e foram extraídos de [iguatemiautomoveis.com.
 
 | Arquivo | Conteúdo |
 | --- | --- |
-| `index.html` | Busca por marca/modelo/preço/ano, atalhos, últimas novidades, marcas, diferenciais, mapa e contato |
-| `estoque.html` | Lista completa com busca por texto, filtros (tipo, marca, modelo, preço, ano, câmbio, combustível, características), ordenação e estado na URL |
+| `index.html` | Vídeo de fundo esmaecido, busca por marca/modelo/preço/ano, atalhos por categoria, últimas novidades (as mesmas que a loja destaca), marcas com logo, diferenciais, avaliações do Google (quando preenchidas), Instagram, mapa e contato |
+| `estoque.html` | Lista completa com busca por texto, filtros (categoria, tipo, marca, modelo, preço, ano, câmbio, combustível, características), ordenação e estado na URL |
 | `v/<id>.html` (e `veiculo.html?id=…`) | Galeria com swipe e tela cheia, especificações, opcionais, descrição, vídeo, WhatsApp, ligação, simulação de financiamento, compartilhar, veículos semelhantes. As páginas em `v/` são geradas a partir de `veiculo.html` com título, Open Graph (foto e preço) e JSON-LD próprios, para a prévia do link ficar certa no WhatsApp e no Google |
 | `venda-seu-veiculo.html` | Formulário que monta a mensagem e abre o WhatsApp da loja |
 | `financiamento.html` | Pré-análise (veículo, entrada, parcelas) enviada pelo WhatsApp |
@@ -27,8 +27,12 @@ assets/js/home.js         página inicial
 assets/js/estoque.js      listagem e filtros
 assets/js/veiculo.js      página do veículo
 assets/img/               logo, favicon, imagem de compartilhamento
-data/vehicles.json        estoque completo (usado na página do veículo)
+data/vehicles.json        estoque completo (usado por veiculo.html?id= e pelos geradores)
 data/index.json           estoque resumido (usado nas listagens)
+data/categorias.json      categoria de carroceria por modelo (SUV, picape, sedan...)
+data/avaliacoes.json      avaliações do Google, preenchidas à mão
+assets/js/analytics.js    GA4 + Pixel da Meta e eventos de contato (IDs em store.js)
+assets/thumbs/, assets/marcas/, assets/video/   miniaturas, logos e vídeo do hero
 scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
 scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo) e sitemap.xml
 scripts/gerar-miniaturas.py gera assets/thumbs/<id>.webp (capa em 640 px, ~40 KB) e baixa assets/marcas/*.webp
@@ -51,11 +55,11 @@ Os cartões usam as miniaturas locais (`assets/thumbs`), com a foto original com
 
 ## Publicar no GitHub Pages
 
-1. O repositório nasceu vazio, então o primeiro branch enviado (`claude/car-sales-mobile-site-m0ixyw`) virou o padrão. Crie o branch `main` a partir dele (ou renomeie-o para `main` em **Settings → Branches**).
+1. O repositório nasceu vazio, então o primeiro branch enviado (`claude/car-sales-mobile-site-m0ixyw`) virou o padrão. **Renomeie-o para `main`** em **Settings → Branches** (é nele que a sincronização diária vai commitar).
 2. Em **Settings → Pages**, escolha **Source: GitHub Actions**.
 3. Todo push em `main` roda `.github/workflows/pages.yml` e publica o site em `https://marcusbarbosa92.github.io/IguatemiVeiculos/`. Também dá para disparar manualmente em **Actions → Publicar no GitHub Pages → Run workflow**, escolhendo o branch.
 
-Se for usar um domínio próprio, troque as URLs absolutas de `og:image`/`canonical` nos HTML (hoje apontam para o endereço acima) e o prefixo `/IguatemiVeiculos/` em `404.html`.
+Se for usar um domínio próprio: (1) crie a variável de repositório `SITE_URL` com a URL final, usada pelo sync ao gerar `v/*.html` e `sitemap.xml`; (2) troque as URLs absolutas de `canonical`/`og:image` nos HTML da raiz e o prefixo `/IguatemiVeiculos/` em `404.html`; (3) só então `robots.txt` e a diretiva `Sitemap` passam a valer, porque robôs só leem `robots.txt` na raiz do domínio (no GitHub Pages em subcaminho ele é ignorado; envie o sitemap pelo Search Console).
 
 ## Avaliações do Google
 
@@ -88,4 +92,4 @@ Qualquer servidor estático serve. Abrir os arquivos direto com `file://` não f
 
 - Ficha de financiamento completa (CPF, RG, renda, etc.): sem back-end não há como receber esses dados com segurança. A pré-análise vai pelo WhatsApp e o consultor pede o restante.
 - Simulador de parcelas com juros: não há taxa oficial da loja para usar; inventar uma seria enganar o cliente.
-- Analytics e pixel: o site atual usa Google Analytics e Meta Pixel. Se quiser manter, adicione as tags no `<head>` das páginas e revise a política de privacidade.
+- Analytics: já incluído com os mesmos IDs do site atual (GA4 `G-F35L06L32H` e Pixel `410840736561439`, em `assets/js/store.js`). Para desligar, deixe os dois como `null`.

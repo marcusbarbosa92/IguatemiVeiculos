@@ -149,7 +149,7 @@
         '<a class="hdr-btn phone" href="' + telLink + '" aria-label="Ligar para ' + esc(S.telefone.exibicao) + '">' + icon("phone") + "</a>" +
         '<a class="btn btn-wa hdr-wa" href="' + waLink() + '" target="_blank" rel="noopener">' + icon("whatsapp") + " " + esc(S.whatsapp.exibicao) + "</a>" +
         "</div>";
-      const skip = document.createElement("a"); skip.className = "skip-link"; skip.href = "#main"; skip.textContent = "Pular para o conteúdo"; document.body.prepend(skip);
+      const skip = document.createElement("a"); skip.className = "skip-link"; skip.href = location.href.split("#")[0] + "#main"; /* com <base href="../"> nas páginas v/, "#main" iria para a home */ skip.textContent = "Pular para o conteúdo"; document.body.prepend(skip);
       const drawer = document.createElement("div");
       drawer.innerHTML = '<div class="drawer-backdrop" id="drawer-backdrop"></div>' +
         '<aside class="drawer" id="drawer" aria-label="Menu" aria-hidden="true" inert>' +
