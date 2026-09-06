@@ -80,19 +80,7 @@
     $("#avaliacoes").innerHTML = list.map((r) => '<article class="review-card">' + A.stars(r.estrelas || 5) + "<blockquote>“" + esc(r.texto) + "”</blockquote><footer><b>" + esc(r.nome) + "</b>" + (r.data ? " · " + esc(r.data) : "") + " · Google</footer></article>").join("");
     $("#avaliacoes").hidden = !list.length;
     $("#avaliacoes-section").hidden = false;
-    reviews = d; renderStats();
   }
-  let reviews = null, inv = null;
-  function renderStats() {
-    // linha de prova discreta sob os botões: números reais do estoque + nota do Google (quando preenchida) ou laudo/procedência
-    const itens = [];
-    if (inv) itens.push("<b>" + inv.total + "</b>veículos", "<b>" + inv.marcas + "</b>marcas");
-    if (reviews) itens.push("<b>" + A.fmtNota(reviews.nota) + " ★</b>no Google");
-    itens.push("Laudo cautelar 100% aprovado");
-    if (!reviews) itens.push("Sem veículos de leilão ou seguradora");
-    $("#hero-proof").innerHTML = itens.map((t) => "<span>" + t + "</span>").join("");
-  }
-
   function setupVideo() {
     const v = $("#hero-video"); if (!v) return;
     const c = navigator.connection || {};
@@ -110,8 +98,6 @@
     try {
       const data = await A.loadIndex();
       const list = data.veiculos;
-      const marcas = new Set(list.map((v) => v.marca));
-      inv = { total: list.length, marcas: marcas.size }; renderStats();
       setupSearch(); setupChips(list); setupBrands(list);
       // "Últimas novidades" = destaques da home da loja (ordem definida por ela, capturada pelo sync)
       const byId = new Map(list.map((v) => [v.id, v]));
