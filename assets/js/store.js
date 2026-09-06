@@ -39,5 +39,7 @@ window.STORE = {
     { titulo: "Garantia opcional de 1 ano", texto: "Em seguradora terceirizada, não inclusa no preço e contratada à parte. Consulte condições." },
     { titulo: "Pagamento seguro", texto: "Pagamentos exclusivamente no CNPJ da Iguatemi Automóveis, garantindo total segurança na negociação." }
   ],
-  avisoLegal: "Reservamo-nos o direito de corrigir eventuais erros de digitação, valores e opcionais dos veículos, sem aviso prévio."
+  avisoLegal: "Reservamo-nos o direito de corrigir eventuais erros de digitação, valores e opcionais dos veículos, sem aviso prévio.",
+  // Medição: os mesmos IDs que o site atual usa (extraídos do HTML de iguatemiautomoveis.com.br). Deixe null para desligar.
+  analytics: { ga4: "G-F35L06L32H", metaPixel: "410840736561439" }
 };

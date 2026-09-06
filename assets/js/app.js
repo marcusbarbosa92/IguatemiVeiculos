@@ -94,14 +94,18 @@
     cache[path] = p;
     return p;
   }
-  const loadIndex = () => loadJSON("data/index.json");
-  const loadAll = () => loadJSON("data/vehicles.json");
+  // categorias de carroceria (data/categorias.json), anexadas a cada veículo como v.categoria
+  let catPromise = null;
+  const loadCats = () => (catPromise = catPromise || loadJSON("data/categorias.json").catch(() => ({ categorias: {}, modelos: {} })));
+  const withCats = (doc) => loadCats().then((c) => { doc.categorias = c.categorias || {}; (doc.veiculos || []).forEach((v) => { v.categoria = v.tipo === "moto" ? "moto" : (c.modelos || {})[v.marca + "|" + v.modelo] || null; }); return doc; });
+  const loadIndex = () => loadJSON("data/index.json").then(withCats);
+  const loadAll = () => loadJSON("data/vehicles.json").then(withCats);
 
   /* ---------- Cartão de veículo ---------- */
   const TAGS = { "Blindado": "red", "Único Dono": "", "7 lugares": "", "Garantia de Fábrica": "" };
   function vehicleCard(v, opts) {
     opts = opts || {};
-    const tags = (v.caracteristicas || []).filter((c) => c in TAGS).slice(0, 2);
+    const tags = (v.caracteristicas || []).filter((c) => Object.prototype.hasOwnProperty.call(TAGS, c)).slice(0, 2);
     return '<article class="v-card">' +
       '<a class="card-link" href="' + vehUrl(v) + '" aria-label="' + esc(vehName(v)) + '"></a>' +
       '<div class="v-img"><img src="' + thumbUrl(v) + '" data-fallback="' + esc(v.capa) + '" alt="' + esc(vehName(v)) + '" loading="' + (opts.eager ? "eager" : "lazy") + '" decoding="async" width="640" height="480">' +
@@ -242,8 +246,9 @@
   }
 
   /* ---------- Avaliações do Google (data/avaliacoes.json, preenchido à mão) ---------- */
-  const loadReviews = () => loadJSON("data/avaliacoes.json").then((d) => (d && typeof d.nota === "number" && d.nota > 0 ? d : null)).catch(() => null);
-  const stars = (n) => '<span class="stars" role="img" aria-label="' + n + ' de 5 estrelas">' + [1, 2, 3, 4, 5].map((i) => icon("star", i <= Math.round(n) ? "ic-fill" : "ic-fill off")).join("") + "</span>";
+  const safeHttp = (u) => (/^https:\/\//i.test(String(u || "")) ? String(u) : "");
+  const loadReviews = () => loadJSON("data/avaliacoes.json").then((d) => (d && typeof d.nota === "number" && d.nota > 0 && d.nota <= 5 ? Object.assign(d, { linkGoogle: safeHttp(d.linkGoogle) }) : null)).catch(() => null);
+  const stars = (n) => '<span class="stars" role="img" aria-label="' + esc(Number(n) || 0) + ' de 5 estrelas">' + [1, 2, 3, 4, 5].map((i) => icon("star", i <= Math.round(n) ? "ic-fill" : "ic-fill off")).join("") + "</span>";
   const fmtNota = (n) => n.toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const googleBadge = (d) => '<a class="google-badge" href="' + esc(d.linkGoogle) + '" target="_blank" rel="noopener">' + stars(d.nota) + "<span>" + fmtNota(d.nota) + " no Google" + (d.totalAvaliacoes ? " · " + fmtNum(d.totalAvaliacoes) + " avaliações" : "") + "</span></a>";
 
@@ -299,8 +304,19 @@
   // imagem com data-fallback: se a miniatura local não existir, usa a foto original
   document.addEventListener("error", (e) => { const t = e.target; if (t && t.tagName === "IMG" && t.dataset.fallback && t.src !== t.dataset.fallback) { t.src = t.dataset.fallback; delete t.dataset.fallback; } }, true);
 
+  function cookieNotice() {
+    if (!S.analytics || (!S.analytics.ga4 && !S.analytics.metaPixel)) return;
+    let ok = false; try { ok = localStorage.getItem("cookies-ok") === "1"; } catch (e) { /* sem storage */ }
+    if (ok) return;
+    const n = document.createElement("div"); n.className = "cookie-notice"; n.setAttribute("role", "region"); n.setAttribute("aria-label", "Aviso de cookies");
+    n.innerHTML = '<p>Usamos cookies para medir o uso do site e melhorar o atendimento. Veja a <a href="politica-de-privacidade.html">política de privacidade</a>.</p><button class="btn btn-dark btn-sm" type="button">Entendi</button>';
+    n.querySelector("button").addEventListener("click", () => { try { localStorage.setItem("cookies-ok", "1"); } catch (e) { /* ignora */ } n.remove(); });
+    document.body.appendChild(n);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     renderChrome();
+    cookieNotice();
     bindWaForms();
     $$('input[type="tel"]').forEach(maskPhone);
     $$("[data-wa-link]").forEach((a) => { a.href = waLink(a.getAttribute("data-wa-link") || undefined); a.target = "_blank"; a.rel = "noopener"; });

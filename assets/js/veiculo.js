@@ -18,8 +18,9 @@
     setMeta('meta[name="description"]', desc); setMeta('meta[property="og:title"]', name + " · " + A.fmtBRL(v.preco)); setMeta('meta[property="og:description"]', desc); setMeta('meta[property="og:image"]', v.capa);
     const canonical = A.absUrl(A.vehUrl(v));
     let link = document.querySelector('link[rel="canonical"]'); if (!link) { link = document.createElement("link"); link.rel = "canonical"; document.head.appendChild(link); } link.href = canonical;
-    const tags = (v.caracteristicas || []).filter((c) => c in TAG_STYLE);
-    const chars = (v.caracteristicas || []).filter((c) => !(c in TAG_STYLE));
+    const has = (c) => Object.prototype.hasOwnProperty.call(TAG_STYLE, c);
+    const tags = (v.caracteristicas || []).filter(has);
+    const chars = (v.caracteristicas || []).filter((c) => !has(c));
 
     $("#vehicle").innerHTML =
       '<div class="container v-layout"><div class="v-main">' +

@@ -51,7 +51,7 @@ const REPO_ROOT = path.resolve(SCRIPT_DIR, '..');
 // ---------------------------------------------------------------------------
 
 function parseArgs(argv) {
-  const opts = { fromDir: null, date: null, out: null, help: false };
+  const opts = { fromDir: null, date: null, out: null, help: false, force: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const next = () => {
@@ -62,6 +62,7 @@ function parseArgs(argv) {
     if (a === '--from-dir') opts.fromDir = next();
     else if (a === '--date') opts.date = next();
     else if (a === '--out') opts.out = next();
+    else if (a === '--force') opts.force = true;
     else if (a === '--help' || a === '-h') opts.help = true;
     else throw new Error(`Unknown argument: ${a}`);
   }
@@ -69,12 +70,13 @@ function parseArgs(argv) {
 }
 
 function usage() {
-  return `Usage: node scripts/sync-inventory.mjs [--from-dir <dir>] [--date YYYY-MM-DD] [--out <dir>]
+  return `Usage: node scripts/sync-inventory.mjs [--from-dir <dir>] [--date YYYY-MM-DD] [--out <dir>] [--force]
 
   (no flags)          live mode: fetch ${LISTING_URL} and every detail page
   --from-dir <dir>    offline mode: read <dir>/Veiculos.html, <dir>/motos.html, <dir>/detail/<id>.html
   --date YYYY-MM-DD   override "atualizadoEm" (default: today in UTC)
   --out <dir>         output directory (default: ${path.join(REPO_ROOT, 'data')})
+  --force             accept a listing with less than half of the previous vehicle count
 `;
 }
 
@@ -250,6 +252,9 @@ function parseDetail(html, item, tipo) {
     .sort((a, b) => a.order - b.order)
     .map((f) => f.url);
   if (fotos.length === 0) problems.push('zero photos');
+  const PHOTO_HOST = /^https:\/\/www\.autocerto\.com\//;
+  for (const f of fotos) if (!PHOTO_HOST.test(f)) { problems.push(`unexpected photo URL: ${f}`); break; }
+  if (item.image && !PHOTO_HOST.test(item.image)) problems.push(`unexpected cover URL: ${item.image}`);
 
   const videoMatch = html.match(/youtube\.com\/embed\/([A-Za-z0-9_-]+)/);
   const video = videoMatch ? videoMatch[1] : null;
@@ -448,6 +453,16 @@ async function main() {
   const listing = parseListing(await source.listing());
   console.error(`Listing: ${listing.length} vehicles`);
   if (listing.length === 0) throw new Error('listing page contains no vehicles');
+  // Proteção contra listagem parcial (página quebrada, bloqueio, etc.): recusa queda brusca sem --force
+  const prevPath = path.join(outDir, 'vehicles.json');
+  if (!opts.force && fs.existsSync(prevPath)) {
+    try {
+      const prevTotal = JSON.parse(fs.readFileSync(prevPath, 'utf8')).total || 0;
+      if (prevTotal >= 20 && listing.length < prevTotal * 0.5) {
+        throw new Error(`listing has ${listing.length} vehicles but the previous sync had ${prevTotal}; refusing to overwrite (use --force if the drop is real)`);
+      }
+    } catch (e) { if (/refusing to overwrite/.test(e.message)) throw e; }
+  }
 
   const motoIds = parseListingIds(await source.motoListing());
   console.error(`Moto listing: ${motoIds.size} ids (${[...motoIds].join(', ') || 'none'})`);

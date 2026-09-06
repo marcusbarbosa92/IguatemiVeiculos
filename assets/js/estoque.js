@@ -5,7 +5,7 @@
   const PRICES = [20000, 30000, 40000, 50000, 75000, 100000, 150000, 200000, 300000, 400000, 500000, 700000];
   const TAGS = ["Blindado", "7 lugares", "Único Dono", "Garantia de Fábrica", "Revisado em Concessionária", "IPVA Pago", "Licenciado", "Chave Reserva", "Manual do proprietário"];
   const PAGE = 24;
-  let ALL = [], state = {}, shown = 0, filtered = [];
+  let ALL = [], state = {}, shown = 0, filtered = [], CATS = {};
   const ordemLabel = () => { const o = $("#ordem"); const l = $("#ordem-label"); if (o && l) l.textContent = o.options[o.selectedIndex].text; };
 
   const norm = (s) => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/-/g, "").toLowerCase();
@@ -13,7 +13,7 @@
   function readState() {
     const p = new URLSearchParams(location.search);
     state = {
-      q: p.get("q") || "", tipo: p.get("tipo") || "", marca: p.get("marca") || "", modelo: p.get("modelo") || "",
+      q: p.get("q") || "", tipo: p.get("tipo") || "", categoria: p.getAll("categoria"), marca: p.get("marca") || "", modelo: p.get("modelo") || "",
       precoMin: p.get("precoMin") || "", precoMax: p.get("precoMax") || "", anoMin: p.get("anoMin") || "", kmMax: p.get("kmMax") || "",
       cambio: p.getAll("cambio"), combustivel: p.getAll("combustivel"), tag: p.getAll("tag"), ordem: p.get("ordem") || "marca"
     };
@@ -21,7 +21,7 @@
   function writeState() {
     const p = new URLSearchParams();
     ["q", "tipo", "marca", "modelo", "precoMin", "precoMax", "anoMin", "kmMax"].forEach((k) => { if (state[k]) p.set(k, state[k]); });
-    ["cambio", "combustivel", "tag"].forEach((k) => state[k].forEach((v) => p.append(k, v)));
+    ["categoria", "cambio", "combustivel", "tag"].forEach((k) => state[k].forEach((v) => p.append(k, v)));
     if (state.ordem && state.ordem !== "marca") p.set("ordem", state.ordem);
     const qs = p.toString();
     history.replaceState(null, "", location.pathname + (qs ? "?" + qs : ""));
@@ -31,6 +31,7 @@
     const q = norm(state.q).split(/\s+/).filter(Boolean);
     filtered = ALL.filter((v) => {
       if (state.tipo && v.tipo !== state.tipo) return false;
+      if (state.categoria.length && !state.categoria.includes(v.categoria)) return false;
       if (state.marca && v.marca !== state.marca) return false;
       if (state.modelo && v.modelo !== state.modelo) return false;
       if (state.precoMin && v.preco < +state.precoMin) return false;
@@ -71,12 +72,13 @@
     const rest = filtered.length - shown;
     if (rest > 0) $("#btn-more").textContent = "Carregar mais (" + rest + (rest === 1 ? " restante)" : " restantes)");
   }
-  function clearAll() { state = { q: "", tipo: "", marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", kmMax: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; syncControls(); apply(); }
+  function clearAll() { state = { q: "", tipo: "", categoria: [], marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", kmMax: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; syncControls(); apply(); }
 
   function activeList() {
     const out = [];
     if (state.q) out.push(["q", "", "“" + state.q + "”"]);
     if (state.tipo) out.push(["tipo", "", state.tipo === "moto" ? "Motos" : "Carros"]);
+    state.categoria.forEach((v) => out.push(["categoria", v, CATS[v] || v]));
     if (state.marca) out.push(["marca", "", A.titleCase(state.marca)]);
     if (state.modelo) out.push(["modelo", "", state.modelo]);
     if (state.precoMin) out.push(["precoMin", "", "de " + A.fmtBRL(+state.precoMin)]);
@@ -116,6 +118,8 @@
         updateApplyCount();
       }));
     };
+    chipGroup("f-categoria", Object.keys(CATS), "categoria", (val) => cnt((v) => v.categoria === val));
+    $$("#f-categoria .chip").forEach((b) => { b.textContent = ""; b.insertAdjacentHTML("beforeend", esc(CATS[b.dataset.val]) + '<span class="n">' + cnt((v) => v.categoria === b.dataset.val) + "</span>"); });
     chipGroup("f-cambio", Array.from(new Set(ALL.map((v) => v.cambio))).sort(), "cambio", (val) => cnt((v) => v.cambio === val));
     chipGroup("f-combustivel", Array.from(new Set(ALL.map((v) => v.combustivel))).sort(), "combustivel", (val) => cnt((v) => v.combustivel === val));
     chipGroup("f-tag", TAGS, "tag", (val) => cnt((v) => v.caracteristicas.includes(val)));
@@ -138,14 +142,14 @@
     $("#f-marca").value = state.marca; fillModels();
     $("#f-precoMin").value = state.precoMin; $("#f-precoMax").value = state.precoMax; $("#f-anoMin").value = state.anoMin;
     $$("#f-tipo button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.val === state.tipo ? "true" : "false"));
-    $$("#f-cambio .chip, #f-combustivel .chip, #f-tag .chip").forEach((b) => b.setAttribute("aria-pressed", state[b.dataset.key].includes(b.dataset.val) ? "true" : "false"));
+    $$("#f-categoria .chip, #f-cambio .chip, #f-combustivel .chip, #f-tag .chip").forEach((b) => b.setAttribute("aria-pressed", state[b.dataset.key].includes(b.dataset.val) ? "true" : "false"));
     $("#ordem").value = state.ordem; ordemLabel();
     updateApplyCount();
   }
   function updateApplyCount() {
     const q = norm(state.q).split(/\s+/).filter(Boolean);
     const n = ALL.filter((v) =>
-      (!state.tipo || v.tipo === state.tipo) && (!state.marca || v.marca === state.marca) && (!state.modelo || v.modelo === state.modelo) &&
+      (!state.tipo || v.tipo === state.tipo) && (!state.categoria.length || state.categoria.includes(v.categoria)) && (!state.marca || v.marca === state.marca) && (!state.modelo || v.modelo === state.modelo) &&
       (!state.precoMin || v.preco >= +state.precoMin) && (!state.precoMax || v.preco <= +state.precoMax) && (!state.anoMin || v.anoModelo >= +state.anoMin) &&
       (!state.kmMax || v.km <= +state.kmMax) &&
       (!state.cambio.length || state.cambio.includes(v.cambio)) && (!state.combustivel.length || state.combustivel.includes(v.combustivel)) &&
@@ -166,7 +170,7 @@
     $("#btn-more").addEventListener("click", renderMore);
     try {
       const data = await A.loadIndex();
-      ALL = data.veiculos;
+      ALL = data.veiculos; CATS = data.categorias || {};
       if (data.atualizadoEm) { const [y, m, d] = data.atualizadoEm.split("-"); $("#results-updated").textContent = "Atualizado em " + d + "/" + m + "/" + y; }
       buildControls(); syncControls(); apply();
     } catch (err) {

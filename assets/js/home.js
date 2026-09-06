@@ -45,7 +45,10 @@
 
   function setupChips(list) {
     const defs = [
-      ["Carros", (v) => v.tipo === "carro", "tipo=carro", "car"],
+      ["SUVs", (v) => v.categoria === "suv", "categoria=suv", "car"],
+      ["Picapes", (v) => v.categoria === "picape", "categoria=picape", null],
+      ["Sedans", (v) => v.categoria === "sedan", "categoria=sedan", null],
+      ["Hatches", (v) => v.categoria === "hatch", "categoria=hatch", null],
       ["Motos", (v) => v.tipo === "moto", "tipo=moto", null],
       ["Até 15 mil km", (v) => v.km <= 15000, "kmMax=15000", "gauge"],
       ["Blindados", (v) => v.caracteristicas.includes("Blindado"), "tag=Blindado", "shield"],
