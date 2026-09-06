@@ -188,6 +188,43 @@
       "permanent": true
     },
     {
+      "source": "/veiculo/:slug/:id(\\d+)/detalhes",
+      "destination": "/v/:id.html",
+      "permanent": true
+    },
+    {
+      "source": "/veiculos",
+      "destination": "/estoque.html?tipo=moto",
+      "permanent": true,
+      "has": [
+        {
+          "type": "query",
+          "key": "tipoveiculo",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "source": "/veiculos",
+      "destination": "/estoque.html",
+      "permanent": true
+    },
+    {
+      "source": "/vendaseuveiculo",
+      "destination": "/venda-seu-veiculo.html",
+      "permanent": true
+    },
+    {
+      "source": "/empresa",
+      "destination": "/quem-somos.html",
+      "permanent": true
+    },
+    {
+      "source": "/politicaprivacidade",
+      "destination": "/politica-de-privacidade.html",
+      "permanent": true
+    },
+    {
       "source": "/estoque",
       "destination": "/estoque.html",
       "permanent": true
