@@ -1,0 +1,7 @@
+{
+ "_como_preencher": "Preenchido automaticamente por scripts/sync-instagram.py quando existe o token da API do Instagram (INSTAGRAM_TOKEN; ver README, seção Instagram). Também pode ser preenchido à mão: cada publicação tem url (link do post), imagem (arquivo em assets/instagram/, quadrado, ~480 px), tipo (foto, video ou album), legenda e data. Enquanto 'publicacoes' estiver vazio, a home mostra só o convite para seguir.",
+ "perfil": "iguatemiautomoveis",
+ "url": "https://www.instagram.com/iguatemiautomoveis/",
+ "atualizadoEm": null,
+ "publicacoes": []
+}

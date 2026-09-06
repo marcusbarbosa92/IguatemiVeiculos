@@ -287,12 +287,12 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .hero.has-video h1, .hero.has-video .lead { text-shadow: 0 2px 14px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4); }
 .hero.has-video .lead { margin-bottom: 0; }
 .hero-cta { display: flex; gap: 10px; }
-.hero-cta .btn { flex: 1 1 0; min-width: 0; border: 1px solid rgba(255,255,255,.3); box-shadow: 0 8px 24px rgba(0,0,0,.25); backdrop-filter: blur(10px) saturate(1.2); -webkit-backdrop-filter: blur(10px) saturate(1.2); text-shadow: 0 1px 2px rgba(0,0,0,.35); }
-.hero-cta .btn-primary { background: rgba(196,35,31,.5); }
-.hero-cta .btn-primary:hover { background: rgba(196,35,31,.72); }
-.hero-cta .btn-wa { background: rgba(17,131,63,.5); }
-.hero-cta .btn-wa:hover { background: rgba(17,131,63,.72); }
-@supports not (backdrop-filter: blur(1px)) { .hero-cta .btn-primary { background: rgba(196,35,31,.8); } .hero-cta .btn-wa { background: rgba(17,131,63,.8); } }
+.hero-cta .btn { flex: 1 1 0; min-width: 0; border: 1px solid rgba(255,255,255,.45); box-shadow: 0 8px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.18); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); text-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.hero-cta .btn-primary { background: rgba(196,35,31,.3); }
+.hero-cta .btn-primary:hover { background: rgba(196,35,31,.55); }
+.hero-cta .btn-wa { background: rgba(17,131,63,.3); }
+.hero-cta .btn-wa:hover { background: rgba(17,131,63,.55); }
+@supports not (backdrop-filter: blur(1px)) { .hero-cta .btn-primary { background: rgba(196,35,31,.7); } .hero-cta .btn-wa { background: rgba(17,131,63,.7); } }
 .quick-find { padding-top: 0; padding-bottom: 8px; position: relative; z-index: 2; }
 .search-bar { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 6px 6px 6px 14px; box-shadow: var(--shadow-lg); margin: -26px 0 14px; color: var(--ink-2); }
 .search-bar input { flex: 1 1 auto; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 1rem; min-height: 40px; color: var(--ink); }
@@ -357,20 +357,37 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .review-card footer b { color: var(--ink); }
 .google-badge { display: inline-flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700; color: var(--ink-2); }
 .google-badge .stars .ic { width: 15px; height: 15px; }
-.insta-strip { background: var(--black); color: #fff; border-radius: var(--radius); padding: 20px 18px; display: grid; gap: 12px; }
-.insta-strip h2 { font-size: 1.25rem; }
-.insta-strip p { color: rgba(255,255,255,.72); margin: 0; font-size: .92rem; }
+.insta-strip { background: var(--black); color: #fff; border-radius: var(--radius); padding: 18px; display: grid; gap: 14px; position: relative; overflow: hidden; }
+.insta-strip::before { content: ""; position: absolute; inset: -40% auto auto -20%; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(closest-side, rgba(184,29,91,.35), transparent 70%); pointer-events: none; }
+.insta-strip > * { position: relative; }
+.insta-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.insta-avatar { width: 56px; height: 56px; border-radius: 50%; padding: 2px; background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7); display: block; }
+.insta-avatar img { width: 100%; height: 100%; border-radius: 50%; display: block; background: #0b0b0c; border: 2px solid #0b0b0c; }
+.insta-id { min-width: 0; }
+.insta-strip h2 { font-size: 1.15rem; margin: 0; overflow-wrap: anywhere; }
+.insta-strip h2 a { color: #fff; text-decoration: none; }
+.insta-strip p { color: rgba(255,255,255,.72); margin: 2px 0 0; font-size: .88rem; }
+.insta-head .btn-insta { grid-column: 1 / -1; }
+.insta-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.insta-grid a { position: relative; display: block; aspect-ratio: 1; border-radius: 8px; overflow: hidden; background: #1c1c20; }
+.insta-grid img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.insta-grid .tipo { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; display: flex; align-items: center; justify-content: center; }
+.insta-grid .tipo .ic { width: 12px; height: 12px; }
+.insta-grid .mais { display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px; font-size: .82rem; font-weight: 800; color: #fff; background: linear-gradient(45deg, #b81d5b, #7a2aa5); }
 .insta-strip .row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.insta-strip .row3 { grid-template-columns: 1fr 1fr; }
-.insta-strip .row3 > :first-child { grid-column: 1 / -1; }
 .insta-strip .btn { white-space: normal; }
 .insta-strip .btn-insta { background: linear-gradient(45deg, #b81d5b, #7a2aa5); color: #fff; }
+.insta-strip .btn-outline-light { border-color: rgba(255,255,255,.35); }
 .contact-card.insta .fi { background: #fbe9f2; color: #c1275f; }
 @media (min-width: 900px) {
   .social-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
-  .insta-strip .row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .insta-strip .row3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .insta-strip .row3 > :first-child { grid-column: auto; }
+  .insta-strip { padding: 24px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); grid-template-areas: "head grid" "row grid"; gap: 16px 24px; align-items: start; }
+  .insta-head { grid-area: head; grid-template-columns: auto minmax(0, 1fr); }
+  .insta-head .btn-insta { grid-column: 1 / -1; justify-self: start; min-width: 200px; }
+  .insta-grid { grid-area: grid; gap: 6px; }
+  .insta-grid[hidden] { display: none; }
+  .insta-strip .row { grid-area: row; grid-template-columns: repeat(2, minmax(0, 1fr)); align-self: end; }
+  .insta-strip.sem-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "row"; max-width: 720px; }
 }
 
 /* ---------- Página: Estoque ---------- */

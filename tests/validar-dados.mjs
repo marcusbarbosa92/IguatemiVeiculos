@@ -50,6 +50,14 @@ for (const key of Object.keys(cats.modelos)) check(Object.keys(cats.categorias).
 if (aval.nota !== null) { check(typeof aval.nota === 'number' && aval.nota > 0 && aval.nota <= 5, 'avaliacoes.json: nota fora de 0-5'); check(/^https:\/\//.test(aval.linkGoogle), 'avaliacoes.json: linkGoogle precisa ser https'); for (const r of aval.avaliacoes || []) check(r.nome && r.texto && r.estrelas >= 1 && r.estrelas <= 5, 'avaliacoes.json: avaliação incompleta'); }
 const estoqueHtml = fs.readFileSync(path.join(ROOT, 'estoque.html'), 'utf8');
 check((estoqueHtml.match(/href="v\/\d+\.html"/g) || []).length === list.length, 'estoque.html: a lista estática de links não bate com o estoque (rode npm run pages)');
+const igPath = path.join(ROOT, 'data/instagram.json');
+if (fs.existsSync(igPath)) {
+  const ig = JSON.parse(fs.readFileSync(igPath, 'utf8'));
+  for (const p of ig.publicacoes || []) {
+    check(/^https:\/\/(www\.)?instagram\.com\//.test(p.url || ''), `instagram.json: url inválida (${p.url})`);
+    check(p.imagem && fs.existsSync(path.join(ROOT, p.imagem)), `instagram.json: imagem não encontrada (${p.imagem})`);
+  }
+}
 const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
 check((sitemap.match(/<url>/g) || []).length === list.length + 6, 'sitemap.xml com contagem inesperada de URLs (rode npm run pages)');
 const thumbs = fs.readdirSync(path.join(ROOT, 'assets/thumbs')).filter((f) => f.endsWith('.webp')).length;

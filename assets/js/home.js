@@ -85,6 +85,20 @@
     $("#avaliacoes").hidden = !list.length;
     $("#avaliacoes-section").hidden = false;
   }
+  // últimas publicações do Instagram (data/instagram.json, preenchido pelo sync-instagram.py ou à mão); sem publicações, fica só o convite
+  async function setupInstagram() {
+    const grid = $("#insta-grid"), strip = grid && grid.closest(".insta-strip");
+    if (!grid) return;
+    let d = null;
+    try { d = await fetch("data/instagram.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)); } catch (e) { d = null; }
+    const pubs = ((d && d.publicacoes) || []).filter((p) => p && p.url && p.imagem && /^https:\/\/(www\.)?instagram\.com\//.test(p.url)).slice(0, 6);
+    if (!pubs.length) { if (strip) strip.classList.add("sem-grid"); return; }
+    const perfil = (d && d.url) || S.links.instagram;
+    grid.innerHTML = pubs.slice(0, 5).map((p) => '<a href="' + esc(p.url) + '" target="_blank" rel="noopener" aria-label="' + esc((p.legenda || "Publicação no Instagram").slice(0, 120)) + '"><img src="' + esc(p.imagem) + '" alt="" loading="lazy" decoding="async" width="240" height="240">' + (p.tipo === "video" ? '<span class="tipo" aria-hidden="true">' + icon("play") + "</span>" : p.tipo === "album" ? '<span class="tipo" aria-hidden="true">' + icon("image") + "</span>" : "") + "</a>").join("") +
+      '<a class="mais" href="' + esc(perfil) + '" target="_blank" rel="noopener">Ver mais no Instagram</a>';
+    grid.hidden = false;
+  }
+
   function setupVideo() {
     const v = $("#hero-video"); if (!v) return;
     const c = navigator.connection || {};
@@ -99,6 +113,7 @@
     setupStore();
     setupVideo();
     setupReviews();
+    setupInstagram();
     try {
       const data = await A.loadIndex();
       const list = data.veiculos;

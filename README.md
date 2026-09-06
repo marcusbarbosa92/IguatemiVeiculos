@@ -39,6 +39,7 @@ scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
 scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo), sitemap.xml e ajusta as URLs absolutas (canonical, Open Graph, robots.txt, 404.html)
 scripts/build-vercel.mjs    build do Vercel: copia só o que é público para dist/ e regenera as páginas com o domínio do projeto
 vercel.json               configuração do Vercel (build, pasta publicada, cabeçalhos de cache e segurança)
+scripts/sync-instagram.py  últimas publicações do Instagram (API oficial, precisa de INSTAGRAM_TOKEN)
 scripts/gerar-miniaturas.py gera assets/thumbs (capa 800 px), assets/fotos (cada foto em 160 px + as 6 primeiras em 640 px), assets/og (capa JPEG para a prévia do WhatsApp) e baixa assets/marcas
 v/                        páginas geradas (não edite à mão: mude veiculo.html e rode npm run pages)
 ```
@@ -97,6 +98,19 @@ A home tem a seção "O que dizem nossos clientes" e a página do veículo mostr
 ```
 
 Use apenas avaliações reais e o texto como está publicado. `totalExibicao` é o total como o Google mostra ("1,1 mil"); `quando` é a data relativa que o Google mostrava no dia de `atualizadoEm` e só aparece no site enquanto essa captura tiver menos de 45 dias. Enquanto `nota` for `null` ou a lista estiver vazia, nada aparece. Preenchido em 06/09/2026 com 4,8 ★, 1,1 mil avaliações e seis avaliações.
+
+## Instagram
+
+A home tem a seção do Instagram logo depois das novidades: perfil, botão **Seguir**, **Chamar no Direct** e, quando `data/instagram.json` tiver publicações, um grid com as 5 últimas e "Ver mais no Instagram". O Instagram não expõe as publicações sem login (perfil, embed e endpoints internos exigem sessão), então há dois caminhos:
+
+**Automático (recomendado).** `scripts/sync-instagram.py` lê as últimas publicações pela API oficial (graph.instagram.com) usando um token da conta da loja, salva as imagens em `assets/instagram/` (quadradas, 480 px, WebP) e escreve `data/instagram.json`. O sync diário já roda esse script; sem token ele não faz nada. Para ligar:
+
+1. A conta `@iguatemiautomoveis` precisa ser profissional (Empresa ou Criador de conteúdo), o que se muda nas configurações do próprio Instagram.
+2. Em [developers.facebook.com](https://developers.facebook.com/) (com o login do dono), crie um app, adicione o produto **Instagram** e, em **API setup with Instagram login**, vincule a conta da loja e gere o token de acesso (é um token de longa duração, válido por 60 dias).
+3. No GitHub: **Settings → Secrets and variables → Actions → New repository secret**, nome `INSTAGRAM_TOKEN`, valor = o token.
+4. Rode **Actions → Sincronizar estoque → Run workflow** (ou espere a execução diária). A cada 60 dias o token vence e precisa ser gerado de novo no mesmo lugar; quando isso acontecer, o sync avisa no log e mantém as últimas publicações salvas.
+
+**Manual.** Preencha `data/instagram.json` à mão: para cada publicação, `url` (link do post), `imagem` (arquivo em `assets/instagram/`, quadrado, ~480 px), `tipo` (`foto`, `video` ou `album`), `legenda` e `data`. O teste de dados confere se as imagens existem.
 
 ## Testes
 
