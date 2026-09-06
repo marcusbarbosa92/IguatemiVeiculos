@@ -542,6 +542,26 @@ body.has-sticky-cta { padding-bottom: calc(76px + var(--safe-b)); }
 
 /* ---------- Páginas de conteúdo ---------- */
 .page-hero { background: var(--black); color: #fff; padding: 26px 0 28px; }
+/* topo com foto da loja (quem somos) */
+.photo-hero { position: relative; overflow: hidden; min-height: 360px; display: grid; align-items: end; padding: 28px 0 26px; }
+.photo-hero .ph-bg { position: absolute; inset: 0; }
+.photo-hero .ph-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 62%; display: block; }
+.photo-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,.35) 0%, rgba(11,11,12,.15) 35%, rgba(11,11,12,.85) 100%); }
+.photo-hero .container { position: relative; z-index: 1; }
+.photo-hero h1, .photo-hero p { text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+.photo-hero .ph-addr { font-size: .85rem; font-weight: 700; color: rgba(255,255,255,.85); margin-top: 10px; }
+.stat-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.stat-row > div { flex: 1 1 120px; background: var(--card); border-radius: 14px; box-shadow: var(--shadow); padding: 12px 14px; display: grid; gap: 2px; }
+.stat-row b { font-size: 1.35rem; font-weight: 900; letter-spacing: -.02em; }
+.stat-row span { font-size: .78rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.photo-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+.photo-grid figure { margin: 0; background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.photo-grid img { width: 100%; height: auto; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
+.photo-grid .wide img { aspect-ratio: 16 / 9; }
+.photo-grid figcaption { padding: 10px 14px; font-size: .85rem; color: var(--ink-2); font-weight: 600; }
+.store-photo { margin: 0; position: relative; }
+.store-photo img { width: 100%; height: auto; display: block; aspect-ratio: 16 / 9; object-fit: cover; }
+.store-photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 14px 10px; font-size: .82rem; font-weight: 700; color: #fff; background: linear-gradient(180deg, transparent, rgba(0,0,0,.7)); }
 .page-hero h1 { font-size: clamp(1.6rem, 6vw, 2.3rem); }
 .page-hero p { color: rgba(255,255,255,.72); margin: 8px 0 0; max-width: 52ch; }
 .prose { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px 18px; }
@@ -634,6 +654,11 @@ body.no-bottom-nav .cookie-notice { bottom: calc(76px + var(--safe-b)); }
   body.page-estoque .site-header { position: sticky; }
   .toolbar { top: var(--header-h); }
   .page-hero { padding: 48px 0; }
+  .photo-hero { min-height: 480px; padding: 56px 0 48px; }
+  .photo-hero .ph-bg img { object-position: center 35%; }
+  .photo-grid { grid-template-columns: 1fr 1fr; }
+  .photo-grid .wide { grid-column: 1 / -1; }
+  .photo-grid .wide img { aspect-ratio: 1600 / 583; }
   .content-split { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: start; }
   .toast { bottom: 24px; }
   .drawer, .drawer-backdrop { display: none; }

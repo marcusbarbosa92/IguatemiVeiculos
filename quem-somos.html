@@ -20,21 +20,56 @@
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/style.css">
 <title>Quem somos · Iguatemi Automóveis</title>
-<meta name="description" content="Uma década de história em Campinas: estoque amplo, atualizado diariamente, com todos os veículos vistoriados e com laudo cautelar aprovado. Conheça a Iguatemi Automóveis.">
+<meta name="description" content="Conheça a Iguatemi Automóveis: uma década de história em Campinas, loja na Av. José Bonifácio com showroom coberto, estoque atualizado diariamente e todos os veículos vistoriados e com laudo cautelar aprovado. Conheça a Iguatemi Automóveis.">
 <meta property="og:title" content="Quem somos · Iguatemi Automóveis">
 <meta property="og:description" content="Uma década de história, veículos vistoriados e laudo cautelar aprovado. Conheça a Iguatemi Automóveis, em Campinas.">
 </head>
 <body>
 <header id="site-header"></header>
 <main id="main">
-  <section class="page-hero"><div class="container"><span class="eyebrow">Quem somos</span><h1>Uma década vendendo veículos com procedência em Campinas</h1><p data-store="slogan"></p></div></section>
-  <section class="section"><div class="container content-split">
-    <div class="prose" id="sobre"></div>
-    <div>
-      <div class="hero-stats" style="color:#17171a;margin:0 0 16px" id="stats"></div>
-      <div class="feature-grid" style="grid-template-columns:1fr" id="features"></div>
-      <div class="cta-banner" style="margin-top:14px"><h2>Venha conhecer a loja</h2><p>Av. José Bonifácio, 1580 · Jardim das Paineiras · Campinas - SP</p><a class="btn" href="contato.html">Como chegar →</a></div>
-      <div style="margin-top:16px"><h3 style="margin-bottom:8px">Siga a Iguatemi</h3><div id="social"></div></div>
+  <section class="page-hero photo-hero">
+    <picture class="ph-bg" aria-hidden="true">
+      <source media="(min-width: 900px)" srcset="assets/loja/capa-wide.webp">
+      <img src="assets/loja/capa-mobile.webp" alt="" width="800" height="1000" fetchpriority="high" decoding="async">
+    </picture>
+    <div class="container">
+      <span class="eyebrow">Quem somos</span>
+      <h1>Uma década vendendo veículos com procedência em Campinas</h1>
+      <p data-store="slogan"></p>
+      <p class="ph-addr">Av. José Bonifácio, 1580 · Jardim das Paineiras · Campinas - SP</p>
+    </div>
+  </section>
+
+  <section class="section"><div class="container">
+    <div class="content-split">
+      <div class="prose" id="sobre"></div>
+      <div>
+        <div class="stat-row" id="stats" aria-live="polite"></div>
+        <div class="feature-grid" style="grid-template-columns:1fr" id="features"></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="section" style="padding-top:0"><div class="container">
+    <div class="section-head"><h2>A loja</h2></div>
+    <div class="photo-grid">
+      <figure><img src="assets/loja/fachada-rua-800.webp" srcset="assets/loja/fachada-rua-800.webp 800w, assets/loja/fachada-rua.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" alt="Fachada da Iguatemi Automóveis vista da Av. José Bonifácio" width="800" height="450" loading="lazy" decoding="async"><figcaption>A loja, vista da Av. José Bonifácio</figcaption></figure>
+      <figure><img src="assets/loja/showroom-800.webp" srcset="assets/loja/showroom-800.webp 800w, assets/loja/showroom.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" alt="Showroom coberto da Iguatemi Automóveis, com os carros em exposição" width="800" height="450" loading="lazy" decoding="async"><figcaption>Showroom coberto</figcaption></figure>
+      <figure class="wide"><img src="assets/loja/fachada-panorama-800.webp" srcset="assets/loja/fachada-panorama-800.webp 800w, assets/loja/fachada-panorama.webp 1600w" sizes="(min-width: 900px) 1120px, 100vw" alt="Frente da Iguatemi Automóveis: placa, showroom envidraçado e carros expostos" width="800" height="292" loading="lazy" decoding="async"><figcaption>Frente da loja, com o showroom envidraçado</figcaption></figure>
+    </div>
+  </div></section>
+
+  <section class="section" style="padding-top:0"><div class="container">
+    <div class="section-head"><h2>Venha conhecer a loja</h2></div>
+    <div class="content-split">
+      <div class="store-card">
+        <div class="map"><iframe id="map-iframe" title="Mapa: localização da Iguatemi Automóveis" loading="lazy" referrerpolicy="no-referrer" src="about:blank"></iframe><div class="map-cta"><a class="btn btn-dark btn-sm" id="link-maps" href="#" target="_blank" rel="noopener">Google Maps</a><a class="btn btn-dark btn-sm" id="link-waze" href="#" target="_blank" rel="noopener">Waze</a></div></div>
+        <div class="store-info" id="store-info"></div>
+      </div>
+      <div>
+        <div class="cta-banner"><h2>Fale com a gente</h2><p>Tire dúvidas, agende uma visita ou peça a avaliação do seu carro.</p><a class="btn" data-wa-link href="#">Chamar no WhatsApp</a></div>
+        <div style="margin-top:16px"><h3 style="margin-bottom:8px">Siga a Iguatemi</h3><div id="social"></div></div>
+      </div>
     </div>
   </div></section>
 </main>
@@ -44,14 +79,22 @@
 <script src="assets/js/analytics.js" defer></script>
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  const A = window.App, S = window.STORE, esc = A.esc, icon = A.icon;
-  document.getElementById("sobre").innerHTML = "<h2>Nossa história</h2>" + S.sobre.map((p) => "<p>" + esc(p) + "</p>").join("") + "";
+  const A = window.App, S = window.STORE, esc = A.esc, icon = A.icon, e = S.endereco, st = A.openStatus();
+  document.getElementById("sobre").innerHTML = "<h2>Nossa história</h2>" + S.sobre.map((p) => "<p>" + esc(p) + "</p>").join("");
   document.getElementById("features").innerHTML = S.garantias.map((g, i) => '<div class="feature"><div class="fi">' + icon(["shield", "doc", "star", "lock"][i]) + "</div><div><h3>" + esc(g.titulo) + "</h3><p>" + esc(g.texto) + "</p></div></div>").join("");
+  document.getElementById("map-iframe").src = S.links.mapaEmbed;
+  document.getElementById("link-maps").href = S.links.googleMaps;
+  document.getElementById("link-waze").href = S.links.waze;
+  document.getElementById("store-info").innerHTML =
+    '<div class="info-row"><div class="fi">' + icon("pin") + "</div><div><b>" + esc(e.logradouro + ", " + e.numero) + "</b><span>" + esc(e.bairro + " · " + e.cidade + " - " + e.uf + " · CEP " + e.cep) + "</span></div></div>" +
+    '<div class="info-row"><div class="fi">' + icon("clock") + '</div><div><b>Horário de atendimento <span class="open-now' + (st.open ? "" : " closed") + '">' + esc(st.label) + "</span></b><span>" + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</span></div></div>" +
+    '<div class="info-row"><div class="fi">' + icon("phone") + '</div><div><b><a href="' + A.telLink + '">' + esc(S.telefone.exibicao) + '</a></b><span>WhatsApp <a href="' + A.waLink() + '" target="_blank" rel="noopener">' + esc(S.whatsapp.exibicao) + "</a></span></div></div>";
   const soc = document.getElementById("social"); soc.innerHTML = A.socialRow(); soc.querySelectorAll(".social-row a").forEach((a) => { a.style.background = "#17171a"; });
-  try {
-    const d = await A.loadIndex(); const marcas = new Set(d.veiculos.map((v) => v.marca));
-    document.getElementById("stats").innerHTML = "<div><b>" + d.veiculos.length + "</b><span style=\"color:#6b6b73\">veículos hoje</span></div><div><b>" + marcas.size + "</b><span style=\"color:#6b6b73\">marcas</span></div><div><b>100%</b><span style=\"color:#6b6b73\">laudo aprovado</span></div>";
-  } catch (e) { document.getElementById("stats").hidden = true; }
+  // números reais: estoque de hoje e nota do Google (quando preenchida)
+  const stats = document.getElementById("stats"); const itens = [];
+  try { const d = await A.loadIndex(); itens.push(["<b>" + d.veiculos.length + "</b>", "veículos hoje"], ["<b>" + new Set(d.veiculos.map((v) => v.marca)).size + "</b>", "marcas"]); } catch (err) { /* sem índice */ }
+  const r = await A.loadReviews(); if (r) itens.push(["<b>" + A.fmtNota(r.nota) + " ★</b>", (r.totalExibicao || A.fmtNum(r.totalAvaliacoes || 0)) + " avaliações no Google"]);
+  stats.innerHTML = itens.map((i) => "<div>" + i[0] + "<span>" + esc(i[1]) + "</span></div>").join(""); stats.hidden = !itens.length;
 });
 </script>
 </body>

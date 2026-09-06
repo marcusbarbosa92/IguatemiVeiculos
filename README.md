@@ -33,6 +33,7 @@ data/categorias.json      categoria de carroceria por modelo (SUV, picape, sedan
 data/avaliacoes.json      avaliações do Google, preenchidas à mão
 assets/js/analytics.js    GA4 + Pixel da Meta e eventos de contato (IDs em store.js)
 assets/thumbs/, assets/fotos/, assets/og/, assets/marcas/, assets/video/   imagens geradas e vídeo do hero
+assets/loja/              fotos da loja (as mesmas do site atual), usadas em Quem somos e Contato
 sw.js                     service worker (mude VERSAO para descartar o cache dos visitantes)
 tests/                    validação de dados, parser do sync (fixtures reais) e fumaça no Chromium
 scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
