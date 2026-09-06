@@ -67,7 +67,13 @@
     const cnt = {}, soMoto = {};
     list.forEach((v) => { cnt[v.marca] = (cnt[v.marca] || 0) + 1; soMoto[v.marca] = (soMoto[v.marca] !== false) && v.tipo === "moto"; });
     const marcas = Object.keys(cnt).sort((a, b) => cnt[b] - cnt[a] || a.localeCompare(b));
-    $("#brands").innerHTML = marcas.map((m) => '<a class="brand-tile" href="estoque.html?marca=' + encodeURIComponent(m) + '"><img src="' + A.brandLogo(m, soMoto[m] ? "moto" : "carro") + '" alt="" width="40" height="40" loading="lazy"><span class="name">' + esc(A.titleCase(m)) + '</span><span class="n">' + cnt[m] + "</span></a>").join("");
+    const grid = $("#brands");
+    grid.innerHTML = marcas.map((m) => '<a class="brand-tile" href="estoque.html?marca=' + encodeURIComponent(m) + '"><img src="' + A.brandLogo(m, soMoto[m] ? "moto" : "carro") + '" alt="" width="40" height="40" loading="lazy"><span class="name">' + esc(A.titleCase(m)) + '</span><span class="n">' + cnt[m] + "</span></a>").join("");
+    if (marcas.length > 10 && window.matchMedia("(max-width: 899px)").matches) {
+      grid.classList.add("collapsed");
+      grid.insertAdjacentHTML("afterend", '<div class="brands-more"><button class="btn btn-outline btn-sm" type="button" id="brands-more" aria-expanded="false" aria-controls="brands">Ver todas as ' + marcas.length + " marcas</button></div>");
+      $("#brands-more").addEventListener("click", () => { const c = grid.classList.toggle("collapsed"); $("#brands-more").setAttribute("aria-expanded", c ? "false" : "true"); $("#brands-more").textContent = c ? "Ver todas as " + marcas.length + " marcas" : "Mostrar menos"; });
+    }
   }
 
   function jsonLd(list) {
@@ -104,7 +110,8 @@
     const c = navigator.connection || {};
     const slow = c.saveData || /(^|[^a-z])2g/.test(c.effectiveType || "");
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (slow || reduce) { v.removeAttribute("autoplay"); v.querySelectorAll("source").forEach((s) => s.remove()); v.load(); v.remove(); return; }
+    const desktop = window.matchMedia && window.matchMedia("(min-width: 900px)").matches; // no desktop o vídeo vertical vira mancha: fica o poster paisagem
+    if (slow || reduce || desktop) { v.removeAttribute("autoplay"); v.querySelectorAll("source").forEach((s) => s.remove()); v.load(); v.remove(); return; }
     const p = v.play && v.play(); if (p && p.catch) p.catch(() => { /* autoplay bloqueado: fica o poster */ });
   }
 

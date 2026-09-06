@@ -22,12 +22,16 @@ const opt = (name, def) => { const i = args.indexOf(name); return i >= 0 && args
 const SITE_URL = opt('--site-url', 'https://marcusbarbosa92.github.io/IguatemiVeiculos/').replace(/\/?$/, '/');
 const DATA = path.resolve(ROOT, opt('--data', 'data/vehicles.json'));
 const OUT_DIR = path.join(ROOT, 'v');
-const NOME = 'Iguatemi Automóveis';
+// dados da loja lidos de assets/js/store.js (única fonte)
+const STORE = (() => { const w = {}; new Function('window', fs.readFileSync(path.join(ROOT, 'assets/js/store.js'), 'utf8'))(w); return w.STORE; })();
+const NOME = STORE.nome;
+const WA = STORE.whatsapp;
 
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const brl = (n) => 'R$ ' + new Intl.NumberFormat('pt-BR', { minimumFractionDigits: Math.round(n * 100) % 100 ? 2 : 0, maximumFractionDigits: Math.round(n * 100) % 100 ? 2 : 0 }).format(n);
 const num = (n) => new Intl.NumberFormat('pt-BR').format(n);
 const nome = (v) => `${v.marca} ${v.modelo}${v.versao ? ' ' + v.versao : ''} ${v.anoFabricacao}/${v.anoModelo}`;
+const curto = (v) => `${v.marca} ${v.modelo} ${v.anoFabricacao}/${v.anoModelo}`;
 
 const doc = JSON.parse(fs.readFileSync(DATA, 'utf8'));
 const template = fs.readFileSync(path.join(ROOT, 'veiculo.html'), 'utf8');
@@ -37,7 +41,8 @@ if (i0 < 0 || i1 < 0) throw new Error('veiculo.html sem os marcadores <!-- meta:
 if (!template.includes('<body class="no-bottom-nav has-sticky-cta">')) throw new Error('veiculo.html: tag <body> inesperada');
 if (!template.includes('<meta charset="utf-8">')) throw new Error('veiculo.html: sem <meta charset>');
 
-const toIndex = (v) => ({ id: v.id, slug: v.slug, tipo: v.tipo, marca: v.marca, modelo: v.modelo, versao: v.versao, anoFabricacao: v.anoFabricacao, anoModelo: v.anoModelo, km: v.km, preco: v.preco, cambio: v.cambio, combustivel: v.combustivel, capa: v.capa, caracteristicas: v.caracteristicas, nFotos: v.fotos.length, video: !!v.video });
+const capaId = (url) => String(url).split('/').pop().replace(/\.[a-z0-9]+$/i, '').replace(/[^A-Za-z0-9_-]/g, '');
+const toIndex = (v) => ({ id: v.id, slug: v.slug, tipo: v.tipo, marca: v.marca, modelo: v.modelo, versao: v.versao, anoFabricacao: v.anoFabricacao, anoModelo: v.anoModelo, km: v.km, preco: v.preco, cambio: v.cambio, combustivel: v.combustivel, capa: v.capa, capaId: capaId(v.capa), caracteristicas: v.caracteristicas, nFotos: v.fotos.length, video: !!v.video });
 function semelhantes(v, all) {
   // mesma regra de veiculo.js: mesmo modelo > mesma marca > preço até 20% de diferença
   let list = all.filter((x) => x.id !== v.id && x.modelo === v.modelo && x.marca === v.marca);
@@ -60,25 +65,30 @@ function pagina(v, all) {
     offers: { '@type': 'Offer', price: v.preco, priceCurrency: 'BRL', availability: 'https://schema.org/InStock', url, seller: { '@type': 'AutoDealer', name: NOME } },
   };
   const meta = `<!-- gerado por scripts/gerar-paginas.mjs a partir de veiculo.html: não edite à mão -->
-<title>${esc(n)} · ${esc(preco)} · ${NOME}</title>
+<title>${esc(curto(v))} · ${esc(preco)} · ${NOME}</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${esc(url)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${NOME}">
-<meta property="og:title" content="${esc(n)} · ${esc(preco)}">
+<meta property="og:title" content="${esc(curto(v))} · ${esc(preco)}">
 <meta property="og:description" content="${esc(desc)}">
-<meta property="og:image" content="${esc(v.capa)}">
+<meta property="og:image" content="${esc(SITE_URL + 'assets/og/' + v.id + '-' + capaId(v.capa) + '.jpg')}">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="720">
+<meta property="og:image:alt" content="${esc(n)}">
 <meta property="og:url" content="${esc(url)}">
 <meta property="og:locale" content="pt_BR">
 <meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
-  const noscript = `<noscript><div class="container" style="padding:16px 16px 0"><h1>${esc(n)}</h1><p><strong>${esc(preco)}</strong> · ${num(v.km)} km · ${esc(v.cambio)} · ${esc(v.combustivel)}</p><p><img src="${esc(v.capa)}" alt="${esc(n)}" width="800" height="600"></p><p>Este site precisa de JavaScript para mostrar todas as fotos e opcionais. Fale conosco pelo WhatsApp: <a href="https://wa.me/5519999950000">(19) 99995-0000</a>.</p></div></noscript>`;
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
+<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Estoque', item: SITE_URL + 'estoque.html' }, { '@type': 'ListItem', position: 2, name: v.marca, item: SITE_URL + 'estoque.html?marca=' + encodeURIComponent(v.marca) }, { '@type': 'ListItem', position: 3, name: v.modelo, item: url }] }).replace(/</g, '\\u003c')}</script>`;
+  const noscript = `<noscript><div class="container" style="padding:16px 16px 0"><h1>${esc(n)}</h1><p><strong>${esc(preco)}</strong> · ${num(v.km)} km · ${esc(v.cambio)} · ${esc(v.combustivel)}</p><p><img src="${esc(v.capa)}" alt="${esc(n)}" width="800" height="600"></p><p>Este site precisa de JavaScript para mostrar todas as fotos e opcionais. Fale conosco pelo WhatsApp: <a href="https://wa.me/${esc(WA.numero)}">${esc(WA.exibicao)}</a>.</p></div></noscript>`;
   let html = template.slice(0, i0) + meta + template.slice(i1 + END.length);
   html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<base href="../">');
   html = html.replace('<body class="no-bottom-nav has-sticky-cta">', `<body class="no-bottom-nav has-sticky-cta" data-vehicle-id="${v.id}">`);
   html = html.replace('<main id="main">', '<main id="main">\n  ' + noscript);
   // dados embutidos: a página renderiza sem baixar data/vehicles.json
-  html = html.replace('<script src="assets/js/store.js"></script>', '<script>window.__VEICULO__ = ' + jsonInline(v) + ';\nwindow.__SEMELHANTES__ = ' + jsonInline(semelhantes(v, all)) + ';</script>\n<script src="assets/js/store.js"></script>');
+  html = html.replace('<script src="assets/js/store.js"></script>', '<script>window.__VEICULO__ = ' + jsonInline({ ...v, capaId: capaId(v.capa) }) + ';\nwindow.__SEMELHANTES__ = ' + jsonInline(semelhantes(v, all)) + ';</script>\n<script src="assets/js/store.js"></script>');
+  html = html.replace('<link rel="stylesheet" href="assets/css/style.css">', '<link rel="stylesheet" href="assets/css/style.css">\n<link rel="preload" as="image" href="assets/thumbs/' + v.id + '-' + capaId(v.capa) + '.webp" fetchpriority="high">');
   if (!html.includes('window.__VEICULO__')) throw new Error('veiculo.html: não encontrei a tag do store.js para embutir os dados');
   return html;
 }

@@ -32,10 +32,12 @@ data/index.json           estoque resumido (usado nas listagens)
 data/categorias.json      categoria de carroceria por modelo (SUV, picape, sedan...)
 data/avaliacoes.json      avaliações do Google, preenchidas à mão
 assets/js/analytics.js    GA4 + Pixel da Meta e eventos de contato (IDs em store.js)
-assets/thumbs/, assets/marcas/, assets/video/   miniaturas, logos e vídeo do hero
+assets/thumbs/, assets/fotos/, assets/og/, assets/marcas/, assets/video/   imagens geradas e vídeo do hero
+sw.js                     service worker (mude VERSAO para descartar o cache dos visitantes)
+tests/                    validação de dados, parser do sync (fixtures reais) e fumaça no Chromium
 scripts/sync-inventory.mjs  atualiza os dois JSON a partir do site atual
 scripts/gerar-paginas.mjs   gera v/<id>.html (uma página por veículo) e sitemap.xml
-scripts/gerar-miniaturas.py gera assets/thumbs/<id>.webp (capa em 640 px, ~40 KB) e baixa assets/marcas/*.webp
+scripts/gerar-miniaturas.py gera assets/thumbs (capa 800 px), assets/fotos (cada foto em 160 px), assets/og (capa JPEG para a prévia do WhatsApp) e baixa assets/marcas
 v/                        páginas geradas (não edite à mão: mude veiculo.html e rode npm run pages)
 ```
 
@@ -47,11 +49,11 @@ O estoque vem do site atual (plataforma AutoCerto). Para sincronizar:
 npm run sync        # ou: node scripts/sync-inventory.mjs
 ```
 
-Requer Node 22+ e Python 3 com Pillow (`pip install pillow`) para as miniaturas. O primeiro script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes). O segundo regenera `v/*.html` e `sitemap.xml` (apaga as páginas de veículos que saíram do estoque). Se o site for publicado em outro domínio, rode `node scripts/gerar-paginas.mjs --site-url https://seu-dominio/`.
+Requer Node 22+ e Python 3 com Pillow (`pip install pillow`) para as miniaturas. O primeiro script baixa a listagem e as páginas de detalhe, valida (título, preço, fotos, contagem) e só grava `data/vehicles.json` e `data/index.json` se tudo estiver consistente. Opções: `--out <dir>`, `--date AAAA-MM-DD`, `--from-dir <dir>` (modo offline para testes). O segundo regenera `v/*.html` e `sitemap.xml` (apaga as páginas de veículos que saíram do estoque). O terceiro gera as imagens locais; os nomes carregam a identidade da foto de origem, então uma capa trocada na loja vira uma miniatura nova automaticamente. Um anúncio com problema (sem fotos, preço ilegível) é pulado com aviso em `data/vehicles.json` (`avisos`), sem travar o resto. Se o site for publicado em outro domínio, rode `node scripts/gerar-paginas.mjs --site-url https://seu-dominio/`.
 
 O workflow `.github/workflows/sync-estoque.yml` faz isso automaticamente todo dia às 06:00 (Brasília) e também pode ser disparado manualmente em **Actions → Sincronizar estoque → Run workflow**. Ele commita as mudanças no branch padrão, o que dispara a publicação.
 
-Os cartões usam as miniaturas locais (`assets/thumbs`), com a foto original como reserva se a miniatura não existir. As fotos grandes da galeria continuam hospedadas em `www.autocerto.com` (mesmo servidor usado pelo site atual). Se a loja deixar a AutoCerto, as fotos precisam ser copiadas para outro lugar e o campo `fotos` ajustado.
+Os cartões, a faixa de miniaturas e a primeira foto da galeria usam imagens locais (`assets/thumbs`, `assets/fotos`), com a foto original como reserva se faltarem; as demais fotos da galeria só são baixadas quando o visitante chega perto delas. As fotos grandes continuam hospedadas em `www.autocerto.com` (mesmo servidor usado pelo site atual). Se a loja deixar a AutoCerto, as fotos precisam ser copiadas para outro lugar e o campo `fotos` ajustado.
 
 ## Publicar no GitHub Pages
 
@@ -82,7 +84,7 @@ Use apenas avaliações reais e o texto como está publicado. Enquanto `nota` fo
 ## Testes
 
 ```bash
-npm run test:dados   # consistência de data/*.json, v/*.html, sitemap, categorias e miniaturas
+npm run test:dados   # consistência de data/*.json, v/*.html, sitemap, categorias e miniaturas + parser do sync contra fixtures reais
 npm test             # o anterior + teste de fumaça no Chromium (precisa de `npm i --no-save playwright@1.56.1` e `npx playwright install chromium`)
 ```
 
@@ -101,4 +103,5 @@ Qualquer servidor estático serve. Abrir os arquivos direto com `file://` não f
 
 - Ficha de financiamento completa (CPF, RG, renda, etc.): sem back-end não há como receber esses dados com segurança. A pré-análise vai pelo WhatsApp e o consultor pede o restante.
 - Simulador de parcelas com juros: não há taxa oficial da loja para usar; inventar uma seria enganar o cliente.
-- Analytics: já incluído com os mesmos IDs do site atual (GA4 `G-F35L06L32H` e Pixel `410840736561439`, em `assets/js/store.js`). Para desligar, deixe os dois como `null`.
+- Analytics: já incluído com os mesmos IDs do site atual (GA4 `G-F35L06L32H` e Pixel `410840736561439`, em `assets/js/store.js`). O aviso de cookies tem "Aceitar" e "Só o necessário": sem aceite, o GA4 roda em Consent Mode (sem cookies) e o Pixel não carrega. Para desligar tudo, deixe os dois IDs como `null`.
+- Modelo novo no estoque: aparece normalmente; para entrar no filtro por categoria, adicione a chave `MARCA|MODELO` em `data/categorias.json` (o teste de dados avisa quais faltam).

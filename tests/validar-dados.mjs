@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = (p) => JSON.parse(fs.readFileSync(path.join(ROOT, p), 'utf8'));
 const erros = [];
+const semCategoria = new Set();
 const check = (cond, msg) => { if (!cond) erros.push(msg); };
 
 const veic = read('data/vehicles.json');
@@ -34,7 +35,7 @@ for (const v of list) {
   check(Array.isArray(v.caracteristicas) && Array.isArray(v.opcionais) && Array.isArray(v.descricao), `${tag}: listas ausentes`);
   check(v.video === null || /^[A-Za-z0-9_-]{6,20}$/.test(v.video), `${tag}: id de vídeo inválido`);
   check(fs.existsSync(path.join(ROOT, 'v', `${v.id}.html`)), `${tag}: falta v/${v.id}.html (rode npm run pages)`);
-  check(v.tipo === 'moto' || cats.modelos[`${v.marca}|${v.modelo}`], `${tag}: sem categoria em data/categorias.json`);
+  if (!(v.tipo === 'moto' || cats.modelos[`${v.marca}|${v.modelo}`])) semCategoria.add(`${v.marca}|${v.modelo}`);
 }
 for (const id of veic.destaques || []) check(ids.has(id), `destaque ${id} não está no estoque`);
 check(idx.total === list.length && idx.veiculos.length === list.length, 'index.json com total diferente de vehicles.json');
@@ -51,6 +52,11 @@ const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
 check((sitemap.match(/<url>/g) || []).length === list.length + 6, 'sitemap.xml com contagem inesperada de URLs (rode npm run pages)');
 const thumbs = fs.readdirSync(path.join(ROOT, 'assets/thumbs')).filter((f) => f.endsWith('.webp')).length;
 if (thumbs < list.length) console.log(`aviso: ${list.length - thumbs} veículos sem miniatura local (o site usa a foto original)`);
+const ogs = fs.existsSync(path.join(ROOT, 'assets/og')) ? fs.readdirSync(path.join(ROOT, 'assets/og')).filter((f) => f.endsWith('.jpg')) : [];
+if (ogs.length < list.length) console.log(`aviso: ${list.length - ogs.length} veículos sem imagem OG local (prévia do WhatsApp pode sair sem foto)`);
+for (const f of ogs) { if (fs.statSync(path.join(ROOT, 'assets/og', f)).size > 300_000) console.log(`aviso: assets/og/${f} passa de 300 KB (o WhatsApp não mostra a prévia)`); }
+if (semCategoria.size) console.log(`aviso: ${semCategoria.size} modelo(s) sem categoria em data/categorias.json (aparecem no estoque, só não entram no filtro por categoria): ${[...semCategoria].join(', ')}`);
+if (veic.avisos && veic.avisos.length) console.log(`aviso: o último sync pulou ${veic.avisos.length} anúncio(s): ${veic.avisos.map((a) => a.id + ' (' + a.erro + ')').join('; ')}`);
 
 if (erros.length) { console.error(`FALHOU: ${erros.length} problema(s)\n  ` + erros.slice(0, 40).join('\n  ')); process.exit(1); }
 console.log(`OK: ${list.length} veículos, ${idx.veiculos.length} no índice, ${(veic.destaques || []).length} destaques, ${thumbs} miniaturas, ${Object.keys(cats.modelos).length} modelos categorizados.`);

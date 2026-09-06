@@ -16,6 +16,8 @@
 <meta property="og:image" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/assets/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:url" content="https://marcusbarbosa92.github.io/IguatemiVeiculos/estoque.html">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://www.autocerto.com">
@@ -35,26 +37,17 @@
           <button class="clear" id="q-clear" type="button" aria-label="Limpar busca" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
         </div>
         <button class="tb-btn" id="btn-filters" type="button" aria-haspopup="dialog" aria-controls="filters"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtros<span class="cnt" id="filter-count" hidden>0</span></button>
-        <div class="tb-btn">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M4 12h7M4 17h4M17 6v12m0 0 3-3m-3 3-3-3"/></svg><span class="lbl" id="ordem-label" aria-hidden="true"></span>
-          <label class="sr-only" for="ordem">Ordenar por</label>
-          <select id="ordem">
-            <option value="marca">Marca / modelo</option>
-            <option value="preco-asc">Menor preço</option>
-            <option value="preco-desc">Maior preço</option>
-            <option value="ano">Ano mais novo</option>
-            <option value="km">Menor km</option>
-          </select>
-        </div>
       </div>
     </div>
   </div>
   <div class="container">
     <h1 class="sr-only">Estoque de veículos</h1>
     <div class="active-filters" id="active-filters"></div>
-    <div class="results-head"><span id="results-count" aria-live="polite">Carregando…</span><button class="chip" type="button" id="saved-chip" aria-pressed="false" hidden></button><span id="results-updated" class="small"></span></div>
+    <div class="results-head"><span id="results-count" aria-live="polite">Carregando…</span><button class="chip" type="button" id="saved-chip" aria-pressed="false" hidden></button>
+      <label class="sort"><span class="sr-only">Ordenar por</span><select id="ordem" aria-label="Ordenar por"><option value="marca">Marca / modelo</option><option value="preco-asc">Menor preço</option><option value="preco-desc">Maior preço</option><option value="ano">Ano mais novo</option><option value="km">Menor km</option></select></label></div>
     <div class="v-grid" id="results"><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div><div class="skeleton sk-card"></div></div>
     <div class="load-more" id="load-more" hidden><button class="btn btn-outline" id="btn-more" type="button">Carregar mais</button></div>
+    <p class="results-foot" id="results-updated"></p>
   </div>
 
   <div class="sheet-backdrop" id="filters-backdrop"></div>
@@ -66,7 +59,7 @@
       <div class="fgroup"><label for="f-marca">Marca</label><select class="input" id="f-marca"><option value="">Todas as marcas</option></select></div>
       <div class="fgroup"><label for="f-modelo">Modelo</label><select class="input" id="f-modelo"><option value="">Todos os modelos</option></select></div>
       <div class="fgroup"><span class="lbl">Preço</span><div class="row2"><div><label class="sr-only" for="f-precoMin">Preço mínimo</label><select class="input" id="f-precoMin"><option value="">De</option></select></div><div><label class="sr-only" for="f-precoMax">Preço máximo</label><select class="input" id="f-precoMax"><option value="">Até</option></select></div></div></div>
-      <div class="fgroup"><label for="f-anoMin">Ano do modelo a partir de</label><select class="input" id="f-anoMin"><option value="">Qualquer ano</option></select></div>
+      <div class="fgroup"><div class="row2"><div><label for="f-anoMin">Ano a partir de</label><select class="input" id="f-anoMin"><option value="">Qualquer</option></select></div><div><label for="f-kmMax">Km até</label><select class="input" id="f-kmMax"><option value="">Qualquer</option><option value="30000">30 mil km</option><option value="50000">50 mil km</option><option value="80000">80 mil km</option><option value="100000">100 mil km</option><option value="150000">150 mil km</option></select></div></div></div>
       <div class="fgroup"><span class="lbl">Câmbio</span><div class="chips wrap" id="f-cambio" role="group" aria-label="Câmbio"></div></div>
       <div class="fgroup"><span class="lbl">Combustível</span><div class="chips wrap" id="f-combustivel" role="group" aria-label="Combustível"></div></div>
       <div class="fgroup"><span class="lbl">Características</span><div class="chips wrap" id="f-tag" role="group" aria-label="Características"></div></div>

@@ -6,6 +6,7 @@
 <!-- meta:start (bloco substituído por scripts/gerar-paginas.mjs nas páginas v/<id>.html) -->
 <title>Veículo · Iguatemi Automóveis</title>
 <meta name="description" content="Detalhes do veículo, fotos, opcionais e contato direto pelo WhatsApp. Iguatemi Automóveis, Campinas - SP.">
+<meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Veículo · Iguatemi Automóveis">
 <meta property="og:description" content="Detalhes do veículo na Iguatemi Automóveis, Campinas - SP.">
@@ -36,9 +37,9 @@
 
   <div class="sheet-backdrop" id="sim-backdrop"></div>
   <section class="sheet" id="sim" role="dialog" aria-modal="true" aria-labelledby="sim-title" aria-hidden="true">
-    <div class="sheet-head"><h3 id="sim-title">Simular financiamento</h3><button class="hdr-btn" type="button" data-close aria-label="Fechar" style="color:#17171a"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    <form class="sheet-body" id="sim-form" data-wa-form="Simulação de financiamento">
-      <p class="muted small" style="margin:0">Preencha e a solicitação abre no seu WhatsApp, já preenchida, para você enviar à loja. As condições dependem da análise de crédito.</p>
+    <div class="sheet-head"><h3 id="sim-title">Proposta de financiamento</h3><button class="hdr-btn" type="button" data-close aria-label="Fechar" style="color:#17171a"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <form class="sheet-body" id="sim-form" data-wa-form="Proposta de financiamento">
+      <p class="muted small" style="margin:0">O site não calcula parcelas: o pedido abre no seu WhatsApp, já preenchido, e a loja responde com as condições, que dependem da análise de crédito.</p>
       <input type="hidden" name="veiculo" id="sim-veiculo" data-label="Veículo">
       <input type="hidden" name="valor" id="sim-valor" data-label="Valor do veículo">
       <div class="field"><label for="sim-entrada">Valor de entrada (R$)</label><input class="input" id="sim-entrada" name="entrada" type="text" inputmode="numeric" placeholder="Ex.: 30.000" data-label="Entrada (R$)"></div>

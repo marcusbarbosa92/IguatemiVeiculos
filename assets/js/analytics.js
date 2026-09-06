@@ -6,23 +6,35 @@
   var S = window.STORE, cfg = S && S.analytics;
   if (!cfg || (!cfg.ga4 && !cfg.metaPixel)) return;
   if (navigator.doNotTrack === "1" || window.doNotTrack === "1" || navigator.globalPrivacyControl) return;
+  var consent = window.App && window.App.Consent ? window.App.Consent.get() : null;
+  if (consent === "necessary") return; // o visitante pediu só o essencial: nada de medição
 
   var page = (location.pathname.split("/").pop() || "index.html");
   var vid = document.body.getAttribute("data-vehicle-id") || new URLSearchParams(location.search).get("id") || null;
+  var granted = { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "granted", analytics_storage: "granted" };
+  var denied = { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" };
 
   if (cfg.ga4) {
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+    // Consent Mode: sem consentimento, o GA4 só envia sinais sem cookies; ao aceitar, libera tudo
+    window.gtag("consent", "default", consent === "all" ? granted : denied);
     window.gtag("js", new Date());
     window.gtag("config", cfg.ga4, { anonymize_ip: true, send_page_view: true });
     var g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(cfg.ga4); document.head.appendChild(g);
   }
-  if (cfg.metaPixel) {
-    /* código oficial do Meta Pixel, sem alterações além do ID vindo de store.js */
+  var pixelOn = false;
+  function startPixel() {
+    if (pixelOn || !cfg.metaPixel) return; pixelOn = true;
+    /* código oficial do Meta Pixel, sem alterações além do ID vindo de store.js; só roda com consentimento */
     !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
     window.fbq("init", cfg.metaPixel);
     window.fbq("track", "PageView");
   }
+  if (consent === "all") startPixel();
+  document.addEventListener("consent:change", function (e) {
+    if (e.detail === "all") { if (window.gtag) window.gtag("consent", "update", granted); startPixel(); }
+  });
 
   function track(name, params, fbEvent) {
     params = Object.assign({ pagina: page }, params || {});
@@ -59,5 +71,6 @@
     track("envio_formulario", { formulario: f.getAttribute("data-wa-form") }, "Lead");
   }, true);
   document.addEventListener("fav:change", function (e) { track(e.detail && e.detail.on ? "salvar_veiculo" : "remover_salvo", { veiculo_salvo: e.detail && e.detail.id, total_salvos: e.detail && e.detail.total }); });
-  if (vid) track("view_item", { content_ids: [String(vid)], content_type: "product" }, "ViewContent");
+  // visualização de veículo só quando a página renderizou de fato (id inexistente = "não encontrado", não conta)
+  document.addEventListener("veiculo:render", function (e) { var id = String(e.detail && e.detail.id || vid); track("view_item", { content_ids: [id], content_type: "product" }, "ViewContent"); });
 })();

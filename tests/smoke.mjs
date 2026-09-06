@@ -62,7 +62,7 @@ try {
   await page.evaluate(() => document.querySelector('#btn-sim').click()); await page.waitForTimeout(300);
   await page.fill('#sim-nome', 'Teste'); await page.fill('#sim-tel', '19999990000'); await page.evaluate(() => document.querySelector('#sim-form button[type=submit]').click()); await page.waitForTimeout(300);
   const wa = await page.evaluate(() => decodeURIComponent(window.__last || ''));
-  if (!/wa\.me\/5519999950000\?text=\*Simula/.test(wa) || !/Telefone: \(19\) 99999-0000/.test(wa)) falhas.push('fluxo: mensagem de simulação errada: ' + wa.slice(0, 80));
+  if (!/wa\.me\/5519999950000\?text=\*Proposta de financiamento/.test(wa) || !/Telefone: \(19\) 99999-0000/.test(wa)) falhas.push('fluxo: mensagem de simulação errada: ' + wa.slice(0, 80));
 } catch (e) { falhas.push('fluxo: ' + e.message.split('\n')[0]); }
 await browser.close(); server.close();
 if (falhas.length) { console.error(`FALHOU (${falhas.length}):\n  ` + falhas.join('\n  ')); process.exit(1); }

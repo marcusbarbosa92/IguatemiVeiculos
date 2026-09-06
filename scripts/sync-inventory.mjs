@@ -313,11 +313,13 @@ function toIndexEntry(v) {
     cambio: v.cambio,
     combustivel: v.combustivel,
     capa: v.capa,
+    capaId: capaId(v.capa), // nome da miniatura local: assets/thumbs/<id>-<capaId>.webp (muda se a loja trocar a capa)
     caracteristicas: v.caracteristicas,
     nFotos: v.fotos.length,
     video: v.video !== null,
   };
 }
+function capaId(url) { return String(url).split('/').pop().replace(/\.[a-z0-9]+$/i, '').replace(/[^A-Za-z0-9_-]/g, ''); }
 
 // Python-style tuple sort on (marca, modelo, versao, id): plain code-point string comparison.
 function compareStrings(a, b) {
@@ -484,19 +486,21 @@ async function main() {
     return vehicle;
   });
 
+  // Anúncios com problema (sem fotos, preço ilegível, página fora do ar) são pulados com aviso; só aborta se forem muitos,
+  // para um único anúncio incompleto não travar a atualização do estoque inteiro.
+  const limite = Math.max(3, Math.ceil(listing.length * 0.05));
   if (failures.length) {
-    console.error(`\n${failures.length} detail page(s) failed:`);
+    console.error(`\n${failures.length} detail page(s) skipped:`);
     for (const f of failures) console.error(`  id ${f.item.id} (${BASE_URL}${f.item.url}): ${f.error.message}`);
-    throw new Error(`${failures.length} of ${listing.length} detail pages failed; nothing written`);
+    if (failures.length > limite) throw new Error(`${failures.length} of ${listing.length} detail pages failed (limit ${limite}); nothing written`);
   }
   const vehicles = results.filter(Boolean);
-  if (vehicles.length !== listing.length) {
-    throw new Error(`parsed ${vehicles.length} vehicles but the listing has ${listing.length}; nothing written`);
-  }
+  if (vehicles.length === 0) throw new Error('no vehicle could be parsed; nothing written');
+  const avisos = failures.map((f) => ({ id: f.item.id, url: BASE_URL + f.item.url, erro: f.error.message }));
 
   vehicles.sort(compareVehicles);
 
-  const vehiclesDoc = { atualizadoEm: date, fonte: LISTING_URL, total: vehicles.length, destaques, veiculos: vehicles };
+  const vehiclesDoc = { atualizadoEm: date, fonte: LISTING_URL, total: vehicles.length, destaques, ...(avisos.length ? { avisos } : {}), veiculos: vehicles };
   const indexDoc = { atualizadoEm: date, total: vehicles.length, destaques, veiculos: vehicles.map(toIndexEntry) };
 
   fs.mkdirSync(outDir, { recursive: true });

@@ -1,0 +1,79 @@
+{
+ "atualizadoEm": "2026-09-06",
+ "total": 3,
+ "destaques": [
+  5466645
+ ],
+ "veiculos": [
+  {
+   "id": 5466645,
+   "slug": "vespa-classic-vxl-150-vespa-classic-vxl-150-2022",
+   "tipo": "moto",
+   "marca": "PIAGGIO",
+   "modelo": "VESPA CLASSIC VXL 150",
+   "versao": "",
+   "anoFabricacao": 2021,
+   "anoModelo": 2022,
+   "km": 12,
+   "preco": 59990,
+   "cambio": "Manual",
+   "combustivel": "Gasolina",
+   "capa": "https://www.autocerto.com/fotos/3854/5466645/1_081255.jpg",
+   "capaId": "1_081255",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Licenciado"
+   ],
+   "nFotos": 17,
+   "video": false
+  },
+  {
+   "id": 5058328,
+   "slug": "burgman-650-burgman-650-2015",
+   "tipo": "moto",
+   "marca": "SUZUKI",
+   "modelo": "BURGMAN 650",
+   "versao": "",
+   "anoFabricacao": 2014,
+   "anoModelo": 2015,
+   "km": 23404,
+   "preco": 33990,
+   "cambio": "Manual",
+   "combustivel": "Gasolina",
+   "capa": "https://www.autocerto.com/fotos/3854/5058328/5_124654.jpg",
+   "capaId": "5_124654",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 16,
+   "video": true
+  },
+  {
+   "id": 5440442,
+   "slug": "bonneville-speedmaster-1200cc-bonneville-speedmaster-1200cc-2026",
+   "tipo": "moto",
+   "marca": "TRIUMPH",
+   "modelo": "BONNEVILLE SPEEDMASTER 1200CC",
+   "versao": "",
+   "anoFabricacao": 2026,
+   "anoModelo": 2026,
+   "km": 323,
+   "preco": 69990,
+   "cambio": "Manual",
+   "combustivel": "Gasolina",
+   "capa": "https://www.autocerto.com/fotos/3854/5440442/2_041506.jpg",
+   "capaId": "2_041506",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 18,
+   "video": true
+  }
+ ]
+}

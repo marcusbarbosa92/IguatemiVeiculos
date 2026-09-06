@@ -63,7 +63,9 @@
   const vehName = (v) => v.marca + " " + v.modelo + (v.versao ? " " + v.versao : "") + " " + v.anoFabricacao + "/" + v.anoModelo;
   const vehShort = (v) => v.marca + " " + v.modelo + " " + v.anoFabricacao + "/" + v.anoModelo;
   const vehUrl = (v) => "v/" + v.id + ".html";
-  const thumbUrl = (v) => "assets/thumbs/" + v.id + ".webp";           // gerado por scripts/gerar-miniaturas.py (fallback: v.capa)
+  const fotoId = (url) => String(url || "").split("/").pop().replace(/\.[a-z0-9]+$/i, "").replace(/[^A-Za-z0-9_-]/g, "");
+  const thumbUrl = (v) => "assets/thumbs/" + v.id + "-" + (v.capaId || fotoId(v.capa)) + ".webp"; // capa em 800 px (scripts/gerar-miniaturas.py; fallback: v.capa)
+  const fotoThumbUrl = (v, url) => "assets/fotos/" + v.id + "/" + fotoId(url) + ".webp";           // foto em 160 px para a faixa de miniaturas
   const brandKey = (marca, tipo) => String(marca).toLowerCase().replace(/[^a-z0-9]/g, "") + (tipo === "moto" ? "_moto" : "");
   const brandLogo = (marca, tipo) => "assets/marcas/" + brandKey(marca, tipo) + ".webp";
   const absUrl = (rel) => new URL(rel, document.baseURI).href;
@@ -264,6 +266,11 @@
   };
   document.addEventListener("click", (e) => { const b = e.target && e.target.closest ? e.target.closest("[data-fav]") : null; if (!b) return; e.preventDefault(); e.stopPropagation(); Fav.toggle(b.dataset.fav); });
 
+  /* Consentimento (LGPD): "all" libera medição e anúncios; "necessary" mantém só o essencial. Lido por analytics.js. */
+  const Consent = {
+    get() { try { const c = localStorage.getItem("consent"); if (c) return c; return localStorage.getItem("cookies-ok") === "1" ? "all" : null; } catch (e) { return null; } },
+    set(v) { try { localStorage.setItem("consent", v); } catch (e) { /* sem storage */ } document.dispatchEvent(new CustomEvent("consent:change", { detail: v })); }
+  };
   /* ---------- Avaliações do Google (data/avaliacoes.json, preenchido à mão) ---------- */
   const safeHttp = (u) => (/^https:\/\//i.test(String(u || "")) ? String(u) : "");
   const loadReviews = () => loadJSON("data/avaliacoes.json").then((d) => (d && typeof d.nota === "number" && d.nota > 0 && d.nota <= 5 ? Object.assign(d, { linkGoogle: safeHttp(d.linkGoogle) }) : null)).catch(() => null);
@@ -323,18 +330,19 @@
     });
   }
 
-  window.App = { Fav, $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, thumbUrl, brandKey, brandLogo, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
+  window.App = { Fav, Consent, $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, thumbUrl, fotoThumbUrl, brandKey, brandLogo, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
 
+  // imagens aparecem com fade (classe .is-loaded) em vez de "pipocar"
+  document.addEventListener("load", (e) => { const t = e.target; if (t && t.tagName === "IMG") t.classList.add("is-loaded"); }, true);
   // imagem com data-fallback: se a miniatura local não existir, usa a foto original
   document.addEventListener("error", (e) => { const t = e.target; if (t && t.tagName === "IMG" && t.dataset.fallback && t.src !== t.dataset.fallback) { t.src = t.dataset.fallback; delete t.dataset.fallback; } }, true);
 
   function cookieNotice() {
     if (!S.analytics || (!S.analytics.ga4 && !S.analytics.metaPixel)) return;
-    let ok = false; try { ok = localStorage.getItem("cookies-ok") === "1"; } catch (e) { /* sem storage */ }
-    if (ok) return;
+    if (Consent.get()) return;
     const n = document.createElement("div"); n.className = "cookie-notice"; n.setAttribute("role", "region"); n.setAttribute("aria-label", "Aviso de cookies");
-    n.innerHTML = '<p>Usamos cookies para medir o uso do site e mostrar anúncios da loja no Google e na Meta. Veja a <a href="politica-de-privacidade.html">política de privacidade</a>.</p><button class="btn btn-dark btn-sm" type="button">Entendi</button>';
-    n.querySelector("button").addEventListener("click", () => { try { localStorage.setItem("cookies-ok", "1"); } catch (e) { /* ignora */ } n.remove(); });
+    n.innerHTML = '<p>Cookies para medir o uso do site e mostrar anúncios da loja no Google e na Meta. <a href="politica-de-privacidade.html">Saiba mais</a></p><button class="btn btn-outline btn-sm" type="button" data-c="necessary">Só o necessário</button><button class="btn btn-dark btn-sm" type="button" data-c="all">Aceitar</button>';
+    $$("button", n).forEach((b) => b.addEventListener("click", () => { Consent.set(b.dataset.c); n.remove(); }));
     document.body.appendChild(n);
   }
 

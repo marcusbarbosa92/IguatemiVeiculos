@@ -37,17 +37,18 @@ jobs:
       - run: node scripts/sync-inventory.mjs
       - run: node scripts/gerar-paginas.mjs --site-url "${{ vars.SITE_URL || 'https://marcusbarbosa92.github.io/IguatemiVeiculos/' }}"
       - run: python3 scripts/gerar-miniaturas.py
+      - run: node tests/validar-dados.mjs
       - name: Commit se o estoque mudou
         id: commit
         run: |
           # ignora linhas que mudam todo dia (data de atualização e lastmod do sitemap)
-          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml assets/thumbs assets/marcas \
-             && [ -z "$(git ls-files --others --exclude-standard -- v assets/thumbs assets/marcas)" ]; then
+          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml assets/thumbs assets/fotos assets/og assets/marcas \
+             && [ -z "$(git ls-files --others --exclude-standard -- v assets/thumbs assets/fotos assets/og assets/marcas)" ]; then
             echo "Estoque sem mudanças."; git checkout -- . ; echo "mudou=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data v sitemap.xml assets/thumbs assets/marcas
+          git add data v sitemap.xml assets/thumbs assets/fotos assets/og assets/marcas
           git commit -m "chore: sincroniza estoque ($(date -u +%Y-%m-%d))"
           git push
           echo "mudou=true" >> "$GITHUB_OUTPUT"

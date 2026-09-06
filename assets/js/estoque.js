@@ -6,17 +6,34 @@
   const TAGS = ["Blindado", "7 lugares", "Único Dono", "Garantia de Fábrica", "Revisado em Concessionária", "IPVA Pago", "Licenciado", "Chave Reserva", "Manual do proprietário"];
   const PAGE = 24;
   let ALL = [], state = {}, shown = 0, filtered = [], CATS = {};
-  const ordemLabel = () => { const o = $("#ordem"); const l = $("#ordem-label"); if (o && l) l.textContent = o.options[o.selectedIndex].text; };
+  const favIds = () => { const ids = new Set(ALL.map((v) => v.id)); return A.Fav.get().filter((id) => ids.has(id)); }; // ignora veículos salvos que já saíram do estoque
+  // "Automático" abrange CVT (para quem compra, os dois são automáticos); CVT continua disponível sozinho
+  const cambioOk = (v) => state.cambio.includes(v.cambio) || (state.cambio.includes("Automático") && v.cambio === "CVT");
+  const hayOf = (v) => norm(v.marca + " " + v.modelo + " " + v.versao + " " + v.anoModelo + " " + v.combustivel + " " + v.cambio + " " + (CATS[v.categoria] || "") + " " + (v.categoria || ""));
 
   const norm = (s) => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/-/g, "").toLowerCase();
 
+  const num = (x) => { const n = Number(x); return x !== null && x !== "" && Number.isFinite(n) && n >= 0 ? String(Math.floor(n)) : ""; };
+  const ORDENS = ["marca", "preco-asc", "preco-desc", "ano", "km"];
   function readState() {
     const p = new URLSearchParams(location.search);
     state = {
       q: p.get("q") || "", salvos: p.get("salvos") === "1", tipo: p.get("tipo") || "", categoria: p.getAll("categoria"), marca: p.get("marca") || "", modelo: p.get("modelo") || "",
-      precoMin: p.get("precoMin") || "", precoMax: p.get("precoMax") || "", anoMin: p.get("anoMin") || "", kmMax: p.get("kmMax") || "",
-      cambio: p.getAll("cambio"), combustivel: p.getAll("combustivel"), tag: p.getAll("tag"), ordem: p.get("ordem") || "marca"
+      precoMin: num(p.get("precoMin")), precoMax: num(p.get("precoMax")), anoMin: num(p.get("anoMin")), kmMax: num(p.get("kmMax")),
+      cambio: p.getAll("cambio"), combustivel: p.getAll("combustivel"), tag: p.getAll("tag"), ordem: ORDENS.includes(p.get("ordem")) ? p.get("ordem") : "marca"
     };
+  }
+  // depois de carregar o índice: marca/modelo em qualquer caixa, valores inexistentes descartados
+  function normalizeState() {
+    const findCI = (list, val) => list.find((x) => x.toLowerCase() === String(val).toLowerCase()) || "";
+    if (state.marca) state.marca = findCI(Array.from(new Set(ALL.map((v) => v.marca))), state.marca);
+    if (state.modelo) state.modelo = findCI(Array.from(new Set(ALL.filter((v) => !state.marca || v.marca === state.marca).map((v) => v.modelo))), state.modelo);
+    if (state.tipo && !["carro", "moto"].includes(state.tipo)) state.tipo = "";
+    state.categoria = state.categoria.filter((c) => Object.prototype.hasOwnProperty.call(CATS, c));
+    const valid = (arr, list) => arr.filter((x) => list.includes(x));
+    state.cambio = valid(state.cambio, Array.from(new Set(ALL.map((v) => v.cambio))));
+    state.combustivel = valid(state.combustivel, Array.from(new Set(ALL.map((v) => v.combustivel))));
+    state.tag = valid(state.tag, TAGS);
   }
   function writeState() {
     const p = new URLSearchParams();
@@ -30,7 +47,7 @@
 
   function apply() {
     const q = norm(state.q).split(/\s+/).filter(Boolean);
-    const favs = A.Fav.get();
+    const favs = favIds();
     filtered = ALL.filter((v) => {
       if (state.salvos && !favs.includes(v.id)) return false;
       if (state.tipo && v.tipo !== state.tipo) return false;
@@ -41,10 +58,10 @@
       if (state.precoMax && v.preco > +state.precoMax) return false;
       if (state.anoMin && v.anoModelo < +state.anoMin) return false;
       if (state.kmMax && v.km > +state.kmMax) return false;
-      if (state.cambio.length && !state.cambio.includes(v.cambio)) return false;
+      if (state.cambio.length && !cambioOk(v)) return false;
       if (state.combustivel.length && !state.combustivel.includes(v.combustivel)) return false;
       if (state.tag.length && !state.tag.every((t) => v.caracteristicas.includes(t))) return false;
-      if (q.length) { const hay = norm(v.marca + " " + v.modelo + " " + v.versao + " " + v.anoModelo + " " + v.combustivel + " " + v.cambio); if (!q.every((w) => hay.includes(w))) return false; }
+      if (q.length) { const hay = hayOf(v); if (!q.every((w) => hay.includes(w))) return false; }
       return true;
     });
     const s = state.ordem;
@@ -65,8 +82,9 @@
   }
   function renderMore() {
     const slice = filtered.slice(shown, shown + PAGE);
-    if (!filtered.length && state.salvos && !A.Fav.get().length) {
-      $("#results").innerHTML = '<div class="empty" style="grid-column:1/-1">' + icon("heart") + "<b>Você ainda não salvou nenhum veículo.</b><span>Toque no coração de um cartão para guardar o veículo neste aparelho.</span><button class=\"btn btn-outline\" type=\"button\" id=\"empty-clear\">Ver todo o estoque</button></div>";
+    if (!filtered.length && state.salvos && !favIds().length) {
+      const vendidos = A.Fav.get().length > 0;
+      $("#results").innerHTML = '<div class="empty" style="grid-column:1/-1">' + icon("heart") + (vendidos ? "<b>Os veículos que você salvou já saíram do estoque.</b><span>Provavelmente foram vendidos. Veja o que chegou ou fale com a gente.</span>" : "<b>Você ainda não salvou nenhum veículo.</b><span>Toque no coração de um cartão para guardar o veículo neste aparelho.</span>") + '<button class="btn btn-outline" type="button" id="empty-clear">Ver todo o estoque</button>' + (vendidos ? '<a class="btn btn-wa" href="' + A.waLink("Olá! Um veículo que eu tinha salvo no site saiu do estoque. Vocês têm algo parecido?") + '" target="_blank" rel="noopener">' + icon("whatsapp") + " Falar no WhatsApp</a>" : "") + "</div>";
       $("#empty-clear").addEventListener("click", clearAll);
     } else if (!filtered.length) {
       $("#results").innerHTML = '<div class="empty" style="grid-column:1/-1">' + icon("search") + "<b>Nenhum veículo com esses filtros.</b><span>Tente remover algum filtro ou fale com a gente: talvez tenhamos algo chegando.</span><button class=\"btn btn-outline\" type=\"button\" id=\"empty-clear\">Limpar filtros</button><a class=\"btn btn-wa\" href=\"" + A.waLink("Olá! Procuro um veículo específico e não encontrei no site. Podem me ajudar?") + '" target="_blank" rel="noopener">' + icon("whatsapp") + " Falar no WhatsApp</a></div>";
@@ -128,14 +146,15 @@
     };
     chipGroup("f-categoria", Object.keys(CATS), "categoria", (val) => cnt((v) => v.categoria === val));
     $$("#f-categoria .chip").forEach((b) => { b.textContent = ""; b.insertAdjacentHTML("beforeend", esc(CATS[b.dataset.val]) + '<span class="n">' + cnt((v) => v.categoria === b.dataset.val) + "</span>"); });
-    chipGroup("f-cambio", Array.from(new Set(ALL.map((v) => v.cambio))).sort(), "cambio", (val) => cnt((v) => v.cambio === val));
+    chipGroup("f-cambio", Array.from(new Set(ALL.map((v) => v.cambio))).sort(), "cambio", (val) => cnt((v) => v.cambio === val || (val === "Automático" && v.cambio === "CVT")));
+    const autoChip = $('#f-cambio .chip[data-val="Automático"]'); if (autoChip && autoChip.firstChild) autoChip.firstChild.textContent = "Automático (inclui CVT)";
     chipGroup("f-combustivel", Array.from(new Set(ALL.map((v) => v.combustivel))).sort(), "combustivel", (val) => cnt((v) => v.combustivel === val));
     chipGroup("f-tag", TAGS, "tag", (val) => cnt((v) => v.caracteristicas.includes(val)));
     $("#f-marca").addEventListener("change", () => { state.marca = $("#f-marca").value; state.modelo = ""; fillModels(); updateApplyCount(); });
     $("#f-modelo").addEventListener("change", () => { state.modelo = $("#f-modelo").value; updateApplyCount(); });
-    ["precoMin", "precoMax", "anoMin"].forEach((k) => $("#f-" + k).addEventListener("change", () => { state[k] = $("#f-" + k).value; updateApplyCount(); }));
+    ["precoMin", "precoMax", "anoMin", "kmMax"].forEach((k) => $("#f-" + k).addEventListener("change", () => { state[k] = $("#f-" + k).value; updateApplyCount(); }));
     $$("#f-tipo button").forEach((b) => b.addEventListener("click", () => { state.tipo = b.dataset.val; $$("#f-tipo button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false")); updateApplyCount(); }));
-    $("#f-clear").addEventListener("click", () => { applied = true; clearAll(); });
+    $("#f-clear").addEventListener("click", () => { clearAll(); saved = JSON.parse(JSON.stringify(state)); applied = false; });
     $("#f-apply").addEventListener("click", () => { applied = true; apply(); filtersSheet.close(); window.scrollTo({ top: 0, behavior: "smooth" }); });
   }
   function fillModels() {
@@ -148,26 +167,27 @@
   function syncControls() {
     $("#q").value = state.q; $("#q-clear").hidden = !state.q;
     $("#f-marca").value = state.marca; fillModels();
-    $("#f-precoMin").value = state.precoMin; $("#f-precoMax").value = state.precoMax; $("#f-anoMin").value = state.anoMin;
+    $("#f-precoMin").value = state.precoMin; $("#f-precoMax").value = state.precoMax; $("#f-anoMin").value = state.anoMin; $("#f-kmMax").value = state.kmMax;
     $$("#f-tipo button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.val === state.tipo ? "true" : "false"));
     $$("#f-categoria .chip, #f-cambio .chip, #f-combustivel .chip, #f-tag .chip").forEach((b) => b.setAttribute("aria-pressed", state[b.dataset.key].includes(b.dataset.val) ? "true" : "false"));
-    $("#ordem").value = state.ordem; ordemLabel();
+    $("#ordem").value = state.ordem;
     updateApplyCount();
   }
   function updateApplyCount() {
     const q = norm(state.q).split(/\s+/).filter(Boolean);
+    const favs = favIds();
     const n = ALL.filter((v) =>
-      (!state.tipo || v.tipo === state.tipo) && (!state.categoria.length || state.categoria.includes(v.categoria)) && (!state.marca || v.marca === state.marca) && (!state.modelo || v.modelo === state.modelo) &&
+      (!state.salvos || favs.includes(v.id)) && (!state.tipo || v.tipo === state.tipo) && (!state.categoria.length || state.categoria.includes(v.categoria)) && (!state.marca || v.marca === state.marca) && (!state.modelo || v.modelo === state.modelo) &&
       (!state.precoMin || v.preco >= +state.precoMin) && (!state.precoMax || v.preco <= +state.precoMax) && (!state.anoMin || v.anoModelo >= +state.anoMin) &&
       (!state.kmMax || v.km <= +state.kmMax) &&
-      (!state.cambio.length || state.cambio.includes(v.cambio)) && (!state.combustivel.length || state.combustivel.includes(v.combustivel)) &&
+      (!state.cambio.length || cambioOk(v)) && (!state.combustivel.length || state.combustivel.includes(v.combustivel)) &&
       (!state.tag.length || state.tag.every((t) => v.caracteristicas.includes(t))) &&
-      (!q.length || q.every((w) => norm(v.marca + " " + v.modelo + " " + v.versao + " " + v.anoModelo + " " + v.combustivel + " " + v.cambio).includes(w)))).length;
+      (!q.length || q.every((w) => hayOf(v).includes(w)))).length;
     $("#f-apply").textContent = n ? "Ver " + n + (n === 1 ? " veículo" : " veículos") : "Nenhum veículo";
   }
 
   function renderSavedChip() {
-    const total = A.Fav.get().length, el = $("#saved-chip"); if (!el) return;
+    const total = favIds().length, el = $("#saved-chip"); if (!el) return;
     el.hidden = !total && !state.salvos;
     el.setAttribute("aria-pressed", state.salvos ? "true" : "false");
     el.innerHTML = icon("heart") + " Salvos" + (total ? '<span class="n">' + total + "</span>" : "");
@@ -180,14 +200,14 @@
     $("#btn-filters").addEventListener("click", () => { saved = JSON.parse(JSON.stringify(state)); applied = false; syncControls(); filtersSheet.open(); });
     let t; $("#q").addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { state.q = $("#q").value.trim(); $("#q-clear").hidden = !state.q; if (ALL.length) apply(); }, 220); });
     $("#q-clear").addEventListener("click", () => { $("#q").value = ""; state.q = ""; $("#q-clear").hidden = true; apply(); $("#q").focus(); });
-    $("#ordem").addEventListener("change", () => { state.ordem = $("#ordem").value; ordemLabel(); apply(); });
+    $("#ordem").addEventListener("change", () => { state.ordem = $("#ordem").value; apply(); });
     $("#btn-more").addEventListener("click", renderMore);
     if ("IntersectionObserver" in window) { new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting) && !$("#load-more").hidden && shown > 0) renderMore(); }, { rootMargin: "600px 0px" }).observe($("#load-more")); }
-    $("#saved-chip").addEventListener("click", () => { state.salvos = !state.salvos; apply(); });
+    $("#saved-chip").addEventListener("click", () => { const on = !state.salvos; if (on) state = { q: "", salvos: true, tipo: "", categoria: [], marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", kmMax: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; else state.salvos = false; syncControls(); apply(); });
     document.addEventListener("fav:change", () => { if (state.salvos) apply(); else renderSavedChip(); });
     try {
       const data = await A.loadIndex();
-      ALL = data.veiculos; CATS = data.categorias || {};
+      ALL = data.veiculos; CATS = data.categorias || {}; normalizeState();
       if (data.atualizadoEm) { const [y, m, d] = data.atualizadoEm.split("-"); $("#results-updated").textContent = "Atualizado em " + d + "/" + m + "/" + y; }
       buildControls(); syncControls(); apply();
     } catch (err) {
