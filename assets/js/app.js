@@ -153,8 +153,9 @@
         '<div class="drawer-hours"><strong>Horário</strong><br>' + S.horario.map((h) => esc(h.dias) + ": " + esc(h.horas)).join("<br>") + "</div>" +
         socialRow() + "</div></aside>";
       document.body.append(...drawer.childNodes);
-      const open = () => { $("#drawer").classList.add("open"); $("#drawer-backdrop").classList.add("open"); $("#drawer").setAttribute("aria-hidden", "false"); $("#menu-open").setAttribute("aria-expanded", "true"); document.body.style.overflow = "hidden"; $("#menu-close").focus(); };
-      const close = () => { $("#drawer").classList.remove("open"); $("#drawer-backdrop").classList.remove("open"); $("#drawer").setAttribute("aria-hidden", "true"); $("#menu-open").setAttribute("aria-expanded", "false"); document.body.style.overflow = ""; };
+      let untrapDrawer = null;
+      const open = () => { $("#drawer").classList.add("open"); $("#drawer-backdrop").classList.add("open"); $("#drawer").setAttribute("aria-hidden", "false"); $("#menu-open").setAttribute("aria-expanded", "true"); document.body.style.overflow = "hidden"; $("#menu-close").focus(); untrapDrawer = trapFocus($("#drawer")); };
+      const close = () => { if (!$("#drawer").classList.contains("open")) return; $("#drawer").classList.remove("open"); $("#drawer-backdrop").classList.remove("open"); $("#drawer").setAttribute("aria-hidden", "true"); $("#menu-open").setAttribute("aria-expanded", "false"); document.body.style.overflow = ""; if (untrapDrawer) { untrapDrawer(); untrapDrawer = null; } $("#menu-open").focus(); };
       $("#menu-open").addEventListener("click", open);
       $("#menu-close").addEventListener("click", close);
       $("#drawer-backdrop").addEventListener("click", close);
@@ -203,15 +204,30 @@
       '<a href="' + esc(L.tiktok) + '" target="_blank" rel="noopener" aria-label="TikTok">' + icon("tiktok") + "</a></div>";
   }
 
+  /* ---------- Prende o foco (Tab) dentro de um diálogo aberto ---------- */
+  const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  function trapFocus(container) {
+    const handler = (e) => {
+      if (e.key !== "Tab") return;
+      const items = $$(FOCUSABLE, container).filter((el) => el.offsetParent !== null || el === document.activeElement);
+      if (!items.length) return;
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && (document.activeElement === first || !container.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (document.activeElement === last || !container.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }
+
   /* ---------- Folha inferior (bottom sheet) genérica ---------- */
   function sheet(id, opts) {
     opts = opts || {};
     const el = $("#" + id), bd = $("#" + id + "-backdrop");
     if (!el || !bd) return null;
-    let lastFocus = null;
+    let lastFocus = null, untrap = null;
     const api = {
-      open() { lastFocus = document.activeElement; el.classList.add("open"); bd.classList.add("open"); el.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; const f = el.querySelector("button, input, select, [tabindex]"); if (f) f.focus(); },
-      close() { if (!el.classList.contains("open")) return; el.classList.remove("open"); bd.classList.remove("open"); el.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) lastFocus.focus(); if (opts.onClose) opts.onClose(); },
+      open() { lastFocus = document.activeElement; el.classList.add("open"); bd.classList.add("open"); el.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; const f = el.querySelector("button, input, select, [tabindex]"); if (f) f.focus(); untrap = trapFocus(el); },
+      close() { if (!el.classList.contains("open")) return; el.classList.remove("open"); bd.classList.remove("open"); el.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; if (untrap) { untrap(); untrap = null; } if (lastFocus && lastFocus.focus) lastFocus.focus(); if (opts.onClose) opts.onClose(); },
       isOpen() { return el.classList.contains("open"); }
     };
     bd.addEventListener("click", api.close);

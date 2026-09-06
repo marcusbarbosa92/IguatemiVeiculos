@@ -60,8 +60,10 @@
     const lb = $("#lightbox"), lbTrack = $("#lb-track");
     lbTrack.innerHTML = v.fotos.map((f, i) => '<div><img src="' + esc(f) + '" alt="' + esc(name) + " — foto " + (i + 1) + '" loading="lazy" decoding="async"></div>').join("");
     let lbIdx = 0;
-    function openLightbox(i) { lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; requestAnimationFrame(() => { lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "auto" }); lbIdx = i; $("#lb-counter").textContent = (i + 1) + "/" + n; }); $("#lb-close").focus(); }
-    function closeLightbox() { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; goTo(lbIdx, false); }
+    let lbOpener = null, lbTab = null;
+    const trapLb = (e) => { if (e.key !== "Tab") return; const items = $$("button", lb).filter((b) => b.offsetParent !== null); if (!items.length) return; const f = items[0], l = items[items.length - 1]; if (e.shiftKey && document.activeElement === f) { e.preventDefault(); l.focus(); } else if (!e.shiftKey && document.activeElement === l) { e.preventDefault(); f.focus(); } };
+    function openLightbox(i) { lbOpener = document.activeElement; lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; requestAnimationFrame(() => { lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "auto" }); lbIdx = i; $("#lb-counter").textContent = (i + 1) + "/" + n; }); $("#lb-close").focus(); document.addEventListener("keydown", trapLb); }
+    function closeLightbox() { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; document.removeEventListener("keydown", trapLb); goTo(lbIdx, false); const t = $$("#g-track > button")[lbIdx]; if (t) t.focus(); else if (lbOpener && lbOpener.focus) lbOpener.focus(); }
     const lbGo = (i) => { i = (i + n) % n; lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "smooth" }); };
     lbTrack.addEventListener("scroll", () => { const i = Math.round(lbTrack.scrollLeft / lbTrack.clientWidth); if (i !== lbIdx) { lbIdx = i; $("#lb-counter").textContent = (i + 1) + "/" + n; } }, { passive: true });
     $("#lb-close").addEventListener("click", closeLightbox); $("#lb-prev").addEventListener("click", () => lbGo(lbIdx - 1)); $("#lb-next").addEventListener("click", () => lbGo(lbIdx + 1));
