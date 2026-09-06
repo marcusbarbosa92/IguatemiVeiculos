@@ -2,6 +2,12 @@
    Iguatemi Automóveis — site mobile-first
    Tokens, base, componentes, páginas. Sem dependências.
    ========================================================================== */
+/* Inter (SIL OFL) hospedada aqui: arquivo variável 400–900 do Google Fonts, só o subconjunto latino (cobre o português) */
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400 900; font-display: swap;
+  src: url("../fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 :root {
   --red: #eb3531;          /* vermelho do logotipo */
   --red-700: #c4231f;
@@ -212,6 +218,11 @@ body.no-bottom-nav .bottom-nav { display: none; }
 
 .v-grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
 .v-grid > *, .h-scroll > *, .specs > *, .row2 > *, .form-grid > *, .contact-grid > *, .feature-grid > *, .brands-grid > * { min-width: 0; }
+/* lista simples de links dos veículos, gerada no HTML; vira cartões quando o JS carrega */
+.static-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; grid-column: 1 / -1; flex: 1 1 100%; max-width: none; }
+.static-list li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 12px; background: var(--card); border-radius: 10px; box-shadow: var(--shadow); font-size: .9rem; }
+.static-list a { color: var(--ink); font-weight: 700; text-decoration: none; }
+.static-list span { color: var(--red-700); font-weight: 800; white-space: nowrap; }
 .h-scroll { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 16px; padding: 4px 16px 14px; margin: 0 -16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .h-scroll::-webkit-scrollbar { display: none; }
 .h-scroll > * { flex: 0 0 78%; max-width: 320px; scroll-snap-align: start; }

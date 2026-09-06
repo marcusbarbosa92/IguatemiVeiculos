@@ -21,6 +21,7 @@
     window.gtag("consent", "default", consent === "all" ? granted : denied);
     window.gtag("js", new Date());
     window.gtag("config", cfg.ga4, { anonymize_ip: true, send_page_view: true });
+    (cfg.googleAds || []).forEach(function (id) { window.gtag("config", id); });
     // o script do Google (~600 KB) só é baixado depois da primeira interação ou do aceite, para não pesar na abertura
     var gtagOn = false;
     var loadGtag = function () { if (gtagOn) return; gtagOn = true; var g = document.createElement("script"); g.async = true; g.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(cfg.ga4); document.head.appendChild(g); };
@@ -44,6 +45,7 @@
     params = Object.assign({ pagina: page }, params || {});
     if (vid) params.veiculo_id = vid;
     try { if (window.gtag) window.gtag("event", name, params); } catch (e) { /* ignora */ }
+    try { var conv = cfg && cfg.conversoes && cfg.conversoes[name]; if (conv && window.gtag) window.gtag("event", "conversion", { send_to: conv }); } catch (e) { /* ignora */ }
     try { if (window.fbq) { if (fbEvent) window.fbq("track", fbEvent, params); else window.fbq("trackCustom", name, params); } } catch (e) { /* ignora */ }
   }
   function origem(el) {

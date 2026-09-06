@@ -7,7 +7,7 @@ Gera as imagens locais que o site usa no lugar das fotos originais (~400 KB cada
   assets/og/<id>-<capaId>.jpg        capa em 960x720 JPEG (prévia do link no WhatsApp/Facebook, que exige < 300 KB)
   assets/fotos/<id>/<foto>.webp       cada foto em 160 px (faixa de miniaturas da galeria)
   assets/fotos/<id>/<foto>-640.webp   as 6 primeiras fotos em 640 px (galeria no celular; as demais vêm da AutoCerto sob demanda)
-  assets/marcas/<chave>.webp          logo da marca
+  assets/marcas/<chave>.webp          logo da marca (128 px, com transparência)
 Nomes carregam a identidade da foto de origem: se a loja trocar a capa, a miniatura antiga é apagada
 e a nova gerada. Fotos de veículos que saíram do estoque são removidas.
 
@@ -66,6 +66,15 @@ def resize_save(data, out, width, quality):
         img.save(out, "JPEG", quality=quality, optimize=True, progressive=True)
     else:
         img.save(out, "WEBP", quality=quality, method=6)
+
+
+def salvar_logo(data, out, width=128):
+    # logo da marca: exibido a 36–44 px; 128 px cobre telas 3x. Mantém a transparência (RGBA) e a proporção (byd não é quadrado).
+    img = Image.open(io.BytesIO(data)).convert("RGBA")
+    if img.width > width:
+        img = img.resize((width, round(img.height * width / img.width)), Image.LANCZOS)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    img.save(out, "WEBP", quality=80, method=6)
 
 
 _cache = {}
@@ -136,7 +145,7 @@ def main():
         out = MARCAS / f"{k}.webp"
         try:
             if not out.exists() or FORCE:
-                out.write_bytes(fetch(f"https://www.autocerto.com/fabricantes/{k}.webp")); logos_novos += 1
+                salvar_logo(fetch(f"https://www.autocerto.com/fabricantes/{k}.webp"), out); logos_novos += 1
         except Exception as e:  # noqa: BLE001
             erros.append(f"logo {k}: {e}")
 

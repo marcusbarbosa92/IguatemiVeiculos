@@ -72,7 +72,7 @@ function pagina(v, all) {
     offers: { '@type': 'Offer', price: v.preco, priceCurrency: 'BRL', availability: 'https://schema.org/InStock', url, seller: { '@type': 'AutoDealer', name: NOME } },
   };
   const meta = `<!-- gerado por scripts/gerar-paginas.mjs a partir de veiculo.html: não edite à mão -->
-<title>${esc(curto(v))} · ${esc(preco)} · ${NOME}</title>
+<title>${esc(n)} · ${esc(preco)} · ${NOME} · Campinas</title>
 <meta name="description" content="${esc(desc)}">
 <link rel="canonical" href="${esc(url)}">
 <meta property="og:type" content="website">
@@ -132,6 +132,35 @@ for (const f of fs.readdirSync(ROOT)) {
     .replace(/<meta property="og:image" content="[^"]*\/assets\/img\/og\.png">/, `<meta property="og:image" content="${esc(SITE_URL + 'assets/img/og.png')}">`));
   if (mudou) ajustados++;
 }
+// ficha da loja (JSON-LD AutoDealer) estática nas páginas institucionais: legível por qualquer robô, sem depender de JS
+const diasSemana = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const lojaLd = {
+  '@context': 'https://schema.org', '@type': 'AutoDealer', name: NOME, legalName: STORE.razaoSocial, taxID: STORE.cnpj,
+  url: SITE_URL, telephone: STORE.telefone.e164, email: STORE.email, image: SITE_URL + 'assets/img/og.png', logo: SITE_URL + 'assets/img/logo.png',
+  address: { '@type': 'PostalAddress', streetAddress: STORE.endereco.logradouro + ', ' + STORE.endereco.numero, addressLocality: STORE.endereco.cidade, addressRegion: STORE.endereco.uf, postalCode: STORE.endereco.cep, addressCountry: 'BR' },
+  geo: { '@type': 'GeoCoordinates', latitude: STORE.endereco.lat, longitude: STORE.endereco.lng },
+  openingHoursSpecification: STORE.horario.map((h) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: h.diasSemana.map((d) => diasSemana[d]), opens: h.abre, closes: h.fecha })),
+  sameAs: [STORE.links.instagram, STORE.links.facebook, STORE.links.youtube, STORE.links.tiktok].filter(Boolean),
+};
+const ldTag = '<script type="application/ld+json">' + JSON.stringify(lojaLd).replace(/</g, '\\u003c') + '</script>';
+for (const f of ['index.html', 'contato.html', 'quem-somos.html']) {
+  if (ajustar(f, (h) => h.replace(/(<!-- ld:start[^>]*-->)[\s\S]*?(<!-- ld:end -->)/, (m, a, b) => a + '\n' + ldTag + '\n' + b))) ajustados++;
+}
+
+// links estáticos para as páginas dos veículos: descobertos por qualquer robô e visíveis sem JavaScript
+// (o JS troca a lista pelos cartões assim que o índice carrega)
+const linha = (v) => `<li><a href="v/${v.id}.html">${esc(nome(v))}</a> <span>${esc(brl(v.preco))}</span></li>`;
+const porMarca = [...doc.veiculos].sort((a, b) => a.marca.localeCompare(b.marca) || a.modelo.localeCompare(b.modelo) || a.preco - b.preco);
+const listaEstoque = '<ul class="static-list" aria-label="Veículos em estoque">' + porMarca.map(linha).join('') + '</ul>';
+const byId = new Map(doc.veiculos.map((v) => [v.id, v]));
+const destaques = (doc.destaques || []).map((id) => byId.get(id)).filter(Boolean).slice(0, 8);
+const listaHome = '<ul class="static-list" aria-label="Últimas novidades">' + (destaques.length ? destaques : porMarca.slice(0, 8)).map(linha).join('') + '</ul>';
+const trocarLista = (arquivo, html) => ajustar(arquivo, (h) => h.replace(/(<!-- lista:start[^>]*-->)[\s\S]*?(<!-- lista:end -->)/, (m, a, b) => a + html + b));
+if (trocarLista('estoque.html', listaEstoque)) ajustados++;
+// contagem já no HTML (sem JS, o estoque não fica em "Carregando…")
+if (ajustar('estoque.html', (h) => h.replace(/(<span id="results-count"[^>]*>)[\s\S]*?(<\/span>)/, (m, a, b) => a + `<b>${doc.veiculos.length}</b> veículos` + b))) ajustados++;
+if (trocarLista('index.html', listaHome)) ajustados++;
+
 // robots.txt só vale na raiz do domínio; a diretiva Sitemap precisa da URL completa
 if (ajustar('robots.txt', (t) => t.replace(/^Sitemap: .*$/m, `Sitemap: ${SITE_URL}sitemap.xml`))) ajustados++;
 // o 404 é servido de qualquer caminho, então os links relativos precisam do prefixo do site ("/" em domínio próprio ou no Vercel)

@@ -48,6 +48,8 @@ for (const e of idx.veiculos) {
 for (const f of fs.readdirSync(path.join(ROOT, 'v'))) { const m = f.match(/^(\d+)\.html$/); if (m) check(ids.has(Number(m[1])), `v/${f} é de um veículo que não está mais no estoque (rode npm run pages)`); }
 for (const key of Object.keys(cats.modelos)) check(Object.keys(cats.categorias).includes(cats.modelos[key]), `categorias.json: categoria desconhecida em ${key}`);
 if (aval.nota !== null) { check(typeof aval.nota === 'number' && aval.nota > 0 && aval.nota <= 5, 'avaliacoes.json: nota fora de 0-5'); check(/^https:\/\//.test(aval.linkGoogle), 'avaliacoes.json: linkGoogle precisa ser https'); for (const r of aval.avaliacoes || []) check(r.nome && r.texto && r.estrelas >= 1 && r.estrelas <= 5, 'avaliacoes.json: avaliação incompleta'); }
+const estoqueHtml = fs.readFileSync(path.join(ROOT, 'estoque.html'), 'utf8');
+check((estoqueHtml.match(/href="v\/\d+\.html"/g) || []).length === list.length, 'estoque.html: a lista estática de links não bate com o estoque (rode npm run pages)');
 const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
 check((sitemap.match(/<url>/g) || []).length === list.length + 6, 'sitemap.xml com contagem inesperada de URLs (rode npm run pages)');
 const thumbs = fs.readdirSync(path.join(ROOT, 'assets/thumbs')).filter((f) => f.endsWith('.webp')).length;

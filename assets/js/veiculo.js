@@ -20,7 +20,7 @@
 
   function render(v, all, semelhantesPre) {
     const name = A.vehName(v), curto = v.marca + " " + v.modelo + " " + v.anoFabricacao + "/" + v.anoModelo, wa = A.waLink(A.waVehicleMsg(v));
-    document.title = curto + " · " + A.fmtBRL(v.preco) + " · " + S.nome;
+    document.title = name + " · " + A.fmtBRL(v.preco) + " · " + S.nome + " · Campinas";
     const desc = name + " por " + A.fmtBRL(v.preco) + ". " + A.fmtKm(v.km) + ", " + v.cambio + ", " + v.combustivel + ". " + S.nome + ", Campinas - SP.";
     const setMeta = (sel, val) => { const m = document.querySelector(sel); if (m) m.setAttribute("content", val); };
     setMeta('meta[name="description"]', desc); setMeta('meta[property="og:title"]', curto + " · " + A.fmtBRL(v.preco)); setMeta('meta[property="og:description"]', desc); setMeta('meta[property="og:image"]', v.capa);

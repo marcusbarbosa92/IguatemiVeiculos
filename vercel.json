@@ -86,9 +86,141 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=3600"
+          "value": "public, max-age=604800"
         }
       ]
+    },
+    {
+      "source": "/assets/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/Veiculo/:slug/:id(\\d+)/detalhes",
+      "destination": "/v/:id.html",
+      "permanent": true
+    },
+    {
+      "source": "/Veiculo/:slug/:id(\\d+)",
+      "destination": "/v/:id.html",
+      "permanent": true
+    },
+    {
+      "source": "/Veiculos",
+      "destination": "/estoque.html?tipo=moto&marca=:marca",
+      "permanent": true,
+      "has": [
+        {
+          "type": "query",
+          "key": "tipoveiculo",
+          "value": "2"
+        },
+        {
+          "type": "query",
+          "key": "marca",
+          "value": "(?<marca>.*)"
+        }
+      ]
+    },
+    {
+      "source": "/Veiculos",
+      "destination": "/estoque.html?tipo=moto",
+      "permanent": true,
+      "has": [
+        {
+          "type": "query",
+          "key": "tipoveiculo",
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "source": "/Veiculos",
+      "destination": "/estoque.html?marca=:marca",
+      "permanent": true,
+      "has": [
+        {
+          "type": "query",
+          "key": "marca",
+          "value": "(?<marca>.*)"
+        }
+      ]
+    },
+    {
+      "source": "/Veiculos",
+      "destination": "/estoque.html",
+      "permanent": true
+    },
+    {
+      "source": "/VendaSeuVeiculo",
+      "destination": "/venda-seu-veiculo.html",
+      "permanent": true
+    },
+    {
+      "source": "/Financiamento",
+      "destination": "/financiamento.html",
+      "permanent": true
+    },
+    {
+      "source": "/Empresa",
+      "destination": "/quem-somos.html",
+      "permanent": true
+    },
+    {
+      "source": "/Contato",
+      "destination": "/contato.html",
+      "permanent": true
+    },
+    {
+      "source": "/PoliticaPrivacidade",
+      "destination": "/politica-de-privacidade.html",
+      "permanent": true
+    },
+    {
+      "source": "/index",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/estoque",
+      "destination": "/estoque.html",
+      "permanent": true
+    },
+    {
+      "source": "/venda-seu-veiculo",
+      "destination": "/venda-seu-veiculo.html",
+      "permanent": true
+    },
+    {
+      "source": "/financiamento",
+      "destination": "/financiamento.html",
+      "permanent": true
+    },
+    {
+      "source": "/quem-somos",
+      "destination": "/quem-somos.html",
+      "permanent": true
+    },
+    {
+      "source": "/contato",
+      "destination": "/contato.html",
+      "permanent": true
+    },
+    {
+      "source": "/politica-de-privacidade",
+      "destination": "/politica-de-privacidade.html",
+      "permanent": true
+    },
+    {
+      "source": "/v/:id(\\d+)",
+      "destination": "/v/:id.html",
+      "permanent": true
     }
   ]
 }

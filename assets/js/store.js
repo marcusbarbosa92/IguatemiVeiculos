@@ -42,5 +42,11 @@ window.STORE = {
   ],
   avisoLegal: "Reservamo-nos o direito de corrigir eventuais erros de digitação, valores e opcionais dos veículos, sem aviso prévio.",
   // Medição: os mesmos IDs que o site atual usa (extraídos do HTML de iguatemiautomoveis.com.br). Deixe null para desligar.
-  analytics: { ga4: "G-F35L06L32H", metaPixel: "410840736561439" }
+  analytics: {
+    ga4: "G-F35L06L32H", metaPixel: "410840736561439",
+    // Google Ads: contas que o site atual configura (a AW-17949964372 é a que tem as conversões, lidas do contêiner GTM-59BH7PH9 dele)
+    googleAds: ["AW-17949964372", "AW-17947810458"],
+    // conversão só no clique/envio real, não a cada página como no site atual; null desliga
+    conversoes: { contato_whatsapp: "AW-17949964372/Ld2XCNbCgZ4cENTwmu9C", envio_formulario: "AW-17949964372/123iCNG3mKQcENTwmu9C" }
+  }
 };
