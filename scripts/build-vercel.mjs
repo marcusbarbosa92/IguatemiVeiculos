@@ -63,6 +63,9 @@ for (const item of itens) fs.cpSync(path.join(ROOT, item), path.join(OUT, item),
 const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/gerar-paginas.mjs'), '--root', OUT, '--site-url', siteUrl], { stdio: 'inherit' });
 if (r.status !== 0) { console.error('build-vercel: gerar-paginas.mjs falhou'); process.exit(r.status || 1); }
 
+// último vídeo do canal: tenta atualizar no deploy; se o YouTube falhar, fica o que está no repositório
+spawnSync(process.execPath, [path.join(ROOT, 'scripts/sync-youtube.mjs'), '--root', OUT], { stdio: 'inherit' });
+
 // conferências mínimas antes de publicar
 const ler = (f) => fs.readFileSync(path.join(OUT, f), 'utf8');
 const base = new URL(siteUrl).pathname;

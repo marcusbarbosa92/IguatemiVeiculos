@@ -33,6 +33,8 @@ window.STORE = {
     waze: "https://www.waze.com/live-map/directions/br/sp/av.-jose-bonifacio,-1580?navigate=yes&to=place.ChIJNVn3rGjPyJQRfmrRZx9g3vE",
     mapaEmbed: "https://maps.google.com/maps?q=-22.8917336,-47.0342262&z=15&output=embed"
   },
+  // canal do YouTube (id lido da página do canal); o feed público alimenta o pop-up "vídeo novo" da home
+  youtube: { id: "UCZ-T169TPcINUUeTuKWBRUQ", handle: "@IguatemiAutomoveis" },
   vendaSeuVeiculo: "Temos a solução completa para você vender seu veículo ganhando mais. Garantimos um pagamento 100% seguro e disponibilizamos um consultor especialista que cuidará da sua venda do início ao fim.",
   garantias: [
     { titulo: "Procedência comprovada", texto: "Não trabalhamos com veículos de leilão ou seguradora." },

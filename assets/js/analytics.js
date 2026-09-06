@@ -78,6 +78,7 @@
     track("envio_formulario", { formulario: f.getAttribute("data-wa-form") }, "Lead");
   }, true);
   document.addEventListener("veiculo:video", function (e) { track("play_video", { content_ids: [String(e.detail && e.detail.id)] }); });
+  document.addEventListener("youtube:play", function (e) { track("play_video", { content_ids: [String(e.detail && e.detail.id)], origem: e.detail && e.detail.origem }); });
   document.addEventListener("fav:change", function (e) { track(e.detail && e.detail.on ? "salvar_veiculo" : "remover_salvo", { veiculo_salvo: e.detail && e.detail.id, total_salvos: e.detail && e.detail.total }); });
   // visualização de veículo só quando a página renderizou de fato (id inexistente = "não encontrado", não conta)
   document.addEventListener("veiculo:render", function (e) { var id = String(e.detail && e.detail.id || vid); track("view_item", { content_ids: [id], content_type: "product" }, "ViewContent"); });

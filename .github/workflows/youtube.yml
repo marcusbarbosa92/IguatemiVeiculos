@@ -1,0 +1,34 @@
+name: Vídeo novo no YouTube
+
+# Lê o feed público do canal a cada 3 horas; se houver vídeo novo, grava data/youtube.json e faz
+# commit. O Vercel publica no push, e a home passa a mostrar o pop-up com o vídeo mais recente.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */3 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-estoque
+  cancel-in-progress: false
+
+jobs:
+  youtube:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/sync-youtube.mjs
+      - name: Commit se houver vídeo novo
+        run: |
+          if git diff --quiet -- data/youtube.json; then echo "Sem vídeo novo."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/youtube.json
+          git commit -m "chore: vídeo novo no YouTube ($(date -u +%Y-%m-%d))"
+          git pull --rebase
+          git push

@@ -99,6 +99,31 @@
     grid.hidden = false;
   }
 
+  // pop-up com o último vídeo do canal (data/youtube.json, atualizado pelo sync-youtube.mjs): aparece uma vez por vídeo em cada aparelho
+  async function setupYoutube() {
+    if (!$("#yt-sheet")) return;
+    let d = null;
+    try { d = await fetch("data/youtube.json", { cache: "no-cache" }).then((r) => (r.ok ? r.json() : null)); } catch (e) { d = null; }
+    const v = d && d.ultimo;
+    if (!v || !/^[\w-]{6,}$/.test(v.id)) return;
+    let visto = null; try { visto = localStorage.getItem("yt-visto"); } catch (e) { /* sem storage */ }
+    if (visto === v.id) return;
+    const marcar = () => { try { localStorage.setItem("yt-visto", v.id); } catch (e) { /* sem storage */ } };
+    const body = $("#yt-sheet-body");
+    const thumb = v.vertical ? "https://i.ytimg.com/vi/" + v.id + "/oardefault.jpg" : "https://i.ytimg.com/vi/" + v.id + "/hqdefault.jpg";
+    body.innerHTML = '<div class="yt-pop' + (v.vertical ? " vertical" : "") + '"><div class="yt" id="yt-pop-player"><img src="' + esc(thumb) + '" alt="' + esc(v.titulo) + '" loading="eager" decoding="async"><button class="play" type="button" id="yt-pop-play" aria-label="Assistir: ' + esc(v.titulo) + '"><span>' + icon("play") + "</span></button></div>" +
+      '<div class="yt-pop-info"><b>' + esc(v.titulo) + "</b>" + (v.publicadoEm ? '<span class="muted small">Publicado em ' + esc(v.publicadoEm.split("-").reverse().join("/")) + "</span>" : "") + "</div>" +
+      '<div class="yt-pop-actions"><a class="btn btn-outline" href="' + esc((d.canal && d.canal.url) || S.links.youtube) + '" target="_blank" rel="noopener">' + icon("youtube") + ' Ver o canal</a><button class="btn btn-dark" type="button" id="yt-pop-close" data-autofocus>Fechar e ver o site</button></div></div>';
+    const sh = A.sheet("yt-sheet", { onClose: marcar });
+    $("#yt-pop-play").addEventListener("click", () => {
+      $("#yt-pop-player").innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + esc(v.id) + '?autoplay=1&rel=0&playsinline=1" title="' + esc(v.titulo) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+      document.dispatchEvent(new CustomEvent("youtube:play", { detail: { id: v.id, origem: "popup_home" } }));
+    });
+    $("#yt-pop-close").addEventListener("click", () => sh.close());
+    // só depois de a página assentar, e nunca por cima do menu ou de outra folha aberta
+    setTimeout(() => { if (!document.querySelector(".sheet.open, .drawer.open")) sh.open(); }, 1400);
+  }
+
   function setupVideo() {
     const v = $("#hero-video"); if (!v) return;
     const c = navigator.connection || {};
@@ -114,6 +139,7 @@
     setupVideo();
     setupReviews();
     setupInstagram();
+    setupYoutube();
     try {
       const data = await A.loadIndex();
       const list = data.veiculos;

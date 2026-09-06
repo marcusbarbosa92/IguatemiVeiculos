@@ -1,0 +1,59 @@
+{
+ "_origem": "Gerado por scripts/sync-youtube.mjs a partir do feed público do canal (sem chave de API). Não edite à mão.",
+ "canal": {
+  "id": "UCZ-T169TPcINUUeTuKWBRUQ",
+  "nome": "Iguatemi Automóveis",
+  "url": "https://www.youtube.com/@IguatemiAutomoveis"
+ },
+ "ultimo": {
+  "id": "Sr7Y2QnYXkE",
+  "titulo": "RAM RAMPAGE - 2025/20262.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
+  "publicadoEm": "2026-09-04",
+  "vertical": true,
+  "url": "https://www.youtube.com/shorts/Sr7Y2QnYXkE"
+ },
+ "videos": [
+  {
+   "id": "Sr7Y2QnYXkE",
+   "titulo": "RAM RAMPAGE - 2025/20262.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-09-04",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Sr7Y2QnYXkE"
+  },
+  {
+   "id": "KJlE8Z3poFw",
+   "titulo": "FIAT FASTBACK - 2026/20261.3 TURBO 270 FLEX ABARTH AT6",
+   "publicadoEm": "2026-09-04",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/KJlE8Z3poFw"
+  },
+  {
+   "id": "jKWJo1hM_rQ",
+   "titulo": "JEEP RENEGADE - 2022/20221.3 T270 TURBO FLEX S 4X4 AT9",
+   "publicadoEm": "2026-09-04",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/jKWJo1hM_rQ"
+  },
+  {
+   "id": "pY4ZNJHOomM",
+   "titulo": "JEEP COMMANDER - 2023/20231.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-09-04",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/pY4ZNJHOomM"
+  },
+  {
+   "id": "2-7k1gF6y7s",
+   "titulo": "JEEP COMMANDER - 2023/20232.0 TD380 TURBO DIESEL OVERLAND AT9",
+   "publicadoEm": "2026-09-04",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/2-7k1gF6y7s"
+  },
+  {
+   "id": "eAJepJaMgW0",
+   "titulo": "FIAT FASTBACK - 2022/20231.0 TURBO 200 FLEX AUDACE CVT",
+   "publicadoEm": "2026-09-04",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/eAJepJaMgW0"
+  }
+ ]
+}

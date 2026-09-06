@@ -38,6 +38,7 @@ jobs:
       - run: node scripts/sync-inventory.mjs
       - run: node scripts/gerar-paginas.mjs --site-url "${{ vars.SITE_URL || 'https://marcusbarbosa92.github.io/IguatemiVeiculos/' }}"
       - run: python3 scripts/gerar-miniaturas.py
+      - run: node scripts/sync-youtube.mjs
       - run: python3 scripts/sync-instagram.py
         env:
           INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}

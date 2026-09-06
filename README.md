@@ -100,6 +100,12 @@ A home tem a seção "O que dizem nossos clientes" e a página do veículo mostr
 
 Use apenas avaliações reais e o texto como está publicado. `totalExibicao` é o total como o Google mostra ("1,1 mil"); `quando` é a data relativa que o Google mostrava no dia de `atualizadoEm` e só aparece no site enquanto essa captura tiver menos de 45 dias. Enquanto `nota` for `null` ou a lista estiver vazia, nada aparece. Preenchido em 06/09/2026 com 4,8 ★, 1,1 mil avaliações e seis avaliações.
 
+## YouTube: pop-up do vídeo novo
+
+A home mostra, uma vez por vídeo em cada aparelho, uma folha com o último vídeo do canal `@IguatemiAutomoveis` (miniatura, play no próprio site e "Ver o canal"). A fonte é o feed público do canal (`youtube.com/feeds/videos.xml?channel_id=...`, sem chave de API), lido por `scripts/sync-youtube.mjs`, que grava `data/youtube.json` só quando a lista muda. Quem atualiza: o workflow `youtube.yml` (a cada 3 horas), o sync diário e o build do Vercel (a cada deploy). Shorts são detectados e mostrados em pé. O id do canal fica em `assets/js/store.js` (`youtube.id`).
+
+Cuidado com o Google: pop-ups que cobrem o conteúdo logo ao abrir a página podem ser penalizados nas buscas no celular ("interstitials intrusivos"). Por isso o pop-up só aparece na home, só uma vez por vídeo, depois de 1,4 s e fecha com um toque; nas páginas de veículos (para onde vão os anúncios e os links compartilhados) ele não aparece.
+
 ## Instagram
 
 A home tem a seção do Instagram logo depois das novidades: perfil, botão **Seguir**, **Chamar no Direct** e, quando `data/instagram.json` tiver publicações, um grid com as 5 últimas e "Ver mais no Instagram". O Instagram não expõe as publicações sem login (perfil, embed e endpoints internos exigem sessão), então há dois caminhos:

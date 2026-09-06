@@ -253,7 +253,7 @@
     el.setAttribute("inert", "");
     let lastFocus = null, untrap = null;
     const api = {
-      open() { lastFocus = document.activeElement; el.removeAttribute("inert"); el.classList.add("open"); bd.classList.add("open"); el.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; const f = el.querySelector("button, input, select, [tabindex]"); if (f) f.focus(); untrap = trapFocus(el); },
+      open() { lastFocus = document.activeElement; el.removeAttribute("inert"); el.classList.add("open"); bd.classList.add("open"); el.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; const f = el.querySelector("[data-autofocus]") || el.querySelector("button, input, select, [tabindex]"); if (f) f.focus({ preventScroll: true }); untrap = trapFocus(el); },
       close() { if (!el.classList.contains("open")) return; el.classList.remove("open"); bd.classList.remove("open"); el.setAttribute("aria-hidden", "true"); el.setAttribute("inert", ""); document.body.style.overflow = ""; if (untrap) { untrap(); untrap = null; } if (lastFocus && lastFocus.focus) lastFocus.focus(); if (opts.onClose) opts.onClose(); },
       isOpen() { return el.classList.contains("open"); }
     };
