@@ -3,7 +3,7 @@
    Imagens, vídeo e fontes da própria origem: cache com revalidação em segundo plano.
    Fotos da AutoCerto e scripts de terceiros: sem cache aqui (fica o cache HTTP do navegador).
    Mudar VERSAO descarta o cache antigo em todos os visitantes. */
-const VERSAO = "v3";
+const VERSAO = "v4"; // v4: vídeo do topo trocado
 const CACHE = "iguatemi-" + VERSAO;
 const IMG = /\.(?:webp|png|jpe?g|svg|gif|mp4|webm|woff2?)(?:\?.*)?$/i;
 
