@@ -159,6 +159,8 @@
       $("#menu-close").addEventListener("click", close);
       $("#drawer-backdrop").addEventListener("click", close);
       document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+      const mq = window.matchMedia("(min-width: 900px)");
+      (mq.addEventListener ? mq.addEventListener("change", (e) => { if (e.matches) close(); }) : mq.addListener((e) => { if (e.matches) close(); }));
     }
     if (!document.body.classList.contains("no-bottom-nav")) {
       const bn = document.createElement("nav");
@@ -202,13 +204,14 @@
   }
 
   /* ---------- Folha inferior (bottom sheet) genérica ---------- */
-  function sheet(id) {
+  function sheet(id, opts) {
+    opts = opts || {};
     const el = $("#" + id), bd = $("#" + id + "-backdrop");
     if (!el || !bd) return null;
     let lastFocus = null;
     const api = {
       open() { lastFocus = document.activeElement; el.classList.add("open"); bd.classList.add("open"); el.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; const f = el.querySelector("button, input, select, [tabindex]"); if (f) f.focus(); },
-      close() { el.classList.remove("open"); bd.classList.remove("open"); el.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) lastFocus.focus(); },
+      close() { if (!el.classList.contains("open")) return; el.classList.remove("open"); bd.classList.remove("open"); el.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) lastFocus.focus(); if (opts.onClose) opts.onClose(); },
       isOpen() { return el.classList.contains("open"); }
     };
     bd.addEventListener("click", api.close);
@@ -259,7 +262,10 @@
   /* ---------- Máscara simples de telefone ---------- */
   function maskPhone(input) {
     input.addEventListener("input", () => {
-      let d = input.value.replace(/\D/g, "").slice(0, 11);
+      let d = input.value.replace(/\D/g, "");
+      if ((d.length === 12 || d.length === 13) && d.startsWith("55")) d = d.slice(2); // colado com +55
+      d = d.slice(0, 11);
+      input.setCustomValidity(d.length === 0 || d.length >= 10 ? "" : "Informe o DDD e o número completo");
       if (d.length > 6) d = "(" + d.slice(0, 2) + ") " + d.slice(2, d.length > 10 ? 7 : 6) + "-" + d.slice(d.length > 10 ? 7 : 6);
       else if (d.length > 2) d = "(" + d.slice(0, 2) + ") " + d.slice(2);
       else if (d.length > 0) d = "(" + d;

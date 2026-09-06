@@ -54,7 +54,7 @@
     $("#g-prev").addEventListener("click", () => goTo(idx - 1)); $("#g-next").addEventListener("click", () => goTo(idx + 1));
     $$("#thumbs button").forEach((b) => b.addEventListener("click", () => goTo(+b.dataset.i)));
     $$("#g-track > button").forEach((b) => b.addEventListener("click", () => openLightbox(+b.dataset.i)));
-    document.addEventListener("keydown", (e) => { if ($("#lightbox").classList.contains("open")) return; if (e.key === "ArrowLeft") goTo(idx - 1); if (e.key === "ArrowRight") goTo(idx + 1); });
+    document.addEventListener("keydown", (e) => { if ($("#lightbox").classList.contains("open") || $(".sheet.open") || (e.target && e.target.matches && e.target.matches("input, select, textarea"))) return; if (e.key === "ArrowLeft") goTo(idx - 1); if (e.key === "ArrowRight") goTo(idx + 1); });
 
     /* lightbox */
     const lb = $("#lightbox"), lbTrack = $("#lb-track");

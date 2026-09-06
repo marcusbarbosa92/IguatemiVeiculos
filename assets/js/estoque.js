@@ -7,7 +7,7 @@
   const PAGE = 24;
   let ALL = [], state = {}, shown = 0, filtered = [];
 
-  const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const norm = (s) => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/-/g, "").toLowerCase();
 
   function readState() {
     const p = new URLSearchParams(location.search);
@@ -67,7 +67,8 @@
     }
     shown += slice.length;
     $("#load-more").hidden = shown >= filtered.length;
-    if (shown < filtered.length) $("#btn-more").textContent = "Carregar mais (" + (filtered.length - shown) + " restantes)";
+    const rest = filtered.length - shown;
+    if (rest > 0) $("#btn-more").textContent = "Carregar mais (" + rest + (rest === 1 ? " restante)" : " restantes)");
   }
   function clearAll() { state = { q: "", tipo: "", marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", kmMax: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; syncControls(); apply(); }
 
@@ -121,8 +122,8 @@
     $("#f-modelo").addEventListener("change", () => { state.modelo = $("#f-modelo").value; updateApplyCount(); });
     ["precoMin", "precoMax", "anoMin"].forEach((k) => $("#f-" + k).addEventListener("change", () => { state[k] = $("#f-" + k).value; updateApplyCount(); }));
     $$("#f-tipo button").forEach((b) => b.addEventListener("click", () => { state.tipo = b.dataset.val; $$("#f-tipo button").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false")); updateApplyCount(); }));
-    $("#f-clear").addEventListener("click", () => { clearAll(); });
-    $("#f-apply").addEventListener("click", () => { apply(); filtersSheet.close(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+    $("#f-clear").addEventListener("click", () => { applied = true; clearAll(); });
+    $("#f-apply").addEventListener("click", () => { applied = true; apply(); filtersSheet.close(); window.scrollTo({ top: 0, behavior: "smooth" }); });
   }
   function fillModels() {
     const sel = $("#f-modelo"); sel.innerHTML = '<option value="">Todos os modelos</option>';
@@ -152,12 +153,13 @@
     $("#f-apply").textContent = n ? "Ver " + n + (n === 1 ? " veículo" : " veículos") : "Nenhum veículo";
   }
 
-  let filtersSheet;
+  let filtersSheet, saved = null, applied = false;
   document.addEventListener("DOMContentLoaded", async () => {
     readState();
-    filtersSheet = A.sheet("filters");
-    $("#btn-filters").addEventListener("click", () => { syncControls(); filtersSheet.open(); });
-    let t; $("#q").addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { state.q = $("#q").value.trim(); $("#q-clear").hidden = !state.q; apply(); }, 220); });
+    // a folha edita o state ao vivo; fechar sem "Ver veículos" restaura o que estava aplicado
+    filtersSheet = A.sheet("filters", { onClose: () => { if (!applied && saved) { state = saved; syncControls(); } saved = null; } });
+    $("#btn-filters").addEventListener("click", () => { saved = JSON.parse(JSON.stringify(state)); applied = false; syncControls(); filtersSheet.open(); });
+    let t; $("#q").addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => { state.q = $("#q").value.trim(); $("#q-clear").hidden = !state.q; if (ALL.length) apply(); }, 220); });
     $("#q-clear").addEventListener("click", () => { $("#q").value = ""; state.q = ""; $("#q-clear").hidden = true; apply(); $("#q").focus(); });
     $("#ordem").addEventListener("change", () => { state.ordem = $("#ordem").value; apply(); });
     $("#btn-more").addEventListener("click", renderMore);
