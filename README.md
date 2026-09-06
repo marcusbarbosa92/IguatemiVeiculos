@@ -79,6 +79,15 @@ A home tem a seção "O que dizem nossos clientes" e a página do veículo mostr
 
 Use apenas avaliações reais e o texto como está publicado. Enquanto `nota` for `null` ou a lista estiver vazia, nada aparece.
 
+## Testes
+
+```bash
+npm run test:dados   # consistência de data/*.json, v/*.html, sitemap, categorias e miniaturas
+npm test             # o anterior + teste de fumaça no Chromium (precisa de `npm i --no-save playwright@1.56.1` e `npx playwright install chromium`)
+```
+
+O workflow `.github/workflows/testes.yml` roda os dois a cada push.
+
 ## Rodar localmente
 
 ```bash

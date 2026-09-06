@@ -45,7 +45,8 @@
     link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
     money: '<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M7 12h0M17 12h0"/>',
     users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-4.5-6.2"/>',
-    key: '<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9m-3 3 2 2m-5 1 2 2"/>'
+    key: '<circle cx="8" cy="15" r="4"/><path d="m11 12 9-9m-3 3 2 2m-5 1 2 2"/>',
+    heart: '<path d="M12 20.5s-7.5-4.6-9.3-9.1C1.5 8.3 3.6 4.9 7 4.9c2 0 3.4 1.1 5 2.8 1.6-1.7 3-2.8 5-2.8 3.4 0 5.5 3.4 4.3 6.5-1.8 4.5-9.3 9.1-9.3 9.1z"/>'
   };
   const icon = (name, cls) => '<svg class="ic ' + (cls || '') + '" viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || '') + '</svg>';
 
@@ -110,7 +111,7 @@
       '<a class="card-link" href="' + vehUrl(v) + '" aria-label="' + esc(vehName(v)) + '"></a>' +
       '<div class="v-img"><img src="' + thumbUrl(v) + '" data-fallback="' + esc(v.capa) + '" alt="' + esc(vehName(v)) + '" loading="' + (opts.eager ? "eager" : "lazy") + '" decoding="async" width="640" height="480">' +
       '<div class="v-badges">' + tags.map((t) => '<span class="badge ' + (TAGS[t] || "") + '">' + esc(t) + "</span>").join("") + "</div>" +
-      (v.nFotos ? '<span class="v-photos" aria-label="' + v.nFotos + ' fotos">' + icon("image") + v.nFotos + "</span>" : "") + "</div>" +
+      (v.nFotos ? '<span class="v-photos" aria-label="' + v.nFotos + ' fotos">' + icon("image") + v.nFotos + "</span>" : "") + Fav.button(v.id, "fav-card") + "</div>" +
       '<div class="v-body">' +
       '<div class="v-brand">' + esc(v.marca) + "</div>" +
       '<div class="v-title">' + esc(v.modelo) + "</div>" +
@@ -245,6 +246,24 @@
     return api;
   }
 
+  /* ---------- Favoritos (só no aparelho: localStorage) ---------- */
+  const Fav = {
+    key: "favoritos",
+    get() { try { const a = JSON.parse(localStorage.getItem(this.key) || "[]"); return Array.isArray(a) ? a.map(Number).filter(Boolean) : []; } catch (e) { return []; } },
+    has(id) { return this.get().includes(Number(id)); },
+    toggle(id) {
+      id = Number(id); let list = this.get(); const on = !list.includes(id);
+      list = on ? list.concat(id) : list.filter((x) => x !== id);
+      try { localStorage.setItem(this.key, JSON.stringify(list)); } catch (e) { /* sem storage */ }
+      $$('[data-fav="' + id + '"]').forEach((b) => { b.setAttribute("aria-pressed", on ? "true" : "false"); b.setAttribute("aria-label", on ? "Remover dos salvos" : "Salvar veículo"); });
+      document.dispatchEvent(new CustomEvent("fav:change", { detail: { id, on, total: list.length } }));
+      toast(on ? "Salvo neste aparelho" : "Removido dos salvos");
+      return on;
+    },
+    button(id, cls) { const on = this.has(id); return '<button class="fav ' + (cls || "") + '" type="button" data-fav="' + id + '" aria-pressed="' + (on ? "true" : "false") + '" aria-label="' + (on ? "Remover dos salvos" : "Salvar veículo") + '">' + icon("heart") + "</button>"; }
+  };
+  document.addEventListener("click", (e) => { const b = e.target && e.target.closest ? e.target.closest("[data-fav]") : null; if (!b) return; e.preventDefault(); e.stopPropagation(); Fav.toggle(b.dataset.fav); });
+
   /* ---------- Avaliações do Google (data/avaliacoes.json, preenchido à mão) ---------- */
   const safeHttp = (u) => (/^https:\/\//i.test(String(u || "")) ? String(u) : "");
   const loadReviews = () => loadJSON("data/avaliacoes.json").then((d) => (d && typeof d.nota === "number" && d.nota > 0 && d.nota <= 5 ? Object.assign(d, { linkGoogle: safeHttp(d.linkGoogle) }) : null)).catch(() => null);
@@ -299,7 +318,7 @@
     });
   }
 
-  window.App = { $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, thumbUrl, brandKey, brandLogo, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
+  window.App = { Fav, $, $$, icon, fmtBRL, fmtNum, fmtKm, esc, titleCase, vehName, vehShort, vehUrl, thumbUrl, brandKey, brandLogo, absUrl, waLink, waVehicleMsg, telLink, openStatus, loadIndex, loadAll, loadReviews, stars, fmtNota, googleBadge, vehicleCard, sheet, toast, bindWaForms, maskPhone, socialRow };
 
   // imagem com data-fallback: se a miniatura local não existir, usa a foto original
   document.addEventListener("error", (e) => { const t = e.target; if (t && t.tagName === "IMG" && t.dataset.fallback && t.src !== t.dataset.fallback) { t.src = t.dataset.fallback; delete t.dataset.fallback; } }, true);

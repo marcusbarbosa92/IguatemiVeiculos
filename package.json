@@ -4,6 +4,8 @@
   "scripts": {
     "sync": "node scripts/sync-inventory.mjs && node scripts/gerar-paginas.mjs && python3 scripts/gerar-miniaturas.py",
     "pages": "node scripts/gerar-paginas.mjs",
-    "thumbs": "python3 scripts/gerar-miniaturas.py"
+    "thumbs": "python3 scripts/gerar-miniaturas.py",
+    "test": "node tests/validar-dados.mjs && node tests/smoke.mjs",
+    "test:dados": "node tests/validar-dados.mjs"
   }
 }

@@ -58,5 +58,6 @@
     if (f.checkValidity && !f.checkValidity()) return;
     track("envio_formulario", { formulario: f.getAttribute("data-wa-form") }, "Lead");
   }, true);
+  document.addEventListener("fav:change", function (e) { track(e.detail && e.detail.on ? "salvar_veiculo" : "remover_salvo", { veiculo_salvo: e.detail && e.detail.id, total_salvos: e.detail && e.detail.total }); });
   if (vid) track("view_item", { content_ids: [String(vid)], content_type: "product" }, "ViewContent");
 })();

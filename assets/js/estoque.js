@@ -13,7 +13,7 @@
   function readState() {
     const p = new URLSearchParams(location.search);
     state = {
-      q: p.get("q") || "", tipo: p.get("tipo") || "", categoria: p.getAll("categoria"), marca: p.get("marca") || "", modelo: p.get("modelo") || "",
+      q: p.get("q") || "", salvos: p.get("salvos") === "1", tipo: p.get("tipo") || "", categoria: p.getAll("categoria"), marca: p.get("marca") || "", modelo: p.get("modelo") || "",
       precoMin: p.get("precoMin") || "", precoMax: p.get("precoMax") || "", anoMin: p.get("anoMin") || "", kmMax: p.get("kmMax") || "",
       cambio: p.getAll("cambio"), combustivel: p.getAll("combustivel"), tag: p.getAll("tag"), ordem: p.get("ordem") || "marca"
     };
@@ -21,6 +21,7 @@
   function writeState() {
     const p = new URLSearchParams();
     ["q", "tipo", "marca", "modelo", "precoMin", "precoMax", "anoMin", "kmMax"].forEach((k) => { if (state[k]) p.set(k, state[k]); });
+    if (state.salvos) p.set("salvos", "1");
     ["categoria", "cambio", "combustivel", "tag"].forEach((k) => state[k].forEach((v) => p.append(k, v)));
     if (state.ordem && state.ordem !== "marca") p.set("ordem", state.ordem);
     const qs = p.toString();
@@ -29,7 +30,9 @@
 
   function apply() {
     const q = norm(state.q).split(/\s+/).filter(Boolean);
+    const favs = A.Fav.get();
     filtered = ALL.filter((v) => {
+      if (state.salvos && !favs.includes(v.id)) return false;
       if (state.tipo && v.tipo !== state.tipo) return false;
       if (state.categoria.length && !state.categoria.includes(v.categoria)) return false;
       if (state.marca && v.marca !== state.marca) return false;
@@ -56,12 +59,16 @@
     renderMore();
     const n = filtered.length;
     $("#results-count").innerHTML = n ? "<b>" + n + "</b> " + (n === 1 ? "veículo encontrado" : "veículos encontrados") : "Nenhum veículo encontrado";
+    renderSavedChip();
     renderActive();
     writeState();
   }
   function renderMore() {
     const slice = filtered.slice(shown, shown + PAGE);
-    if (!filtered.length) {
+    if (!filtered.length && state.salvos && !A.Fav.get().length) {
+      $("#results").innerHTML = '<div class="empty" style="grid-column:1/-1">' + icon("heart") + "<b>Você ainda não salvou nenhum veículo.</b><span>Toque no coração de um cartão para guardar o veículo neste aparelho.</span><button class=\"btn btn-outline\" type=\"button\" id=\"empty-clear\">Ver todo o estoque</button></div>";
+      $("#empty-clear").addEventListener("click", clearAll);
+    } else if (!filtered.length) {
       $("#results").innerHTML = '<div class="empty" style="grid-column:1/-1">' + icon("search") + "<b>Nenhum veículo com esses filtros.</b><span>Tente remover algum filtro ou fale com a gente: talvez tenhamos algo chegando.</span><button class=\"btn btn-outline\" type=\"button\" id=\"empty-clear\">Limpar filtros</button><a class=\"btn btn-wa\" href=\"" + A.waLink("Olá! Procuro um veículo específico e não encontrei no site. Podem me ajudar?") + '" target="_blank" rel="noopener">' + icon("whatsapp") + " Falar no WhatsApp</a></div>";
       $("#empty-clear").addEventListener("click", clearAll);
     } else {
@@ -72,10 +79,11 @@
     const rest = filtered.length - shown;
     if (rest > 0) $("#btn-more").textContent = "Carregar mais (" + rest + (rest === 1 ? " restante)" : " restantes)");
   }
-  function clearAll() { state = { q: "", tipo: "", categoria: [], marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", kmMax: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; syncControls(); apply(); }
+  function clearAll() { state = { q: "", salvos: false, tipo: "", categoria: [], marca: "", modelo: "", precoMin: "", precoMax: "", anoMin: "", kmMax: "", cambio: [], combustivel: [], tag: [], ordem: state.ordem }; syncControls(); apply(); }
 
   function activeList() {
     const out = [];
+    if (state.salvos) out.push(["salvos", "", "Salvos"]);
     if (state.q) out.push(["q", "", "“" + state.q + "”"]);
     if (state.tipo) out.push(["tipo", "", state.tipo === "moto" ? "Motos" : "Carros"]);
     state.categoria.forEach((v) => out.push(["categoria", v, CATS[v] || v]));
@@ -96,7 +104,7 @@
     $("#active-filters").innerHTML = act.map((a) => '<button class="chip on" type="button" data-k="' + esc(a[0]) + '" data-v="' + esc(a[1]) + '" aria-label="Remover filtro: ' + esc(a[2]) + '">' + esc(a[2]) + icon("close") + "</button>").join("") + (act.length > 1 ? '<button class="chip" type="button" id="chip-clear">Limpar tudo</button>' : "");
     $$("#active-filters .chip[data-k]").forEach((b) => b.addEventListener("click", () => {
       const k = b.dataset.k, v = b.dataset.v;
-      if (Array.isArray(state[k])) state[k] = state[k].filter((x) => x !== v); else state[k] = "";
+      if (Array.isArray(state[k])) state[k] = state[k].filter((x) => x !== v); else if (k === "salvos") state.salvos = false; else state[k] = "";
       syncControls(); apply();
     }));
     const c = $("#chip-clear"); if (c) c.addEventListener("click", clearAll);
@@ -158,6 +166,12 @@
     $("#f-apply").textContent = n ? "Ver " + n + (n === 1 ? " veículo" : " veículos") : "Nenhum veículo";
   }
 
+  function renderSavedChip() {
+    const total = A.Fav.get().length, el = $("#saved-chip"); if (!el) return;
+    el.hidden = !total && !state.salvos;
+    el.setAttribute("aria-pressed", state.salvos ? "true" : "false");
+    el.innerHTML = icon("heart") + " Salvos" + (total ? '<span class="n">' + total + "</span>" : "");
+  }
   let filtersSheet, saved = null, applied = false;
   document.addEventListener("DOMContentLoaded", async () => {
     readState();
@@ -168,6 +182,8 @@
     $("#q-clear").addEventListener("click", () => { $("#q").value = ""; state.q = ""; $("#q-clear").hidden = true; apply(); $("#q").focus(); });
     $("#ordem").addEventListener("change", () => { state.ordem = $("#ordem").value; ordemLabel(); apply(); });
     $("#btn-more").addEventListener("click", renderMore);
+    $("#saved-chip").addEventListener("click", () => { state.salvos = !state.salvos; apply(); });
+    document.addEventListener("fav:change", () => { if (state.salvos) apply(); else renderSavedChip(); });
     try {
       const data = await A.loadIndex();
       ALL = data.veiculos; CATS = data.categorias || {};
