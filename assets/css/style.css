@@ -307,21 +307,28 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 /* vídeo de fundo esmaecido (index.html); reduzido a poster quando o usuário prefere menos movimento */
 .hero-bg { position: absolute; inset: 0; overflow: hidden; background: #0b0b0c url("../video/hero-poster.webp") center / cover no-repeat; }
 /* escurece só onde há texto (topo) e botões/busca (base); o meio fica livre para o vídeo */
-.hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,.62) 0%, rgba(11,11,12,.28) 34%, rgba(11,11,12,.08) 55%, rgba(11,11,12,.3) 78%, rgba(11,11,12,.88) 100%); }
+.hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11,11,12,.62) 0%, rgba(11,11,12,.28) 34%, rgba(11,11,12,.06) 55%, rgba(11,11,12,.24) 80%, rgba(11,11,12,.8) 100%); }
 .hero-video { width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: .95; display: block; }
-.hero.has-video { min-height: clamp(480px, 72svh, 720px); display: grid; align-items: stretch; padding: 22px 0 30px; }
+.hero.has-video { min-height: clamp(480px, 72svh, 720px); display: grid; align-items: stretch; padding: 22px 0 54px; }
 .hero.has-video::after { opacity: .2; }
 .hero-content { display: grid; grid-template-rows: 1fr auto; align-content: space-between; }
 .hero-text { max-width: 640px; }
 .hero.has-video h1, .hero.has-video .lead { text-shadow: 0 2px 14px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.4); }
 .hero.has-video .lead { margin-bottom: 0; }
-.hero-cta { display: flex; gap: 10px; }
-.hero-cta .btn { flex: 1 1 0; min-width: 0; border: 1px solid rgba(255,255,255,.45); box-shadow: 0 8px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.18); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3); text-shadow: 0 1px 3px rgba(0,0,0,.5); }
-.hero-cta .btn-primary { background: rgba(196,35,31,.3); }
-.hero-cta .btn-primary:hover { background: rgba(196,35,31,.55); }
-.hero-cta .btn-wa { background: rgba(17,131,63,.3); }
-.hero-cta .btn-wa:hover { background: rgba(17,131,63,.55); }
-@supports not (backdrop-filter: blur(1px)) { .hero-cta .btn-primary { background: rgba(196,35,31,.7); } .hero-cta .btn-wa { background: rgba(17,131,63,.7); } }
+/* Botões do hero: um manda, o outro acompanha. "Ver estoque" é uma pill branca sólida (ícone no vermelho da marca);
+   "WhatsApp" é vidro branco, com o vídeo aparecendo por trás. Pill (999px) de propósito: separa da barra de busca (14-16px) logo abaixo. */
+.hero-cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.hero-cta .btn { flex: 1 1 140px; min-width: 0; min-height: 52px; padding: 0 16px; border-radius: 999px; border: 1px solid transparent; font-weight: 700; transition: transform .12s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.hero-cta .btn-primary { flex-grow: 1.2; background: #fff; color: var(--black); border-color: #fff; box-shadow: 0 10px 26px rgba(0,0,0,.3), 0 2px 6px rgba(0,0,0,.2); }
+.hero-cta .btn .ic { width: 1.3em; height: 1.3em; }
+.hero-cta .btn-primary .ic { color: var(--red); }
+.hero-cta .btn-primary:hover { background: #f2f2f4; color: var(--black); transform: translateY(-1px); box-shadow: 0 12px 28px rgba(0,0,0,.34), 0 3px 8px rgba(0,0,0,.22); }
+.hero-cta .btn-primary:active { transform: scale(.98); }
+.hero-cta .btn-wa { background: linear-gradient(180deg, rgba(255,255,255,.26), rgba(255,255,255,.14)); color: #fff; border-color: rgba(255,255,255,.55); backdrop-filter: blur(14px) saturate(1.5); -webkit-backdrop-filter: blur(14px) saturate(1.5); box-shadow: 0 0 0 1px rgba(0,0,0,.25), 0 8px 24px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.4); text-shadow: 0 1px 2px rgba(0,0,0,.4); }
+.hero-cta .btn-wa .ic { color: var(--green-light); filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
+.hero-cta .btn-wa:hover { background: rgba(255,255,255,.3); border-color: rgba(255,255,255,.85); color: #fff; }
+@supports not (backdrop-filter: blur(1px)) { .hero-cta .btn-wa { background: rgba(23,23,26,.7); border-color: rgba(255,255,255,.6); } }
+.hero-cta .btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; box-shadow: 0 0 0 6px rgba(11,11,12,.9); }
 .quick-find { padding-top: 0; padding-bottom: 12px; position: relative; z-index: 2; }
 .search-bar { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 6px 6px 6px 14px; box-shadow: var(--shadow-lg); margin: -26px 0 14px; color: var(--ink-2); }
 .search-bar input { flex: 1 1 auto; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 1rem; min-height: 44px; color: var(--ink); }
@@ -331,7 +338,7 @@ select.input { appearance: none; -webkit-appearance: none; padding-right: 40px; 
 .search-bar .btn { flex: 0 0 auto; }
 @media (prefers-reduced-motion: reduce) { .hero-video { display: none; } .bottom-nav .bn-wa .bn-wa-circle::before { animation: none; } .yt-pop, .yt-pop-frame { transition: none; } }
 @media (min-width: 900px) { .hero-video { display: none; } .hero-bg { background-image: url("../video/hero-poster-wide.webp"); } }
-@media (min-width: 900px) { .hero-bg::after { background: linear-gradient(90deg, rgba(11,11,12,.72) 0%, rgba(11,11,12,.32) 50%, rgba(11,11,12,.5) 100%), linear-gradient(180deg, rgba(11,11,12,.35) 0%, rgba(11,11,12,0) 30%, rgba(11,11,12,0) 75%, rgba(11,11,12,.6) 100%); } }
+@media (min-width: 900px) { .hero-bg::after { background: linear-gradient(90deg, rgba(11,11,12,.72) 0%, rgba(11,11,12,.32) 50%, rgba(11,11,12,.5) 100%), linear-gradient(180deg, rgba(11,11,12,.35) 0%, rgba(11,11,12,0) 30%, rgba(11,11,12,0) 75%, rgba(11,11,12,.5) 100%); } }
 .hero h1 { font-size: clamp(1.8rem, 6.4vw, 2.8rem); line-height: 1.05; letter-spacing: -.025em; max-width: 14ch; }
 .hero h1 em { font-style: normal; color: var(--red); }
 .hero .lead { color: rgba(255,255,255,.86); margin: 12px 0 18px; max-width: 42ch; font-size: .98rem; }
@@ -690,7 +697,8 @@ body.no-bottom-nav .cookie-notice { bottom: calc(76px + var(--safe-b)); }
   .hero.has-video { min-height: 600px; padding: 48px 0 64px; }
   .hero-text { max-width: 720px; }
   .hero-cta { gap: 12px; }
-  .hero-cta .btn { flex: 0 0 auto; min-width: 220px; }
+  .hero-cta .btn { flex: 0 0 auto; min-width: 220px; min-height: 54px; padding: 0 26px; }
+  .hero-cta .btn-primary { min-width: 236px; }
   .search-bar { margin-top: -30px; padding: 8px 8px 8px 18px; border-radius: 16px; }
   .search-bar input { font-size: 1.05rem; min-height: 44px; }
   .home-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
