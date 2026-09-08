@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "Sr7Y2QnYXkE",
-  "titulo": "RAM RAMPAGE - 2025/20262.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
-  "publicadoEm": "2026-09-04",
+  "id": "NePipdP4Kxo",
+  "titulo": "FIAT TORO - 2019/20202.4 16V MULTIAIR FLEX VOLCANO AT9",
+  "publicadoEm": "2026-09-08",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/Sr7Y2QnYXkE"
+  "url": "https://www.youtube.com/shorts/NePipdP4Kxo"
  },
  "videos": [
+  {
+   "id": "NePipdP4Kxo",
+   "titulo": "FIAT TORO - 2019/20202.4 16V MULTIAIR FLEX VOLCANO AT9",
+   "publicadoEm": "2026-09-08",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/NePipdP4Kxo"
+  },
+  {
+   "id": "ZzSf6YwAv9c",
+   "titulo": "MINI COOPER - 2023/20242.0 16V TWINPOWER GASOLINA S 4P STEPTRONIC",
+   "publicadoEm": "2026-09-08",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/ZzSf6YwAv9c"
+  },
+  {
+   "id": "3Z_Fzw5f_KE",
+   "titulo": "JEEP COMPASS - 2021/20222.0 TD350 TURBO DIESEL TRAILHAWK AT9",
+   "publicadoEm": "2026-09-08",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/3Z_Fzw5f_KE"
+  },
   {
    "id": "Sr7Y2QnYXkE",
    "titulo": "RAM RAMPAGE - 2025/20262.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-09-04",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/jKWJo1hM_rQ"
-  },
-  {
-   "id": "pY4ZNJHOomM",
-   "titulo": "JEEP COMMANDER - 2023/20231.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-09-04",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/pY4ZNJHOomM"
-  },
-  {
-   "id": "2-7k1gF6y7s",
-   "titulo": "JEEP COMMANDER - 2023/20232.0 TD380 TURBO DIESEL OVERLAND AT9",
-   "publicadoEm": "2026-09-04",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/2-7k1gF6y7s"
-  },
-  {
-   "id": "eAJepJaMgW0",
-   "titulo": "FIAT FASTBACK - 2022/20231.0 TURBO 200 FLEX AUDACE CVT",
-   "publicadoEm": "2026-09-04",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/eAJepJaMgW0"
   }
  ]
 }
