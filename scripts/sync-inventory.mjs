@@ -15,6 +15,9 @@
  *                                                         <dir>/Veiculos.html, <dir>/motos.html,
  *                                                         <dir>/detail/<id>.html
  *   --date YYYY-MM-DD   override "atualizadoEm" (default: today, UTC)
+ *   --check-only        só confere se a listagem mudou em relação a data/index.json (ids, capas, preços e
+ *                       destaques); não baixa páginas de detalhe nem grava nada. Imprime "mudou=true|false"
+ *                       e, no GitHub Actions, grava a mesma linha em $GITHUB_OUTPUT.
  *   --out <dir>         output directory (default: <repo>/data)
  *   --help              show this help
  *
@@ -51,7 +54,7 @@ const REPO_ROOT = path.resolve(SCRIPT_DIR, '..');
 // ---------------------------------------------------------------------------
 
 function parseArgs(argv) {
-  const opts = { fromDir: null, date: null, out: null, help: false, force: false };
+  const opts = { fromDir: null, date: null, out: null, help: false, force: false, checkOnly: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const next = () => {
@@ -63,6 +66,7 @@ function parseArgs(argv) {
     else if (a === '--date') opts.date = next();
     else if (a === '--out') opts.out = next();
     else if (a === '--force') opts.force = true;
+    else if (a === '--check-only') opts.checkOnly = true;
     else if (a === '--help' || a === '-h') opts.help = true;
     else throw new Error(`Unknown argument: ${a}`);
   }
@@ -186,6 +190,7 @@ function parseListing(html) {
       slug: href[2],
       url: href[1],
       capa: img[1],
+      preco: parsePrice(card), // null quando o cartão não traz o preço
       marca: htmlUnescape(title[1]).trim(),
       modelo: htmlUnescape(title[2]).trim(),
     });
@@ -466,6 +471,8 @@ async function main() {
     } catch (e) { if (/refusing to overwrite/.test(e.message)) throw e; }
   }
 
+  if (opts.checkOnly) return checkOnly(listing, source, outDir);
+
   const motoIds = parseListingIds(await source.motoListing());
   console.error(`Moto listing: ${motoIds.size} ids (${[...motoIds].join(', ') || 'none'})`);
   for (const id of motoIds) {
@@ -513,6 +520,21 @@ async function main() {
   console.log(`Wrote ${indexPath}`);
   console.log(`atualizadoEm: ${date}`);
   console.log(summarize(vehicles));
+}
+
+/** Modo leve (a cada 5 minutos no Actions): compara a listagem com data/index.json sem baixar os detalhes. */
+async function checkOnly(listing, source, outDir) {
+  const indexPath = path.join(outDir, 'index.json');
+  const idx = fs.existsSync(indexPath) ? JSON.parse(fs.readFileSync(indexPath, 'utf8')) : null;
+  const destaques = parseHomeHighlights(await source.home()).filter((id) => listing.some((it) => it.id === id));
+  const comPreco = listing.every((it) => it.preco != null);
+  const chave = (id, capa, preco) => `${id}|${capa}|${comPreco ? Number(preco) : ''}`;
+  const atual = listing.map((it) => chave(it.id, it.capa, it.preco)).sort().join('\n') + '\n#' + destaques.join(',');
+  const gravado = idx ? idx.veiculos.map((v) => chave(v.id, v.capa, v.preco)).sort().join('\n') + '\n#' + (idx.destaques || []).join(',') : '';
+  const mudou = atual !== gravado;
+  console.log(`check: ${mudou ? 'estoque mudou' : 'sem mudanças'} (listagem ${listing.length} veículos${comPreco ? ' com preço' : ''}, índice ${idx ? idx.total : 'inexistente'}, ${destaques.length} destaques)`);
+  console.log(`mudou=${mudou}`);
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `mudou=${mudou}\n`);
 }
 
 main().catch((err) => {
