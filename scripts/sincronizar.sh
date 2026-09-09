@@ -12,6 +12,14 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# se algo falhar no meio (leitura incompleta, validação), desfaz o que foi gerado para a árvore ficar
+# limpa: o vigia continua com o último estoque publicado e o git pull seguinte não trava
+limpar() {
+  git checkout -q -- data v sitemap.xml robots.txt ':(glob)*.html' assets/thumbs assets/fotos assets/og assets/marcas 2>/dev/null || true
+  git clean -qfd -- v assets/thumbs assets/fotos assets/og assets/marcas 2>/dev/null || true
+}
+trap 'limpar' ERR
+
 SITE_URL="${SITE_URL:-https://iguatemi-veiculos.vercel.app/}"
 SEM_COMMIT="${SEM_COMMIT:-}"
 while [ $# -gt 0 ]; do
@@ -42,7 +50,7 @@ if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- "${RASTREADOS[@]}" asset
 fi
 
 if [ -n "$SEM_COMMIT" ]; then
-  git status --short | head -20
+  git status --short | sed -n '1,20p'
   echo "mudou=true (sem commit: modo de teste)"
   exit 0
 fi

@@ -504,11 +504,17 @@ async function main() {
   const vehicles = results.filter(Boolean);
   if (vehicles.length === 0) throw new Error('no vehicle could be parsed; nothing written');
   const avisos = failures.map((f) => ({ id: f.item.id, url: BASE_URL + f.item.url, erro: f.error.message }));
+  // anúncios pulados ficam registrados no índice (id, capa e preço da listagem) para o --check-only não
+  // disparar uma sincronização completa a cada 5 minutos por causa deles; quando o anúncio mudar
+  // (por exemplo, ganhar fotos), a capa muda e a sincronização roda
+  const pulados = failures.map((f) => ({ id: f.item.id, capa: f.item.capa, preco: f.item.preco ?? null }));
+  // destaques da home só com veículos que de fato entraram no estoque
+  const destaquesFinais = destaques.filter((id) => vehicles.some((v) => v.id === id));
 
   vehicles.sort(compareVehicles);
 
-  const vehiclesDoc = { atualizadoEm: date, fonte: LISTING_URL, total: vehicles.length, destaques, ...(avisos.length ? { avisos } : {}), veiculos: vehicles };
-  const indexDoc = { atualizadoEm: date, total: vehicles.length, destaques, veiculos: vehicles.map(toIndexEntry) };
+  const vehiclesDoc = { atualizadoEm: date, fonte: LISTING_URL, total: vehicles.length, destaques: destaquesFinais, ...(avisos.length ? { avisos } : {}), veiculos: vehicles };
+  const indexDoc = { atualizadoEm: date, total: vehicles.length, destaques: destaquesFinais, ...(pulados.length ? { pulados } : {}), veiculos: vehicles.map(toIndexEntry) };
 
   fs.mkdirSync(outDir, { recursive: true });
   const vehiclesPath = path.join(outDir, 'vehicles.json');
@@ -529,8 +535,12 @@ async function checkOnly(listing, source, outDir) {
   const destaques = parseHomeHighlights(await source.home()).filter((id) => listing.some((it) => it.id === id));
   const comPreco = listing.every((it) => it.preco != null);
   const chave = (id, capa, preco) => `${id}|${capa}|${comPreco ? Number(preco) : ''}`;
-  const atual = listing.map((it) => chave(it.id, it.capa, it.preco)).sort().join('\n') + '\n#' + destaques.join(',');
-  const gravado = idx ? idx.veiculos.map((v) => chave(v.id, v.capa, v.preco)).sort().join('\n') + '\n#' + (idx.destaques || []).join(',') : '';
+  // no índice, os anúncios pulados contam como estão na listagem (ver 'pulados' em main); destaques da home só
+  // com veículos publicados, como o índice guarda
+  const publicados = new Set(idx ? idx.veiculos.map((v) => v.id) : []);
+  const destaquesAtual = destaques.filter((id) => publicados.has(id) || !(idx && (idx.pulados || []).some((p) => p.id === id)));
+  const atual = listing.map((it) => chave(it.id, it.capa, it.preco)).sort().join('\n') + '\n#' + destaquesAtual.join(',');
+  const gravado = idx ? [...idx.veiculos.map((v) => chave(v.id, v.capa, v.preco)), ...(idx.pulados || []).map((p) => chave(p.id, p.capa, p.preco))].sort().join('\n') + '\n#' + (idx.destaques || []).join(',') : '';
   const mudou = atual !== gravado;
   console.log(`check: ${mudou ? 'estoque mudou' : 'sem mudanças'} (listagem ${listing.length} veículos${comPreco ? ' com preço' : ''}, índice ${idx ? idx.total : 'inexistente'}, ${destaques.length} destaques)`);
   console.log(`mudou=${mudou}`);
