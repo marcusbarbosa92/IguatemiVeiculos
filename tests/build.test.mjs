@@ -36,6 +36,10 @@ try {
   check(ler('veiculo.html').includes(`<meta property="og:image" content="${SITE}assets/img/og.png">`), 'veiculo.html: og:image errado');
   check(ler('404.html').includes('<base href="/">'), '404.html: <base> precisa ser "/" na raiz do domínio');
   check(ler('robots.txt').includes(`Sitemap: ${SITE}sitemap.xml`), 'robots.txt: Sitemap errado');
+  // endereço provisório (*.vercel.app) não deve ser indexado; domínio próprio, sim
+  const provisorio = /\.vercel\.app$/.test(HOST);
+  check(ler('index.html').includes('data-provisorio') === provisorio, `index.html: meta noindex ${provisorio ? 'faltando' : 'indevida'} para ${HOST}`);
+  check(ler('robots.txt').includes(provisorio ? 'Disallow: /' : 'Allow: /'), `robots.txt: ${provisorio ? 'deveria bloquear' : 'não deveria bloquear'} ${HOST}`);
   check(!ler('sitemap.xml').includes('github.io'), 'sitemap.xml ainda cita o GitHub Pages');
   check(ler('sitemap.xml').includes(`<loc>${SITE}estoque.html</loc>`), 'sitemap.xml sem a URL do estoque no endereço do projeto');
 
@@ -70,6 +74,8 @@ try {
     check(ler('404.html').includes('<base href="/loja/">'), '404.html: <base> deveria ser "/loja/" com SITE_URL em subpasta');
     check(ler('index.html').includes('<link rel="canonical" href="https://www.exemplo.com.br/loja/">'), 'SITE_URL não teve prioridade sobre VERCEL_PROJECT_PRODUCTION_URL');
     check(ler('robots.txt').includes('Sitemap: https://www.exemplo.com.br/loja/sitemap.xml'), 'robots.txt: Sitemap não seguiu SITE_URL');
+    check(!ler('index.html').includes('data-provisorio') && !ler('v/' + fs.readdirSync(path.join(OUT2, 'v')).find((f) => /^\d+\.html$/.test(f))).includes('data-provisorio'), 'domínio próprio não pode levar noindex');
+    check(ler('robots.txt').includes('Allow: /') && !ler('robots.txt').includes('Disallow: /'), 'robots.txt: domínio próprio não pode bloquear robôs');
   } finally {
     fs.rmSync(OUT2, { recursive: true, force: true });
   }

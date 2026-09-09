@@ -177,6 +177,14 @@ if (trocarLista('index.html', listaHome)) ajustados++;
 
 // robots.txt só vale na raiz do domínio; a diretiva Sitemap precisa da URL completa
 if (ajustar('robots.txt', (t) => t.replace(/^Sitemap: .*$/m, `Sitemap: ${SITE_URL}sitemap.xml`))) ajustados++;
+// endereço provisório (*.vercel.app): sem indexação, para o Google não guardar um endereço que vai mudar.
+// Com o domínio próprio configurado no Vercel, a tag e o Disallow somem sozinhos no build seguinte.
+const PROVISORIO = /\.vercel\.app$/i.test(new URL(SITE_URL).hostname);
+const META_NOINDEX = '<meta name="robots" content="noindex, nofollow" data-provisorio>';
+const robotsMeta = (h) => { const semTag = h.replace(/\n?<meta name="robots"[^>]*data-provisorio>/g, ''); return PROVISORIO ? semTag.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n' + META_NOINDEX) : semTag; };
+for (const f of fs.readdirSync(ROOT)) { if (/\.html$/.test(f) && ajustar(f, robotsMeta)) ajustados++; }
+for (const f of fs.readdirSync(OUT_DIR)) { if (/^\d+\.html$/.test(f) && ajustar(path.join(path.relative(ROOT, OUT_DIR), f), robotsMeta)) ajustados++; }
+if (ajustar('robots.txt', (t) => t.replace(/^(Allow|Disallow): \/$/m, PROVISORIO ? 'Disallow: /' : 'Allow: /'))) ajustados++;
 // o 404 é servido de qualquer caminho, então os links relativos precisam do prefixo do site ("/" em domínio próprio ou no Vercel)
 if (ajustar('404.html', (h) => h.replace(/<base href="[^"]*">/, `<base href="${esc(new URL(SITE_URL).pathname)}">`))) ajustados++;
 
