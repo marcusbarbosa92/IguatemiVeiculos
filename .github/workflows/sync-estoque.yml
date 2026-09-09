@@ -1,103 +1,71 @@
 name: Sincronizar estoque
 
-# Atualiza data/*.json, v/*.html, sitemap.xml e assets/thumbs a partir de iguatemiautomoveis.com.br
-# e faz commit. A cada 5 minutos confere só a listagem (2 requisições) e, se algo mudou (veículo novo,
-# vendido, preço ou capa), faz a sincronização completa. Todo dia às 06:00 (Brasília) faz a completa de
-# qualquer jeito, para pegar fotos e opcionais editados em anúncios que já existiam. Também roda
-# manualmente em Actions > Sincronizar estoque > Run workflow.
+# Vigia o estoque da loja na AutoCerto (iguatemiautomoveis.com.br) e publica as mudanças em poucos minutos.
 #
-# Publicação: o Vercel (vercel.json) faz o deploy sozinho a cada push, inclusive este commit, e recalcula
-# as URLs absolutas com o domínio do projeto. O job "publicar" (GitHub Pages) só roda se a variável de
-# repositório PUBLICAR_GITHUB_PAGES for "true" (Settings > Secrets and variables > Actions > Variables).
-# Nesse caso, defina também SITE_URL com a URL final, ex.: https://www.seudominio.com.br/
+# Como funciona: cada execução é um "vigia" que fica ativo por quase 6 horas (o máximo de um job). Ao
+# começar, faz uma sincronização completa (estoque, páginas, miniaturas, YouTube, Instagram). Depois, a
+# cada 5 minutos, confere só a listagem (duas requisições: listagem e home) e, se algo mudou (veículo
+# novo, vendido, preço ou capa), faz a sincronização completa e commita. Ao terminar o turno, dispara a
+# próxima execução, e assim a vigilância nunca para. O workflow "Manter a vigilância do estoque"
+# (vigia-estoque.yml) confere de hora em hora se há um vigia ativo e, se não houver, inicia um.
+#
+# Por que assim e não um cron de 5 em 5 minutos: o agendador do GitHub tem prioridade baixa e atrasa
+# (neste repositório, a execução diária das 09:00 UTC chegou a rodar às 13:24). Um job contínuo respeita
+# o intervalo de 5 minutos; só o atraso do próprio GitHub para iniciar a execução seguinte fica fora do
+# nosso controle. Actions é gratuito em repositório público.
+#
+# Publicação: o Vercel (vercel.json) faz o deploy sozinho a cada push, inclusive os commits deste job.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/5 * * * *"   # confere a listagem; sincroniza só se mudou
-    - cron: "0 9 * * *"     # sincronização completa diária
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
+  actions: write   # para disparar a próxima execução
 
 concurrency:
   group: sync-estoque
   cancel-in-progress: false
 
 jobs:
-  sync:
+  vigiar:
     runs-on: ubuntu-latest
-    outputs:
-      mudou: ${{ steps.commit.outputs.mudou }}
+    timeout-minutes: 355
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'https://iguatemi-veiculos.vercel.app/' }}
+      INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
+      DURACAO_MIN: 340       # duração do turno; depois disso, passa o bastão para a próxima execução
+      INTERVALO_S: 300       # 5 minutos entre conferências
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      # Conferência leve (só nas execuções de 5 em 5 minutos): compara a listagem com data/index.json
-      - name: Conferir se a listagem mudou
-        id: check
-        if: github.event.schedule == '*/5 * * * *'
-        run: node scripts/sync-inventory.mjs --check-only
-      # Daqui em diante só quando mudou, na execução diária ou quando disparado à mão
       - uses: actions/setup-python@v5
-        if: steps.check.outputs.mudou != 'false'
         with:
           python-version: "3.12"
-      - if: steps.check.outputs.mudou != 'false'
-        run: pip install pillow
-      - if: steps.check.outputs.mudou != 'false'
-        run: node scripts/sync-inventory.mjs
-      - if: steps.check.outputs.mudou != 'false'
-        run: node scripts/gerar-paginas.mjs --site-url "${{ vars.SITE_URL || 'https://iguatemi-veiculos.vercel.app/' }}"
-      - if: steps.check.outputs.mudou != 'false'
-        run: python3 scripts/gerar-miniaturas.py
-      - if: steps.check.outputs.mudou != 'false'
-        run: node scripts/sync-youtube.mjs
-      - if: steps.check.outputs.mudou != 'false'
-        run: python3 scripts/sync-instagram.py
-        env:
-          INSTAGRAM_TOKEN: ${{ secrets.INSTAGRAM_TOKEN }}
-      - if: steps.check.outputs.mudou != 'false'
-        run: node tests/validar-dados.mjs
-      - name: Commit se o estoque mudou
-        id: commit
-        if: steps.check.outputs.mudou != 'false'
+      - run: pip install pillow
+      - name: Sincronização completa ao iniciar o turno
+        run: bash scripts/sincronizar.sh --site-url "$SITE_URL" || echo "::warning::a sincronização completa falhou; o vigia continua e tenta de novo na próxima mudança"
+      - name: Vigiar a listagem a cada 5 minutos
         run: |
-          # ignora linhas que mudam todo dia (data de atualização e lastmod do sitemap)
-          if git diff --quiet -I 'atualizadoEm' -I '<lastmod>' -- data v sitemap.xml robots.txt ':(glob)*.html' assets/thumbs assets/fotos assets/og assets/marcas assets/instagram \
-             && [ -z "$(git ls-files --others --exclude-standard -- v assets/thumbs assets/fotos assets/og assets/marcas assets/instagram)" ]; then
-            echo "Estoque sem mudanças."; git checkout -- . ; echo "mudou=false" >> "$GITHUB_OUTPUT"; exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # assets/instagram só existe com INSTAGRAM_TOKEN: um pathspec inexistente faz o git add falhar
-          git add data v sitemap.xml robots.txt ':(glob)*.html' assets/thumbs assets/fotos assets/og assets/marcas
-          [ -d assets/instagram ] && git add assets/instagram
-          git commit -m "chore: sincroniza estoque ($(date -u +%Y-%m-%d))"
-          git pull --rebase
-          git push
-          echo "mudou=true" >> "$GITHUB_OUTPUT"
-
-  # GitHub Pages (opcional): pushes feitos com o GITHUB_TOKEN não disparam outros workflows, então a
-  # publicação acontece aqui mesmo. O Vercel não precisa disso: ele reage ao push por conta própria.
-  publicar:
-    needs: sync
-    if: needs.sync.outputs.mudou == 'true' && vars.PUBLICAR_GITHUB_PAGES == 'true'
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }}
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          fim=$(( $(date +%s) + DURACAO_MIN * 60 ))
+          n=0
+          while [ "$(date +%s)" -lt "$fim" ]; do
+            sleep "$INTERVALO_S"
+            n=$((n + 1))
+            git pull -q --rebase || true   # pega commits feitos por fora (YouTube, ajustes no site)
+            if saida=$(node scripts/sync-inventory.mjs --check-only 2>&1); then
+              echo "[$(date -u +%H:%M)] #$n $(echo "$saida" | grep '^check:')"
+              if echo "$saida" | grep -q '^mudou=true'; then
+                bash scripts/sincronizar.sh --site-url "$SITE_URL" || echo "::warning::sincronização falhou às $(date -u +%H:%M); tento de novo na próxima mudança"
+              fi
+            else
+              echo "::warning::[$(date -u +%H:%M)] conferência falhou: $(echo "$saida" | tail -1)"
+            fi
+          done
+          echo "Turno encerrado após $n conferências."
+      - name: Passar o bastão para a próxima execução
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run sync-estoque.yml --ref "$GITHUB_REF_NAME"

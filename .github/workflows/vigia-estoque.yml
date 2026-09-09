@@ -1,0 +1,28 @@
+name: Manter a vigilância do estoque
+
+# De hora em hora, confere se existe uma execução de "Sincronizar estoque" em andamento ou na fila.
+# Se não existir (por exemplo, depois de uma falha ou de um período de indisponibilidade do GitHub),
+# inicia uma. Não mexe em nada quando o vigia já está ativo.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "7 * * * *"
+
+permissions:
+  actions: write
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Iniciar o vigia se não houver um ativo
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          ativos=$(gh run list --workflow sync-estoque.yml --json status --jq '[.[] | select(.status == "in_progress" or .status == "queued" or .status == "waiting" or .status == "requested" or .status == "pending")] | length')
+          echo "execuções ativas do vigia: $ativos"
+          if [ "$ativos" = "0" ]; then
+            gh workflow run sync-estoque.yml --ref "$GITHUB_REF_NAME"
+            echo "vigia iniciado"
+          fi

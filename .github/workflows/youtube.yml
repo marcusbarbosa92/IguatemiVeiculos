@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-estoque
+  group: youtube
   cancel-in-progress: false
 
 jobs:
