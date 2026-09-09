@@ -2,14 +2,14 @@
  "atualizadoEm": "2026-09-09",
  "total": 127,
  "destaques": [
+  5466833,
   5457666,
   5454009,
   5466445,
   5467055,
   5268750,
   5137336,
-  5467093,
-  5465979
+  5467093
  ],
  "veiculos": [
   {
@@ -2628,16 +2628,16 @@
    "preco": 190990,
    "cambio": "Automático",
    "combustivel": "Diesel",
-   "capa": "https://www.autocerto.com/fotos/3854/5466833/1_085951.jpg",
-   "capaId": "1_085951",
+   "capa": "https://www.autocerto.com/fotos/3854/5466833/12_120249.jpg",
+   "capaId": "12_120249",
    "caracteristicas": [
     "IPVA Pago",
     "Manual do proprietário",
     "Chave Reserva",
     "Licenciado"
    ],
-   "nFotos": 2,
-   "video": false
+   "nFotos": 19,
+   "video": true
   },
   {
    "id": 5161281,

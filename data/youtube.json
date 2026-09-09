@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "NePipdP4Kxo",
-  "titulo": "FIAT TORO - 2019/20202.4 16V MULTIAIR FLEX VOLCANO AT9",
-  "publicadoEm": "2026-09-08",
+  "id": "JOL0DZyZWKY",
+  "titulo": "CHEVROLET SPARK EUV - 2025/202642 KW ELÉTRICO",
+  "publicadoEm": "2026-09-09",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/NePipdP4Kxo"
+  "url": "https://www.youtube.com/shorts/JOL0DZyZWKY"
  },
  "videos": [
+  {
+   "id": "JOL0DZyZWKY",
+   "titulo": "CHEVROLET SPARK EUV - 2025/202642 KW ELÉTRICO",
+   "publicadoEm": "2026-09-09",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/JOL0DZyZWKY"
+  },
+  {
+   "id": "SFcl1sgWoDw",
+   "titulo": "RAM RAMPAGE - 2025/20252.2 TURBO DIESEL LARAMIE 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-09-09",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/SFcl1sgWoDw"
+  },
   {
    "id": "NePipdP4Kxo",
    "titulo": "FIAT TORO - 2019/20202.4 16V MULTIAIR FLEX VOLCANO AT9",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-09-04",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/Sr7Y2QnYXkE"
-  },
-  {
-   "id": "KJlE8Z3poFw",
-   "titulo": "FIAT FASTBACK - 2026/20261.3 TURBO 270 FLEX ABARTH AT6",
-   "publicadoEm": "2026-09-04",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/KJlE8Z3poFw"
-  },
-  {
-   "id": "jKWJo1hM_rQ",
-   "titulo": "JEEP RENEGADE - 2022/20221.3 T270 TURBO FLEX S 4X4 AT9",
-   "publicadoEm": "2026-09-04",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/jKWJo1hM_rQ"
   }
  ]
 }
