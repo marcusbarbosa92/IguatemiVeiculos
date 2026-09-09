@@ -1,15 +1,15 @@
 {
  "atualizadoEm": "2026-09-09",
- "total": 127,
+ "total": 128,
  "destaques": [
+  5481874,
   5466833,
   5457666,
   5454009,
   5466445,
   5467055,
   5268750,
-  5137336,
-  5467093
+  5137336
  ],
  "veiculos": [
   {
@@ -470,6 +470,30 @@
     "Licenciado"
    ],
    "nFotos": 19,
+   "video": true
+  },
+  {
+   "id": 5481874,
+   "slug": "spark-euv-42-kw-eletrico-2026",
+   "tipo": "carro",
+   "marca": "CHEVROLET",
+   "modelo": "SPARK EUV",
+   "versao": "42 KW ELÉTRICO",
+   "anoFabricacao": 2025,
+   "anoModelo": 2026,
+   "km": 16839,
+   "preco": 134890,
+   "cambio": "Automático",
+   "combustivel": "Elétrico",
+   "capa": "https://www.autocerto.com/fotos/3854/5481874/14_120834.jpg",
+   "capaId": "14_120834",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 18,
    "video": true
   },
   {
