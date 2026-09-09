@@ -1,15 +1,15 @@
 {
  "atualizadoEm": "2026-09-09",
- "total": 128,
+ "total": 131,
  "destaques": [
-  5481874,
-  5466833,
-  5457666,
-  5454009,
-  5466445,
-  5467055,
-  5268750,
-  5137336
+  5485733,
+  5483114,
+  5482104,
+  5482506,
+  5477487,
+  5476673,
+  5481834,
+  5482523
  ],
  "veiculos": [
   {
@@ -300,6 +300,32 @@
    "video": true
   },
   {
+   "id": 5485733,
+   "slug": "king-1.5-dm-i-phev-gs-automatico-2026",
+   "tipo": "carro",
+   "marca": "BYD",
+   "modelo": "KING",
+   "versao": "1.5 DM-I PHEV GS AUTOMÁTICO",
+   "anoFabricacao": 2025,
+   "anoModelo": 2026,
+   "km": 35747,
+   "preco": 155490,
+   "cambio": "Automático",
+   "combustivel": "Gasolina e Elétrico",
+   "capa": "https://www.autocerto.com/fotos/3854/5485733/2_060420.jpg",
+   "capaId": "2_060420",
+   "caracteristicas": [
+    "Garantia de Fábrica",
+    "Revisado em Concessionária",
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 2,
+   "video": false
+  },
+  {
    "id": 5457666,
    "slug": "song-plus-premium-1.5-dm-i-turbo-hibrido-awd-automatico-2026",
    "tipo": "carro",
@@ -426,6 +452,30 @@
    "video": true
   },
   {
+   "id": 5477487,
+   "slug": "cruze-1.4-turbo-sport6-rs-16v-flex-4p-automatico-2023",
+   "tipo": "carro",
+   "marca": "CHEVROLET",
+   "modelo": "CRUZE",
+   "versao": "1.4 TURBO SPORT6 RS 16V FLEX 4P AUTOMÁTICO",
+   "anoFabricacao": 2022,
+   "anoModelo": 2023,
+   "km": 76191,
+   "preco": 117890,
+   "cambio": "Automático",
+   "combustivel": "Flex",
+   "capa": "https://www.autocerto.com/fotos/3854/5477487/21_040957.jpg",
+   "capaId": "21_040957",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 20,
+   "video": true
+  },
+  {
    "id": 5467093,
    "slug": "equinox-2.0-16v-turbo-gasolina-lt-automatico--2019",
    "tipo": "carro",
@@ -523,30 +573,6 @@
    "video": true
   },
   {
-   "id": 5448856,
-   "slug": "tracker-1.2-turbo-flex-premier-automatico-2024",
-   "tipo": "carro",
-   "marca": "CHEVROLET",
-   "modelo": "TRACKER",
-   "versao": "1.2 TURBO FLEX PREMIER AUTOMÁTICO",
-   "anoFabricacao": 2023,
-   "anoModelo": 2024,
-   "km": 85968,
-   "preco": 94990,
-   "cambio": "Automático",
-   "combustivel": "Flex",
-   "capa": "https://www.autocerto.com/fotos/3854/5448856/1_110849.jpg",
-   "capaId": "1_110849",
-   "caracteristicas": [
-    "IPVA Pago",
-    "Manual do proprietário",
-    "Chave Reserva",
-    "Licenciado"
-   ],
-   "nFotos": 20,
-   "video": true
-  },
-  {
    "id": 5373015,
    "slug": "fastback-1.0-turbo-200-flex-audace-cvt-2024",
    "tipo": "carro",
@@ -623,28 +649,27 @@
    "video": true
   },
   {
-   "id": 4814825,
-   "slug": "pulse-1.0-turbo-200-hybrid-impetus-cvt-2025",
+   "id": 5483114,
+   "slug": "fastback-1.3-turbo-270-flex-abarth-at6-2024",
    "tipo": "carro",
    "marca": "FIAT",
-   "modelo": "PULSE",
-   "versao": "1.0 TURBO 200 HYBRID IMPETUS CVT",
-   "anoFabricacao": 2024,
-   "anoModelo": 2025,
-   "km": 50381,
-   "preco": 110890,
-   "cambio": "CVT",
+   "modelo": "FASTBACK",
+   "versao": "1.3 TURBO 270 FLEX ABARTH AT6",
+   "anoFabricacao": 2023,
+   "anoModelo": 2024,
+   "km": 46862,
+   "preco": 114490,
+   "cambio": "Automático",
    "combustivel": "Flex",
-   "capa": "https://www.autocerto.com/fotos/3854/4814825/1_111910.jpg",
-   "capaId": "1_111910",
+   "capa": "https://www.autocerto.com/fotos/3854/5483114/16_054644.jpg",
+   "capaId": "16_054644",
    "caracteristicas": [
-    "Garantia de Fábrica",
-    "Revisado em Concessionária",
-    "Único Dono",
+    "IPVA Pago",
     "Manual do proprietário",
-    "Chave Reserva"
+    "Chave Reserva",
+    "Licenciado"
    ],
-   "nFotos": 25,
+   "nFotos": 19,
    "video": true
   },
   {
@@ -964,6 +989,30 @@
     "Chave Reserva"
    ],
    "nFotos": 20,
+   "video": true
+  },
+  {
+   "id": 5482506,
+   "slug": "hr-v-1.5-di-i-vtec-turbo-flex-touring-cvt-2025",
+   "tipo": "carro",
+   "marca": "HONDA",
+   "modelo": "HR-V",
+   "versao": "1.5 DI I-VTEC TURBO FLEX TOURING CVT",
+   "anoFabricacao": 2024,
+   "anoModelo": 2025,
+   "km": 40645,
+   "preco": 158490,
+   "cambio": "CVT",
+   "combustivel": "Flex",
+   "capa": "https://www.autocerto.com/fotos/3854/5482506/15_032936.jpg",
+   "capaId": "15_032936",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 18,
    "video": true
   },
   {
@@ -1414,6 +1463,30 @@
    "video": true
   },
   {
+   "id": 5482104,
+   "slug": "compass-1.3-t270-turbo-flex-limited-at6-2025",
+   "tipo": "carro",
+   "marca": "JEEP",
+   "modelo": "COMPASS",
+   "versao": "1.3 T270 TURBO FLEX LIMITED AT6",
+   "anoFabricacao": 2024,
+   "anoModelo": 2025,
+   "km": 62821,
+   "preco": 149890,
+   "cambio": "Automático",
+   "combustivel": "Flex",
+   "capa": "https://www.autocerto.com/fotos/3854/5482104/21_043435.jpg",
+   "capaId": "21_043435",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 20,
+   "video": true
+  },
+  {
    "id": 5304024,
    "slug": "compass-1.3-t270-turbo-flex-longitude-at6-2023",
    "tipo": "carro",
@@ -1499,16 +1572,39 @@
    "preco": 107890,
    "cambio": "Automático",
    "combustivel": "Flex",
-   "capa": "https://www.autocerto.com/fotos/3854/5466929/3_061749.jpg",
-   "capaId": "3_061749",
+   "capa": "https://www.autocerto.com/fotos/3854/5466929/10_022331.jpg",
+   "capaId": "10_022331",
    "caracteristicas": [
     "IPVA Pago",
     "Manual do proprietário",
     "Chave Reserva",
     "Licenciado"
    ],
-   "nFotos": 2,
-   "video": false
+   "nFotos": 17,
+   "video": true
+  },
+  {
+   "id": 5481834,
+   "slug": "compass-1.3-t270-turbo-flex-longitude-at6-2025",
+   "tipo": "carro",
+   "marca": "JEEP",
+   "modelo": "COMPASS",
+   "versao": "1.3 T270 TURBO FLEX LONGITUDE AT6",
+   "anoFabricacao": 2024,
+   "anoModelo": 2025,
+   "km": 33462,
+   "preco": 127890,
+   "cambio": "Automático",
+   "combustivel": "Flex",
+   "capa": "https://www.autocerto.com/fotos/3854/5481834/14_121557.jpg",
+   "capaId": "14_121557",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Licenciado"
+   ],
+   "nFotos": 19,
+   "video": true
   },
   {
    "id": 4495255,
@@ -1824,6 +1920,30 @@
    "video": true
   },
   {
+   "id": 5482523,
+   "slug": "compass-2.0-16v-flex-sport-automatico-2019",
+   "tipo": "carro",
+   "marca": "JEEP",
+   "modelo": "COMPASS",
+   "versao": "2.0 16V FLEX SPORT AUTOMÁTICO",
+   "anoFabricacao": 2019,
+   "anoModelo": 2019,
+   "km": 70876,
+   "preco": 82890,
+   "cambio": "Automático",
+   "combustivel": "Flex",
+   "capa": "https://www.autocerto.com/fotos/3854/5482523/15_023142.jpg",
+   "capaId": "15_023142",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 19,
+   "video": true
+  },
+  {
    "id": 5284352,
    "slug": "compass-2.0-hurricane-4-turbo-gasolina-blackhawk-at9-2025",
    "tipo": "carro",
@@ -1897,30 +2017,6 @@
    "video": true
   },
   {
-   "id": 5286164,
-   "slug": "renegade-1.3-t270-turbo-flex-longitude-at6-2026",
-   "tipo": "carro",
-   "marca": "JEEP",
-   "modelo": "RENEGADE",
-   "versao": "1.3 T270 TURBO FLEX LONGITUDE AT6",
-   "anoFabricacao": 2025,
-   "anoModelo": 2026,
-   "km": 12317,
-   "preco": 119890,
-   "cambio": "Automático",
-   "combustivel": "Flex",
-   "capa": "https://www.autocerto.com/fotos/3854/5286164/15_055135.jpg",
-   "capaId": "15_055135",
-   "caracteristicas": [
-    "IPVA Pago",
-    "Manual do proprietário",
-    "Chave Reserva",
-    "Licenciado"
-   ],
-   "nFotos": 19,
-   "video": true
-  },
-  {
    "id": 5318369,
    "slug": "renegade-1.3-t270-turbo-flex-sport-at6-2022",
    "tipo": "carro",
@@ -1991,6 +2087,30 @@
     "Licenciado"
    ],
    "nFotos": 21,
+   "video": true
+  },
+  {
+   "id": 5476673,
+   "slug": "renegade-1.8-16v-flex-longitude-4p-automatico-2019",
+   "tipo": "carro",
+   "marca": "JEEP",
+   "modelo": "RENEGADE",
+   "versao": "1.8 16V FLEX LONGITUDE 4P AUTOMÁTICO",
+   "anoFabricacao": 2019,
+   "anoModelo": 2019,
+   "km": 110445,
+   "preco": 67890,
+   "cambio": "Automático",
+   "combustivel": "Flex",
+   "capa": "https://www.autocerto.com/fotos/3854/5476673/14_032501.jpg",
+   "capaId": "14_032501",
+   "caracteristicas": [
+    "IPVA Pago",
+    "Manual do proprietário",
+    "Chave Reserva",
+    "Licenciado"
+   ],
+   "nFotos": 19,
    "video": true
   },
   {
@@ -3061,29 +3181,6 @@
    "video": true
   },
   {
-   "id": 5435587,
-   "slug": "polo-1.0-200-tsi-comfortline-automatico-2020",
-   "tipo": "carro",
-   "marca": "VOLKSWAGEN",
-   "modelo": "POLO",
-   "versao": "1.0 200 TSI COMFORTLINE AUTOMÁTICO",
-   "anoFabricacao": 2020,
-   "anoModelo": 2020,
-   "km": 100535,
-   "preco": 69490,
-   "cambio": "Automático",
-   "combustivel": "Flex",
-   "capa": "https://www.autocerto.com/fotos/3854/5435587/15_024351.jpg",
-   "capaId": "15_024351",
-   "caracteristicas": [
-    "IPVA Pago",
-    "Chave Reserva",
-    "Licenciado"
-   ],
-   "nFotos": 19,
-   "video": true
-  },
-  {
    "id": 5198467,
    "slug": "t-cross-1.4-250-tsi-total-flex-highline-automatico-2020",
    "tipo": "carro",
@@ -3104,30 +3201,6 @@
     "Licenciado"
    ],
    "nFotos": 18,
-   "video": false
-  },
-  {
-   "id": 5057877,
-   "slug": "tiguan-1.4-250-tsi-total-flex-allspace-comfortline-tiptronic-2020",
-   "tipo": "carro",
-   "marca": "VOLKSWAGEN",
-   "modelo": "TIGUAN",
-   "versao": "1.4 250 TSI TOTAL FLEX ALLSPACE COMFORTLINE TIPTRONIC",
-   "anoFabricacao": 2019,
-   "anoModelo": 2020,
-   "km": 104654,
-   "preco": 111790,
-   "cambio": "Automático",
-   "combustivel": "Flex",
-   "capa": "https://www.autocerto.com/fotos/3854/5057877/1_125717.jpg",
-   "capaId": "1_125717",
-   "caracteristicas": [
-    "IPVA Pago",
-    "Manual do proprietário",
-    "Chave Reserva",
-    "Licenciado"
-   ],
-   "nFotos": 24,
    "video": false
   },
   {
