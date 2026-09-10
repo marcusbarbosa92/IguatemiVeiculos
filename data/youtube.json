@@ -6,13 +6,41 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "9QSMvH9BWlQ",
-  "titulo": "CHEVROLET TRACKER - 2020/20211.2 TURBO FLEX PREMIER AUTOMÁTICO",
+  "id": "ixcIEDBN_JU",
+  "titulo": "CHERY TIGGO 7 - 2023/2024PRO MAX DRIVE 1.6 TURBO 16V AUT",
   "publicadoEm": "2026-09-10",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/9QSMvH9BWlQ"
+  "url": "https://www.youtube.com/shorts/ixcIEDBN_JU"
  },
  "videos": [
+  {
+   "id": "ixcIEDBN_JU",
+   "titulo": "CHERY TIGGO 7 - 2023/2024PRO MAX DRIVE 1.6 TURBO 16V AUT",
+   "publicadoEm": "2026-09-10",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/ixcIEDBN_JU"
+  },
+  {
+   "id": "pternLeE178",
+   "titulo": "BYD KING - 2025/20261.5 DM-I PHEV GS AUTOMÁTICO",
+   "publicadoEm": "2026-09-10",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/pternLeE178"
+  },
+  {
+   "id": "2mhgRLnYocU",
+   "titulo": "FIAT TORO - 2019/20201.8 16V EVO FLEX ENDURANCE MANUAL",
+   "publicadoEm": "2026-09-10",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/2mhgRLnYocU"
+  },
+  {
+   "id": "iD8nJSU5mAU",
+   "titulo": "JEEP COMMANDER - 2024/2025 T270 TURBO FLEX LIMITED AT6",
+   "publicadoEm": "2026-09-10",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/iD8nJSU5mAU"
+  },
   {
    "id": "9QSMvH9BWlQ",
    "titulo": "CHEVROLET TRACKER - 2020/20211.2 TURBO FLEX PREMIER AUTOMÁTICO",
@@ -26,34 +54,6 @@
    "publicadoEm": "2026-09-10",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/YuzjnHepHCg"
-  },
-  {
-   "id": "N6hZcEw8HXY",
-   "titulo": "HONDA CITY - 2020/20211.5 LX 16V FLEX 4P AUTOMÁTICO",
-   "publicadoEm": "2026-09-10",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/N6hZcEw8HXY"
-  },
-  {
-   "id": "EMK0i__Dins",
-   "titulo": "FIAT FASTBACK - 2023/20241.3 TURBO 270 FLEX ABARTH AT6",
-   "publicadoEm": "2026-09-09",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/EMK0i__Dins"
-  },
-  {
-   "id": "HhAt10kxuR8",
-   "titulo": "FIAT TORO - 2018/20192.0 16V TURBO DIESEL VOLCANO 4WD AT9",
-   "publicadoEm": "2026-09-09",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/HhAt10kxuR8"
-  },
-  {
-   "id": "gn-eE2ArSL8",
-   "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LIMITED AT6",
-   "publicadoEm": "2026-09-09",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/gn-eE2ArSL8"
   }
  ]
 }
