@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "V7CUq9w8TTE",
-  "titulo": "JEEP RENEGADE - 2022/20221.3 T270 TURBO FLEX LONGITUDE AT6",
+  "id": "2EnX2JEr6aw",
+  "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
   "publicadoEm": "2026-09-14",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/V7CUq9w8TTE"
+  "url": "https://www.youtube.com/shorts/2EnX2JEr6aw"
  },
  "videos": [
+  {
+   "id": "2EnX2JEr6aw",
+   "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-09-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/2EnX2JEr6aw"
+  },
+  {
+   "id": "14CQguVDaSk",
+   "titulo": "VOLKSWAGEN TAOS - 2025/20251.4 250 TSI TOTAL FLEX HIGHLINE AUTOMÁTICO",
+   "publicadoEm": "2026-09-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/14CQguVDaSk"
+  },
+  {
+   "id": "klLgltsgZB4",
+   "titulo": "JEEP RENEGADE - 2022/20221.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-09-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/klLgltsgZB4"
+  },
   {
    "id": "V7CUq9w8TTE",
    "titulo": "JEEP RENEGADE - 2022/20221.3 T270 TURBO FLEX LONGITUDE AT6",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-09-14",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/p3s6o3Dgrp8"
-  },
-  {
-   "id": "zeDmyEtsx28",
-   "titulo": "KIA SPORTAGE - 2015/20162.0 LX 4X4 16V FLEX 4P AUTOMÁTICO",
-   "publicadoEm": "2026-09-14",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/zeDmyEtsx28"
-  },
-  {
-   "id": "f5izprXvHPw",
-   "titulo": "JEEP COMPASS - 2024/20252.0 HURRICANE 4 TURBO GASOLINA BLACKHAWK AT9",
-   "publicadoEm": "2026-09-14",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/f5izprXvHPw"
-  },
-  {
-   "id": "3JHt1iwp8rk",
-   "titulo": "JEEP COMPASS - 2022/20231.3 T270 TURBO FLEX LIMITED AT6",
-   "publicadoEm": "2026-09-11",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/3JHt1iwp8rk"
   }
  ]
 }
