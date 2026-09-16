@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "sxkQYSVz5NM",
-  "titulo": "FIAT TORO - 2023/20231.3 TURBO 270 FLEX VOLCANO AT6",
-  "publicadoEm": "2026-09-15",
+  "id": "dsf3JMy7SuQ",
+  "titulo": "JEEP RENEGADE - 2024/20251.3 T270 TURBO FLEX TRAILHAWK 4X4 AT9",
+  "publicadoEm": "2026-09-16",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/sxkQYSVz5NM"
+  "url": "https://www.youtube.com/shorts/dsf3JMy7SuQ"
  },
  "videos": [
+  {
+   "id": "dsf3JMy7SuQ",
+   "titulo": "JEEP RENEGADE - 2024/20251.3 T270 TURBO FLEX TRAILHAWK 4X4 AT9",
+   "publicadoEm": "2026-09-16",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/dsf3JMy7SuQ"
+  },
+  {
+   "id": "pwxV5AaftlQ",
+   "titulo": "JEEP COMPASS - 2019/20202.0 16V FLEX LONGITUDE AUTOMÁTICO",
+   "publicadoEm": "2026-09-16",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/pwxV5AaftlQ"
+  },
+  {
+   "id": "V1et3lKvP58",
+   "titulo": "JEEP RENEGADE - 2023/20241.3 T270 TURBO FLEX SPORT AT6",
+   "publicadoEm": "2026-09-16",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/V1et3lKvP58"
+  },
   {
    "id": "sxkQYSVz5NM",
    "titulo": "FIAT TORO - 2023/20231.3 TURBO 270 FLEX VOLCANO AT6",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-09-15",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/UT0PgodK5oA"
-  },
-  {
-   "id": "1Acx8UBDNeo",
-   "titulo": "MITSUBISHI PAJERO SPORT - 2023/20242.4 16V MIVEC TURBO DIESEL HPE AWD AUTOMÁTICO",
-   "publicadoEm": "2026-09-15",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/1Acx8UBDNeo"
-  },
-  {
-   "id": "3wJYbBskTaM",
-   "titulo": "VOLKSWAGEN TAOS - 2021/20221.4 250 TSI TOTAL FLEX COMFORTLINE AUTOMÁTICO",
-   "publicadoEm": "2026-09-15",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/3wJYbBskTaM"
-  },
-  {
-   "id": "i-VGFfvZUGY",
-   "titulo": "FIAT TORO - 2025/20261.3 TURBO 270 FLEX VOLCANO AT6",
-   "publicadoEm": "2026-09-15",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/i-VGFfvZUGY"
   }
  ]
 }
