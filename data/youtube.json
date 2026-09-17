@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "xYEbYjcOU00",
-  "titulo": "HONDA HR-V - 2020/20201.8 16V FLEX EX 4P AUTOMÁTICO",
+  "id": "SJ0fiSXQZs8",
+  "titulo": "FORD RANGER - 2025/20263.0 V6 TURBO DIESEL CD LIMITED 4X4 AUTOMÁTICO",
   "publicadoEm": "2026-09-17",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/xYEbYjcOU00"
+  "url": "https://www.youtube.com/shorts/SJ0fiSXQZs8"
  },
  "videos": [
+  {
+   "id": "SJ0fiSXQZs8",
+   "titulo": "FORD RANGER - 2025/20263.0 V6 TURBO DIESEL CD LIMITED 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-09-17",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/SJ0fiSXQZs8"
+  },
+  {
+   "id": "OTcixGqw3So",
+   "titulo": "HONDA HR-V - 2019/20201.8 16V FLEX EX 4P AUTOMÁTICO",
+   "publicadoEm": "2026-09-17",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/OTcixGqw3So"
+  },
   {
    "id": "xYEbYjcOU00",
    "titulo": "HONDA HR-V - 2020/20201.8 16V FLEX EX 4P AUTOMÁTICO",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-09-16",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/sXtoIC5ZUY0"
-  },
-  {
-   "id": "w5Jt1-OEDcg",
-   "titulo": "RAM CLASSIC - 2022/20225.7 V8 GASOLINA LARAMIE NIGHT EDITION CD 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-09-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/w5Jt1-OEDcg"
-  },
-  {
-   "id": "R396tGrNQgs",
-   "titulo": "NISSAN FRONTIER - 2024/20252.3 16V TURBO DIESEL PLATINUM CD 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-09-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/R396tGrNQgs"
   }
  ]
 }
