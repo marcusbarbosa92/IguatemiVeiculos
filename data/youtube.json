@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "XfNLTocsFWg",
-  "titulo": "CHEVROLET MONTANA - 2024/20251.2 TURBO FLEX PREMIER AUTOMÁTICO",
+  "id": "9r3SnFfMy_Y",
+  "titulo": "RAM RAMPAGE - 2025/20252.2 TURBO DIESEL LARAMIE 4X4 AUTOMÁTICO",
   "publicadoEm": "2026-09-18",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/XfNLTocsFWg"
+  "url": "https://www.youtube.com/shorts/9r3SnFfMy_Y"
  },
  "videos": [
+  {
+   "id": "9r3SnFfMy_Y",
+   "titulo": "RAM RAMPAGE - 2025/20252.2 TURBO DIESEL LARAMIE 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-09-18",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/9r3SnFfMy_Y"
+  },
+  {
+   "id": "G5fDJhomUnc",
+   "titulo": "RAM RAMPAGE - 2024/20242.0 TURBO DIESEL REBEL 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-09-18",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/G5fDJhomUnc"
+  },
+  {
+   "id": "ZbOzYxatjjs",
+   "titulo": "CHERY TIGGO 5x - 2021/20221.5 VVT TURBO iFLEX TXS DCT",
+   "publicadoEm": "2026-09-18",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/ZbOzYxatjjs"
+  },
   {
    "id": "XfNLTocsFWg",
    "titulo": "CHEVROLET MONTANA - 2024/20251.2 TURBO FLEX PREMIER AUTOMÁTICO",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-09-18",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/9uCw96h0DLQ"
-  },
-  {
-   "id": "GyTV7GLJcl8",
-   "titulo": "BMW 320i - 2018/20182.0 SPORT GP 16V TURBO ACTIVE FLEX 4P AUTOMÁTICO",
-   "publicadoEm": "2026-09-18",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/GyTV7GLJcl8"
-  },
-  {
-   "id": "GT_MysLlF4o",
-   "titulo": "VOLKSWAGEN T-CROSS - 2021/20211.0 200 TSI TOTAL FLEX AUTOMÁTICO",
-   "publicadoEm": "2026-09-18",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/GT_MysLlF4o"
-  },
-  {
-   "id": "SJ0fiSXQZs8",
-   "titulo": "FORD RANGER - 2025/20263.0 V6 TURBO DIESEL CD LIMITED 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-09-17",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/SJ0fiSXQZs8"
   }
  ]
 }
