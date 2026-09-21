@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "9r3SnFfMy_Y",
-  "titulo": "RAM RAMPAGE - 2025/20252.2 TURBO DIESEL LARAMIE 4X4 AUTOMÁTICO",
-  "publicadoEm": "2026-09-18",
+  "id": "kf_0B84sQzE",
+  "titulo": "JEEP COMPASS - 2023/20231.3 T270 TURBO FLEX SPORT AT6",
+  "publicadoEm": "2026-09-21",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/9r3SnFfMy_Y"
+  "url": "https://www.youtube.com/shorts/kf_0B84sQzE"
  },
  "videos": [
+  {
+   "id": "kf_0B84sQzE",
+   "titulo": "JEEP COMPASS - 2023/20231.3 T270 TURBO FLEX SPORT AT6",
+   "publicadoEm": "2026-09-21",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/kf_0B84sQzE"
+  },
+  {
+   "id": "A9xsbNwvxTw",
+   "titulo": "KIA SPORTAGE - 2019/20202.0 LX 4X2 16V FLEX 4P AUTOMÁTICO",
+   "publicadoEm": "2026-09-21",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/A9xsbNwvxTw"
+  },
   {
    "id": "9r3SnFfMy_Y",
    "titulo": "RAM RAMPAGE - 2025/20252.2 TURBO DIESEL LARAMIE 4X4 AUTOMÁTICO",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-09-18",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/XfNLTocsFWg"
-  },
-  {
-   "id": "TIer8hzK7ok",
-   "titulo": "RAM RAMPAGE - 2025/20262.2 TURBO DIESEL REBEL 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-09-18",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/TIer8hzK7ok"
-  },
-  {
-   "id": "9uCw96h0DLQ",
-   "titulo": "HONDA HR-V - 2024/20251.5 DI I-VTEC TURBO FLEX TOURING CVT",
-   "publicadoEm": "2026-09-18",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/9uCw96h0DLQ"
   }
  ]
 }
