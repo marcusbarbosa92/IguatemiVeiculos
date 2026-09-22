@@ -6,13 +6,41 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "I23IWWLTu8E",
-  "titulo": "VOLKSWAGEN NIVUS - 2023/20241.0 200 TSI TOTAL FLEX HIGHLINE AUTOMÁTICO",
+  "id": "2_cTu6iSyP0",
+  "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
   "publicadoEm": "2026-09-22",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/I23IWWLTu8E"
+  "url": "https://www.youtube.com/shorts/2_cTu6iSyP0"
  },
  "videos": [
+  {
+   "id": "2_cTu6iSyP0",
+   "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-09-22",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/2_cTu6iSyP0"
+  },
+  {
+   "id": "ammRx7PSwN0",
+   "titulo": "RAM RAMPAGE - 2025/20262.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-09-22",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/ammRx7PSwN0"
+  },
+  {
+   "id": "Y2ueYAdtnyQ",
+   "titulo": "JEEP COMMANDER - 2022/20222.0 TD380 TURBO DIESEL LIMITED AT9",
+   "publicadoEm": "2026-09-22",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Y2ueYAdtnyQ"
+  },
+  {
+   "id": "-KnwwzvcbTo",
+   "titulo": "CHERY TIGGO 7 PRO - 2022/20231.6 TGDI GASOLINA MAX DRIVE DCT",
+   "publicadoEm": "2026-09-22",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/-KnwwzvcbTo"
+  },
   {
    "id": "I23IWWLTu8E",
    "titulo": "VOLKSWAGEN NIVUS - 2023/20241.0 200 TSI TOTAL FLEX HIGHLINE AUTOMÁTICO",
@@ -26,34 +54,6 @@
    "publicadoEm": "2026-09-22",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/DHlfhEcpHhE"
-  },
-  {
-   "id": "7YUcujkmyBk",
-   "titulo": "NISSAN MARCH - 2017/20181.6 SV 16V FLEX 4P XTRONIC",
-   "publicadoEm": "2026-09-22",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/7YUcujkmyBk"
-  },
-  {
-   "id": "kf_0B84sQzE",
-   "titulo": "JEEP COMPASS - 2023/20231.3 T270 TURBO FLEX SPORT AT6",
-   "publicadoEm": "2026-09-21",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/kf_0B84sQzE"
-  },
-  {
-   "id": "A9xsbNwvxTw",
-   "titulo": "KIA SPORTAGE - 2019/20202.0 LX 4X2 16V FLEX 4P AUTOMÁTICO",
-   "publicadoEm": "2026-09-21",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/A9xsbNwvxTw"
-  },
-  {
-   "id": "9r3SnFfMy_Y",
-   "titulo": "RAM RAMPAGE - 2025/20252.2 TURBO DIESEL LARAMIE 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-09-18",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/9r3SnFfMy_Y"
   }
  ]
 }
