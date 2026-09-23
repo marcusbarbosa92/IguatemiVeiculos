@@ -14,7 +14,7 @@
  * Sem nenhum deles o build falha: publicar com URLs de outro endereço (canonical, sitemap, <base> do 404)
  * seria pior do que não publicar.
  *
- * Uso: node scripts/build-vercel.mjs [--out dist] [--site-url https://dominio/]
+ * Uso: node scripts/build-vercel.mjs [--out dist] [--site-url https://dominio/] [--fora-do-ar]
  * A pasta de saída precisa se chamar dist ou dist-<algo> (é o que .gitignore ignora); ela é apagada e recriada.
  */
 import fs from 'node:fs';
@@ -30,6 +30,24 @@ const OUT = path.resolve(ROOT, opt('--out', 'dist'));
 // a pasta de saída é apagada antes do build: só aceita dist ou dist-<algo>, direto na raiz do repositório
 const relOut = path.relative(ROOT, OUT);
 if (!/^dist(-[\w.-]+)?$/.test(relOut)) throw new Error(`--out precisa ser "dist" ou "dist-<algo>" na raiz do repositório (recebi: ${relOut || '.'})`);
+
+// Site fora do ar. Ligado em vercel.json com "buildCommand": "node scripts/build-vercel.mjs --fora-do-ar": publica
+// só a pasta fora-do-ar/ (página preta em index.html e em 404.html, para qualquer endereço; sw.js que desliga o
+// service worker e apaga o cache nos visitantes; robots.txt bloqueando tudo). Nada do site vai para o ar e o
+// endereço do site não é necessário. Para voltar, basta tirar --fora-do-ar do buildCommand.
+if (args.includes('--fora-do-ar')) {
+  const SRC = path.join(ROOT, 'fora-do-ar');
+  const ARQUIVOS = ['index.html', 'sw.js', 'robots.txt'];
+  for (const f of ARQUIVOS) if (!fs.existsSync(path.join(SRC, f))) throw new Error(`build-vercel: falta fora-do-ar/${f}`);
+  const preta = fs.readFileSync(path.join(SRC, 'index.html'), 'utf8');
+  if (/<script|<img|<link|<iframe/i.test(preta)) throw new Error('build-vercel: a página fora do ar não pode carregar scripts, imagens ou arquivos externos');
+  fs.rmSync(OUT, { recursive: true, force: true });
+  fs.mkdirSync(OUT, { recursive: true });
+  for (const f of ARQUIVOS) fs.copyFileSync(path.join(SRC, f), path.join(OUT, f));
+  fs.copyFileSync(path.join(SRC, 'index.html'), path.join(OUT, '404.html'));
+  console.log(`build-vercel: SITE FORA DO AR. ${fs.readdirSync(OUT).length} arquivos em ${relOut}/ (só a página preta). Para voltar, remova --fora-do-ar do buildCommand em vercel.json.`);
+  process.exit(0);
+}
 
 const env = process.env;
 const comProtocolo = (h) => (/^https?:\/\//.test(h) ? h : `https://${h}`);

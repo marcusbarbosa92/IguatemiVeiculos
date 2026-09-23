@@ -72,6 +72,8 @@ O build precisa saber o endereço do site e falha, de propósito, se não souber
 
 O build copia para `dist/` apenas o que é público (páginas, `assets/`, `data/`, `v/`, `sw.js`, manifest, `robots.txt`, `sitemap.xml`), regenera `v/*.html` e o sitemap com o domínio do projeto e confere o resultado antes de publicar. `dist/` não vai para o Git. Para reproduzir localmente: `npm run build -- --site-url https://meusite.vercel.app/` e depois `SMOKE_ROOT=dist node tests/smoke.mjs`.
 
+**Tirar o site do ar:** em `vercel.json`, troque o `buildCommand` por `node scripts/build-vercel.mjs --fora-do-ar` e faça push. O build passa a publicar só a pasta `fora-do-ar/`: uma página preta em `index.html` e em `404.html` (portanto em qualquer endereço), um `sw.js` que apaga o cache e desliga o service worker em quem já visitou o site, e um `robots.txt` bloqueando tudo. Nada do site (páginas, `assets/`, `data/`, `v/`) vai para o ar. Para voltar, tire `--fora-do-ar` do `buildCommand` e faça push; o deploy seguinte publica o site completo de novo. Os testes cobrem os dois modos.
+
 **Plano do Vercel:** as [diretrizes de uso justo](https://vercel.com/docs/limits/fair-use-guidelines) restringem o plano Hobby (gratuito) a uso pessoal e não comercial; anunciar a venda de produtos ou serviços conta como uso comercial. Para o site da loja, o plano indicado é o Pro.
 
 ### GitHub Pages (alternativa)

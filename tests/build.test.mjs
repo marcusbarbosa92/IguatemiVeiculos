@@ -26,7 +26,7 @@ try {
 
   // só o público vai para o ar
   for (const f of ['index.html', 'estoque.html', 'veiculo.html', '404.html', 'sw.js', 'manifest.webmanifest', 'robots.txt', 'sitemap.xml', 'assets/css/style.css', 'assets/js/app.js', 'data/index.json', 'data/vehicles.json']) check(existe(f), `falta ${f} na saída`);
-  for (const f of ['scripts', 'tests', '.github', 'README.md', 'package.json', 'vercel.json', 'node_modules', '.git', '.gitignore']) check(!existe(f), `${f} não deveria ir para o ar`);
+  for (const f of ['scripts', 'tests', '.github', 'README.md', 'package.json', 'vercel.json', 'node_modules', '.git', '.gitignore', 'fora-do-ar']) check(!existe(f), `${f} não deveria ir para o ar`);
 
   // URLs absolutas com o endereço do projeto
   check(ler('index.html').includes(`<link rel="canonical" href="${SITE}">`), 'index.html: canonical não aponta para o endereço do projeto');
@@ -81,6 +81,28 @@ try {
   }
 }
 
+// site fora do ar (--fora-do-ar): só a página preta vai para o ar, em qualquer endereço, sem precisar da URL do site
+{
+  const OUT5 = path.join(ROOT, `dist-teste-${process.pid}-g`);
+  const r5 = spawnSync(process.execPath, ['scripts/build-vercel.mjs', '--out', path.basename(OUT5), '--fora-do-ar'], {
+    cwd: ROOT, encoding: 'utf8', env: { ...process.env, SITE_URL: '', VERCEL_PROJECT_PRODUCTION_URL: '', VERCEL_URL: '' },
+  });
+  check(r5.status === 0 && /FORA DO AR/.test(r5.stdout), `build --fora-do-ar saiu com ${r5.status}: ${r5.stderr}`);
+  try {
+    const ler = (f) => fs.readFileSync(path.join(OUT5, f), 'utf8');
+    const lista = (d) => { const out = []; const andar = (p, rel) => { for (const e of fs.readdirSync(p, { withFileTypes: true })) e.isDirectory() ? andar(path.join(p, e.name), rel + e.name + '/') : out.push(rel + e.name); }; andar(d, ''); return out.sort(); };
+    check(lista(OUT5).join(',') === '404.html,index.html,robots.txt,sw.js', `fora do ar: a saída deveria ter só a página preta, tem: ${lista(OUT5).join(', ')}`);
+    const preta = ler('index.html');
+    check(preta === ler('404.html'), 'fora do ar: 404.html deveria ser a mesma página preta (vale para qualquer endereço)');
+    check(/background:#000/.test(preta) && /noindex/.test(preta) && /<body><\/body>/.test(preta), 'fora do ar: index.html deveria ser só uma tela preta com noindex');
+    check(!/<script|gtag|fbq|autocerto|estoque|whatsapp/i.test(preta), 'fora do ar: index.html não pode ter scripts nem conteúdo do site');
+    const sw = ler('sw.js').replace(/\/\*[\s\S]*?\*\//g, '');
+    check(/unregister\(\)/.test(sw) && /caches\.delete/.test(sw) && !/fetch/.test(sw), 'fora do ar: sw.js deveria apagar o cache, se desregistrar e não interceptar requisições');
+    check(/^Disallow: \/$/m.test(ler('robots.txt')) && !/Sitemap|Allow: \/$/m.test(ler('robots.txt')), 'fora do ar: robots.txt deveria bloquear tudo, sem sitemap');
+    check(spawnSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8' }).stdout === antes, 'build --fora-do-ar alterou o repositório');
+  } finally { fs.rmSync(OUT5, { recursive: true, force: true }); }
+}
+
 // casos que precisam FALHAR ou ser normalizados
 const rodar = (argv, env) => spawnSync(process.execPath, ['scripts/build-vercel.mjs', ...argv], { cwd: ROOT, encoding: 'utf8', env: { ...process.env, SITE_URL: '', VERCEL_PROJECT_PRODUCTION_URL: '', VERCEL_URL: '', ...env } });
 {
@@ -111,7 +133,7 @@ const rodar = (argv, env) => spawnSync(process.execPath, ['scripts/build-vercel.
 
 // vercel.json precisa ser JSON válido e apontar para o build
 const vj = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
-check(vj.buildCommand === 'node scripts/build-vercel.mjs', 'vercel.json: buildCommand inesperado');
+check(/^node scripts\/build-vercel\.mjs( --fora-do-ar)?$/.test(vj.buildCommand), 'vercel.json: buildCommand inesperado');
 check(vj.outputDirectory === 'dist', 'vercel.json: outputDirectory deveria ser dist');
 check(vj.framework === null, 'vercel.json: framework deveria ser null (preset "Other")');
 check(!('public' in vj) && !('builds' in vj), 'vercel.json: propriedades legadas (public/builds) quebram o deploy');
