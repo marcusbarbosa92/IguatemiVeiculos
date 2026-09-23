@@ -96,7 +96,8 @@ try {
     check(preta === ler('404.html'), 'fora do ar: 404.html deveria ser a mesma página preta (vale para qualquer endereço)');
     check(/background:#000/.test(preta) && /noindex/.test(preta) && /<body><\/body>/.test(preta), 'fora do ar: index.html deveria ser só uma tela preta com noindex');
     check(!/<script|gtag|fbq|autocerto|estoque|whatsapp/i.test(preta), 'fora do ar: index.html não pode ter scripts nem conteúdo do site');
-    const sw = ler('sw.js').replace(/\/\*[\s\S]*?\*\//g, '');
+    const sw = ler('sw.js');
+    check(!/\/\*|\/\/|fora do ar/i.test(sw), 'fora do ar: o sw.js publicado não pode levar comentários (nada no ar deve explicar a saída)');
     check(/unregister\(\)/.test(sw) && /caches\.delete/.test(sw) && !/fetch/.test(sw), 'fora do ar: sw.js deveria apagar o cache, se desregistrar e não interceptar requisições');
     check(/^Disallow: \/$/m.test(ler('robots.txt')) && !/Sitemap|Allow: \/$/m.test(ler('robots.txt')), 'fora do ar: robots.txt deveria bloquear tudo, sem sitemap');
     check(spawnSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8' }).stdout === antes, 'build --fora-do-ar alterou o repositório');

@@ -44,6 +44,8 @@ if (args.includes('--fora-do-ar')) {
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.mkdirSync(OUT, { recursive: true });
   for (const f of ARQUIVOS) fs.copyFileSync(path.join(SRC, f), path.join(OUT, f));
+  // o sw.js vai para o ar sem os comentários: nada publicado deve explicar a saída do ar
+  fs.writeFileSync(path.join(OUT, 'sw.js'), fs.readFileSync(path.join(SRC, 'sw.js'), 'utf8').replace(/\/\*[\s\S]*?\*\/\n?/g, '').replace(/[ \t]*\/\/[^\n]*/g, '').replace(/\n{2,}/g, '\n').trim() + '\n');
   fs.copyFileSync(path.join(SRC, 'index.html'), path.join(OUT, '404.html'));
   console.log(`build-vercel: SITE FORA DO AR. ${fs.readdirSync(OUT).length} arquivos em ${relOut}/ (só a página preta). Para voltar, remova --fora-do-ar do buildCommand em vercel.json.`);
   process.exit(0);
