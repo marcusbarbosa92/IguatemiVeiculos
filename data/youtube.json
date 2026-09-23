@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "2_cTu6iSyP0",
-  "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
-  "publicadoEm": "2026-09-22",
+  "id": "CByV95WcI84",
+  "titulo": "NISSAN SENTRA - 2023/20232.0 16V GASOLINA EXCLUSIVE XTRONIC",
+  "publicadoEm": "2026-09-23",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/2_cTu6iSyP0"
+  "url": "https://www.youtube.com/shorts/CByV95WcI84"
  },
  "videos": [
+  {
+   "id": "CByV95WcI84",
+   "titulo": "NISSAN SENTRA - 2023/20232.0 16V GASOLINA EXCLUSIVE XTRONIC",
+   "publicadoEm": "2026-09-23",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/CByV95WcI84"
+  },
+  {
+   "id": "Pp8IKZb4Ob0",
+   "titulo": "JEEP COMPASS - 2021/20222.0 TD380 TURBO DIESEL LIMITED AT9",
+   "publicadoEm": "2026-09-23",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Pp8IKZb4Ob0"
+  },
+  {
+   "id": "xIhbfXxgILM",
+   "titulo": "JEEP RENEGADE - 2025/20261.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-09-23",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/xIhbfXxgILM"
+  },
   {
    "id": "2_cTu6iSyP0",
    "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-09-22",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/Y2ueYAdtnyQ"
-  },
-  {
-   "id": "-KnwwzvcbTo",
-   "titulo": "CHERY TIGGO 7 PRO - 2022/20231.6 TGDI GASOLINA MAX DRIVE DCT",
-   "publicadoEm": "2026-09-22",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/-KnwwzvcbTo"
-  },
-  {
-   "id": "I23IWWLTu8E",
-   "titulo": "VOLKSWAGEN NIVUS - 2023/20241.0 200 TSI TOTAL FLEX HIGHLINE AUTOMÁTICO",
-   "publicadoEm": "2026-09-22",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/I23IWWLTu8E"
-  },
-  {
-   "id": "DHlfhEcpHhE",
-   "titulo": "VOLVO XC60 - 2019/20202.0 D5 DIESEL MOMENTUM AWD GEARTRONIC",
-   "publicadoEm": "2026-09-22",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/DHlfhEcpHhE"
   }
  ]
 }
