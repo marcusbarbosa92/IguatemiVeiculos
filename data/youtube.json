@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "DAo8fvvGrhw",
-  "titulo": "FIAT TORO - 2022/20222.0 16V TURBO DIESEL ULTRA 4WD AT9",
+  "id": "K-P037dzVQY",
+  "titulo": "FIAT STRADA - 2015/20161.8 MPI ADVENTURE CE 16V FLEX 2P MANUAL",
   "publicadoEm": "2026-09-24",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/DAo8fvvGrhw"
+  "url": "https://www.youtube.com/shorts/K-P037dzVQY"
  },
  "videos": [
+  {
+   "id": "K-P037dzVQY",
+   "titulo": "FIAT STRADA - 2015/20161.8 MPI ADVENTURE CE 16V FLEX 2P MANUAL",
+   "publicadoEm": "2026-09-24",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/K-P037dzVQY"
+  },
+  {
+   "id": "6986Mj9ools",
+   "titulo": "AUDI A3 - 2018/20191.4 TFSI FLEX SEDAN PRESTIGE TIPTRONIC",
+   "publicadoEm": "2026-09-24",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/6986Mj9ools"
+  },
+  {
+   "id": "xzDOx5rHgAk",
+   "titulo": "JEEP COMPASS - 2022/20232.0 TD350 TURBO DIESEL LONGITUDE AT9",
+   "publicadoEm": "2026-09-24",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/xzDOx5rHgAk"
+  },
   {
    "id": "DAo8fvvGrhw",
    "titulo": "FIAT TORO - 2022/20222.0 16V TURBO DIESEL ULTRA 4WD AT9",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-09-23",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/obqr2TxpIMA"
-  },
-  {
-   "id": "hKgNEe73nIE",
-   "titulo": "GWM HAVAL H6 - 2023/20241.5 HEV PREMIUM E-TRACTION",
-   "publicadoEm": "2026-09-23",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/hKgNEe73nIE"
-  },
-  {
-   "id": "CByV95WcI84",
-   "titulo": "NISSAN SENTRA - 2023/20232.0 16V GASOLINA EXCLUSIVE XTRONIC",
-   "publicadoEm": "2026-09-23",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/CByV95WcI84"
-  },
-  {
-   "id": "Pp8IKZb4Ob0",
-   "titulo": "JEEP COMPASS - 2021/20222.0 TD380 TURBO DIESEL LIMITED AT9",
-   "publicadoEm": "2026-09-23",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/Pp8IKZb4Ob0"
   }
  ]
 }
