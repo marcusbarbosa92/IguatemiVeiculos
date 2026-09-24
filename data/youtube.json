@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "obqr2TxpIMA",
-  "titulo": "MERCEDES-BENZ C 180 - 2020/20201.6 CGI GASOLINA EXCLUSIVE 9G-TRONIC",
-  "publicadoEm": "2026-09-23",
+  "id": "DAo8fvvGrhw",
+  "titulo": "FIAT TORO - 2022/20222.0 16V TURBO DIESEL ULTRA 4WD AT9",
+  "publicadoEm": "2026-09-24",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/obqr2TxpIMA"
+  "url": "https://www.youtube.com/shorts/DAo8fvvGrhw"
  },
  "videos": [
+  {
+   "id": "DAo8fvvGrhw",
+   "titulo": "FIAT TORO - 2022/20222.0 16V TURBO DIESEL ULTRA 4WD AT9",
+   "publicadoEm": "2026-09-24",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/DAo8fvvGrhw"
+  },
+  {
+   "id": "0B3uUNsCaGA",
+   "titulo": "MERCEDES-BENZ GLA 200 - 2016/20161.6 CGI ENDURO 16V TURBO FLEX 4P AUTOMÁTICO",
+   "publicadoEm": "2026-09-24",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/0B3uUNsCaGA"
+  },
   {
    "id": "obqr2TxpIMA",
    "titulo": "MERCEDES-BENZ C 180 - 2020/20201.6 CGI GASOLINA EXCLUSIVE 9G-TRONIC",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-09-23",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/Pp8IKZb4Ob0"
-  },
-  {
-   "id": "xIhbfXxgILM",
-   "titulo": "JEEP RENEGADE - 2025/20261.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-09-23",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/xIhbfXxgILM"
-  },
-  {
-   "id": "2_cTu6iSyP0",
-   "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-09-22",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/2_cTu6iSyP0"
   }
  ]
 }
