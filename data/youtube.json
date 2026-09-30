@@ -6,13 +6,41 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "CJJM6-f5vEg",
-  "titulo": "JEEP COMPASS - 2020/20212.0 16V DIESEL LONGITUDE 4X4 AUTOMÁTICO",
-  "publicadoEm": "2026-09-29",
+  "id": "U6QTNsHVXHE",
+  "titulo": "BYD KING - 2024/20251.5 DM-I PHEV GS AUTOMÁTICO",
+  "publicadoEm": "2026-09-30",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/CJJM6-f5vEg"
+  "url": "https://www.youtube.com/shorts/U6QTNsHVXHE"
  },
  "videos": [
+  {
+   "id": "U6QTNsHVXHE",
+   "titulo": "BYD KING - 2024/20251.5 DM-I PHEV GS AUTOMÁTICO",
+   "publicadoEm": "2026-09-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/U6QTNsHVXHE"
+  },
+  {
+   "id": "IWB84W3u_q8",
+   "titulo": "BYD TAN - 2024/2025ELÉTRICO AWD",
+   "publicadoEm": "2026-09-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/IWB84W3u_q8"
+  },
+  {
+   "id": "lVeCXJ5a5U0",
+   "titulo": "JEEP COMPASS - 2017/20182.0 16V FLEX LONGITUDE AUTOMÁTICO",
+   "publicadoEm": "2026-09-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/lVeCXJ5a5U0"
+  },
+  {
+   "id": "rzm-yD45l3c",
+   "titulo": "JEEP COMPASS - 2018/20182.0 16V FLEX LIMITED AUTOMÁTICO",
+   "publicadoEm": "2026-09-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/rzm-yD45l3c"
+  },
   {
    "id": "CJJM6-f5vEg",
    "titulo": "JEEP COMPASS - 2020/20212.0 16V DIESEL LONGITUDE 4X4 AUTOMÁTICO",
@@ -26,34 +54,6 @@
    "publicadoEm": "2026-09-29",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/LyiUh-h6Z4s"
-  },
-  {
-   "id": "ih0Shw5CwIw",
-   "titulo": "HERY TIGGO 7 PRO - 2022/20231.6 TGDI GASOLINA DCT",
-   "publicadoEm": "2026-09-29",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/ih0Shw5CwIw"
-  },
-  {
-   "id": "7cpAKQqCujE",
-   "titulo": "HONDA CITY - 2024/20241.5 i-VTEC FLEX EX CVT",
-   "publicadoEm": "2026-09-29",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/7cpAKQqCujE"
-  },
-  {
-   "id": "z9qbzEzUUac",
-   "titulo": "TOYOTA COROLLA - 2023/20241.8 VVT-I HYBRID FLEX ALTIS PREMIUM CVT",
-   "publicadoEm": "2026-09-29",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/z9qbzEzUUac"
-  },
-  {
-   "id": "k9CQ3buiiXg",
-   "titulo": "JEEP COMPASS - 2023/20231.3 T270 TURBO FLEX S AT6",
-   "publicadoEm": "2026-09-28",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/k9CQ3buiiXg"
   }
  ]
 }
