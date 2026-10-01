@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "U6QTNsHVXHE",
-  "titulo": "BYD KING - 2024/20251.5 DM-I PHEV GS AUTOMÁTICO",
+  "id": "FY8HYN94TNs",
+  "titulo": "VOLKSWAGEN NIVUS - 2024/20241.0 200 TSI TOTAL FLEX HIGHLINE AUTOMÁTICO",
   "publicadoEm": "2026-09-30",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/U6QTNsHVXHE"
+  "url": "https://www.youtube.com/shorts/FY8HYN94TNs"
  },
  "videos": [
+  {
+   "id": "FY8HYN94TNs",
+   "titulo": "VOLKSWAGEN NIVUS - 2024/20241.0 200 TSI TOTAL FLEX HIGHLINE AUTOMÁTICO",
+   "publicadoEm": "2026-09-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/FY8HYN94TNs"
+  },
+  {
+   "id": "nnuKi-kTG5s",
+   "titulo": "TOYOTA COROLLA CROSS - 2022/20231.8 VVT-I HYBRID FLEX XRX CVT",
+   "publicadoEm": "2026-09-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/nnuKi-kTG5s"
+  },
   {
    "id": "U6QTNsHVXHE",
    "titulo": "BYD KING - 2024/20251.5 DM-I PHEV GS AUTOMÁTICO",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-09-30",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/rzm-yD45l3c"
-  },
-  {
-   "id": "CJJM6-f5vEg",
-   "titulo": "JEEP COMPASS - 2020/20212.0 16V DIESEL LONGITUDE 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-09-29",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/CJJM6-f5vEg"
-  },
-  {
-   "id": "LyiUh-h6Z4s",
-   "titulo": "RAM RAMPAGE - 2025/20262.2 TURBO DIESEL BIG HORN 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-09-29",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/LyiUh-h6Z4s"
   }
  ]
 }
