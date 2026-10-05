@@ -6,13 +6,20 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "HEiLdCdVCkw",
-  "titulo": "AUDI Q3 - 2020/20201.4 35 TFSI GASOLINA PRESTIGE PLUS S TRONIC",
-  "publicadoEm": "2026-10-02",
+  "id": "dgQHIzSXdkE",
+  "titulo": "RAM RAMPAGE - 2023/20242.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
+  "publicadoEm": "2026-10-05",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/HEiLdCdVCkw"
+  "url": "https://www.youtube.com/shorts/dgQHIzSXdkE"
  },
  "videos": [
+  {
+   "id": "dgQHIzSXdkE",
+   "titulo": "RAM RAMPAGE - 2023/20242.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-10-05",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/dgQHIzSXdkE"
+  },
   {
    "id": "HEiLdCdVCkw",
    "titulo": "AUDI Q3 - 2020/20201.4 35 TFSI GASOLINA PRESTIGE PLUS S TRONIC",
@@ -47,13 +54,6 @@
    "publicadoEm": "2026-10-01",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/VawtBVwvYZY"
-  },
-  {
-   "id": "BGLJ3ZdmM9M",
-   "titulo": "JEEP COMMANDER - 2023/20231.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-10-01",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/BGLJ3ZdmM9M"
   }
  ]
 }
