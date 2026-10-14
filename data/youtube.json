@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "d91RmhM2OYQ",
-  "titulo": "MITSUBISHI ECLIPSE CROSS - 2025/20261.5 MIVEC TURBO GASOLINA HPE-S CVT",
-  "publicadoEm": "2026-10-13",
+  "id": "79bFr4rGN7w",
+  "titulo": "CHERY TIGGO 7 PRO - 2024/20251.6 TGDI GASOLINA MAX DRIVE DCT",
+  "publicadoEm": "2026-10-14",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/d91RmhM2OYQ"
+  "url": "https://www.youtube.com/shorts/79bFr4rGN7w"
  },
  "videos": [
+  {
+   "id": "79bFr4rGN7w",
+   "titulo": "CHERY TIGGO 7 PRO - 2024/20251.6 TGDI GASOLINA MAX DRIVE DCT",
+   "publicadoEm": "2026-10-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/79bFr4rGN7w"
+  },
+  {
+   "id": "vzCQU_XBmrc",
+   "titulo": "BYD SONG PLUS - 2026/20271.5 DM-I TURBO HÍBRIDO AUTOMÁTICO",
+   "publicadoEm": "2026-10-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/vzCQU_XBmrc"
+  },
   {
    "id": "d91RmhM2OYQ",
    "titulo": "MITSUBISHI ECLIPSE CROSS - 2025/20261.5 MIVEC TURBO GASOLINA HPE-S CVT",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-10-13",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/gt7U1MYCLlY"
-  },
-  {
-   "id": "QbitvSMoFOc",
-   "titulo": "FORD RANGER - 2024/20243.0 V6 TURBO GASOLINA RAPTOR 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-10-13",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/QbitvSMoFOc"
-  },
-  {
-   "id": "s0wc9VdL5DQ",
-   "titulo": "NISSAN FRONTIER - 2022/20232.3 16V TURBO DIESEL PLATINUM CD 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-10-13",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/s0wc9VdL5DQ"
   }
  ]
 }
