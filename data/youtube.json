@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "79bFr4rGN7w",
-  "titulo": "CHERY TIGGO 7 PRO - 2024/20251.6 TGDI GASOLINA MAX DRIVE DCT",
+  "id": "Jmqce1hYTbg",
+  "titulo": "JEEP RENEGADE - 2024/20251.3 T270 TURBO FLEX AT6",
   "publicadoEm": "2026-10-14",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/79bFr4rGN7w"
+  "url": "https://www.youtube.com/shorts/Jmqce1hYTbg"
  },
  "videos": [
+  {
+   "id": "Jmqce1hYTbg",
+   "titulo": "JEEP RENEGADE - 2024/20251.3 T270 TURBO FLEX AT6",
+   "publicadoEm": "2026-10-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Jmqce1hYTbg"
+  },
+  {
+   "id": "lfjIxLxCLZU",
+   "titulo": "JEEP COMPASS - 2022/20231.3 T270 TURBO FLEX LIMITED AT6",
+   "publicadoEm": "2026-10-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/lfjIxLxCLZU"
+  },
+  {
+   "id": "D_E50w2_1wQ",
+   "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-10-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/D_E50w2_1wQ"
+  },
   {
    "id": "79bFr4rGN7w",
    "titulo": "CHERY TIGGO 7 PRO - 2024/20251.6 TGDI GASOLINA MAX DRIVE DCT",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-10-13",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/d91RmhM2OYQ"
-  },
-  {
-   "id": "SRRAHhg3xj4",
-   "titulo": "RAM RAMPAGE - 2024/20242.0 TURBO DIESEL REBEL 4X4 AUTOMÁTICO",
-   "publicadoEm": "2026-10-13",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/SRRAHhg3xj4"
-  },
-  {
-   "id": "OcycgHeF5DM",
-   "titulo": "KIA SPORTAGE - 2014/20152.0 EX 4X2 16V FLEX 4P AUTOMÁTICO",
-   "publicadoEm": "2026-10-13",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/OcycgHeF5DM"
-  },
-  {
-   "id": "gt7U1MYCLlY",
-   "titulo": "FIAT TORO - 2021/20221.3 TURBO 270 FLEX VOLCANO AT6",
-   "publicadoEm": "2026-10-13",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/gt7U1MYCLlY"
   }
  ]
 }
