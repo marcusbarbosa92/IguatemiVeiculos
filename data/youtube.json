@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "Jmqce1hYTbg",
-  "titulo": "JEEP RENEGADE - 2024/20251.3 T270 TURBO FLEX AT6",
+  "id": "TLONWec7R-0",
+  "titulo": "BYD SONG PLUS - 2026/20271.5 DM-I TURBO HÍBRIDO AUTOMÁTICO",
   "publicadoEm": "2026-10-14",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/Jmqce1hYTbg"
+  "url": "https://www.youtube.com/shorts/TLONWec7R-0"
  },
  "videos": [
+  {
+   "id": "TLONWec7R-0",
+   "titulo": "BYD SONG PLUS - 2026/20271.5 DM-I TURBO HÍBRIDO AUTOMÁTICO",
+   "publicadoEm": "2026-10-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/TLONWec7R-0"
+  },
+  {
+   "id": "2ze0BMblXx8",
+   "titulo": "PEUGEOT 208 - 2025/20261.0 TURBO 200 HYBRID GT CVT",
+   "publicadoEm": "2026-10-14",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/2ze0BMblXx8"
+  },
   {
    "id": "Jmqce1hYTbg",
    "titulo": "JEEP RENEGADE - 2024/20251.3 T270 TURBO FLEX AT6",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-10-14",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/79bFr4rGN7w"
-  },
-  {
-   "id": "vzCQU_XBmrc",
-   "titulo": "BYD SONG PLUS - 2026/20271.5 DM-I TURBO HÍBRIDO AUTOMÁTICO",
-   "publicadoEm": "2026-10-14",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/vzCQU_XBmrc"
-  },
-  {
-   "id": "d91RmhM2OYQ",
-   "titulo": "MITSUBISHI ECLIPSE CROSS - 2025/20261.5 MIVEC TURBO GASOLINA HPE-S CVT",
-   "publicadoEm": "2026-10-13",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/d91RmhM2OYQ"
   }
  ]
 }
