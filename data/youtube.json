@@ -6,13 +6,41 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "TLONWec7R-0",
-  "titulo": "BYD SONG PLUS - 2026/20271.5 DM-I TURBO HÍBRIDO AUTOMÁTICO",
-  "publicadoEm": "2026-10-14",
+  "id": "8IQZcXh_NRY",
+  "titulo": "RAM RAMPAGE - 2023/20242.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
+  "publicadoEm": "2026-10-15",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/TLONWec7R-0"
+  "url": "https://www.youtube.com/shorts/8IQZcXh_NRY"
  },
  "videos": [
+  {
+   "id": "8IQZcXh_NRY",
+   "titulo": "RAM RAMPAGE - 2023/20242.0 HURRICANE 4 TURBO GASOLINA R/T 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-10-15",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/8IQZcXh_NRY"
+  },
+  {
+   "id": "mzWg4rDDJnA",
+   "titulo": "RAM RAMPAGE - 2024/20242.0 HURRICANE 4 TURBO GASOLINA LARAMIE 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-10-15",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/mzWg4rDDJnA"
+  },
+  {
+   "id": "6eZxlew55q4",
+   "titulo": "CITROEN C4 CACTUS - 2022/20221.6 VTI 120 FLEX LIVE EAT6",
+   "publicadoEm": "2026-10-15",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/6eZxlew55q4"
+  },
+  {
+   "id": "m8Dys48z88w",
+   "titulo": "MITSUBISHI L200 TRITON - 2021/20222.4 16V TURBO DIESEL SPORT HPE-S CD 4P 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-10-15",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/m8Dys48z88w"
+  },
   {
    "id": "TLONWec7R-0",
    "titulo": "BYD SONG PLUS - 2026/20271.5 DM-I TURBO HÍBRIDO AUTOMÁTICO",
@@ -26,34 +54,6 @@
    "publicadoEm": "2026-10-14",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/2ze0BMblXx8"
-  },
-  {
-   "id": "Jmqce1hYTbg",
-   "titulo": "JEEP RENEGADE - 2024/20251.3 T270 TURBO FLEX AT6",
-   "publicadoEm": "2026-10-14",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/Jmqce1hYTbg"
-  },
-  {
-   "id": "lfjIxLxCLZU",
-   "titulo": "JEEP COMPASS - 2022/20231.3 T270 TURBO FLEX LIMITED AT6",
-   "publicadoEm": "2026-10-14",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/lfjIxLxCLZU"
-  },
-  {
-   "id": "D_E50w2_1wQ",
-   "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-10-14",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/D_E50w2_1wQ"
-  },
-  {
-   "id": "79bFr4rGN7w",
-   "titulo": "CHERY TIGGO 7 PRO - 2024/20251.6 TGDI GASOLINA MAX DRIVE DCT",
-   "publicadoEm": "2026-10-14",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/79bFr4rGN7w"
   }
  ]
 }
