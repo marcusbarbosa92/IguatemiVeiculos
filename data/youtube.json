@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "kdH4mljrvPI",
-  "titulo": "EEP RENEGADE - 2024/20241.3 T270 TURBO FLEX LONGITUDE AT6",
-  "publicadoEm": "2026-10-16",
+  "id": "4Cjp8KDU9Zg",
+  "titulo": "BYD SONG PRO - 2024/20251.5 DM-I HÍBRIDO GS AUTOMÁTICO",
+  "publicadoEm": "2026-10-19",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/kdH4mljrvPI"
+  "url": "https://www.youtube.com/shorts/4Cjp8KDU9Zg"
  },
  "videos": [
+  {
+   "id": "4Cjp8KDU9Zg",
+   "titulo": "BYD SONG PRO - 2024/20251.5 DM-I HÍBRIDO GS AUTOMÁTICO",
+   "publicadoEm": "2026-10-19",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/4Cjp8KDU9Zg"
+  },
+  {
+   "id": "3RUN8oUt2dw",
+   "titulo": "JEEP COMPASS - 2022/20221.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-10-19",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/3RUN8oUt2dw"
+  },
+  {
+   "id": "8BxQ5Vx1GMk",
+   "titulo": "FIAT TORO - 2020/20212.0 16V TURBO DIESEL FREEDOM 4WD AT9",
+   "publicadoEm": "2026-10-19",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/8BxQ5Vx1GMk"
+  },
   {
    "id": "kdH4mljrvPI",
    "titulo": "EEP RENEGADE - 2024/20241.3 T270 TURBO FLEX LONGITUDE AT6",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-10-16",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/X6Dy0eSFYGc"
-  },
-  {
-   "id": "bNNKhq5DZzE",
-   "titulo": "VOLKSWAGEN T-CROSS - 2021/20211.4 250 TSI TOTAL FLEX HIGHLINE AUTOMÁTICO",
-   "publicadoEm": "2026-10-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/bNNKhq5DZzE"
-  },
-  {
-   "id": "OQYXmNRPwHc",
-   "titulo": "FIAT FASTBACK - 2024/20241.0 FLEX DRIVE",
-   "publicadoEm": "2026-10-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/OQYXmNRPwHc"
-  },
-  {
-   "id": "Kxc2JL0xARw",
-   "titulo": "JEEP COMPASS - 2021/20221.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-10-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/Kxc2JL0xARw"
   }
  ]
 }
