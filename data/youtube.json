@@ -6,13 +6,20 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "4Cjp8KDU9Zg",
-  "titulo": "BYD SONG PRO - 2024/20251.5 DM-I HÍBRIDO GS AUTOMÁTICO",
+  "id": "WaAup_iArtM",
+  "titulo": "TOYOTA COROLLA - 2023/20232.0 VVT-IE FLEX ALTIS DIRECT SHIFT",
   "publicadoEm": "2026-10-19",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/4Cjp8KDU9Zg"
+  "url": "https://www.youtube.com/shorts/WaAup_iArtM"
  },
  "videos": [
+  {
+   "id": "WaAup_iArtM",
+   "titulo": "TOYOTA COROLLA - 2023/20232.0 VVT-IE FLEX ALTIS DIRECT SHIFT",
+   "publicadoEm": "2026-10-19",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/WaAup_iArtM"
+  },
   {
    "id": "4Cjp8KDU9Zg",
    "titulo": "BYD SONG PRO - 2024/20251.5 DM-I HÍBRIDO GS AUTOMÁTICO",
@@ -47,13 +54,6 @@
    "publicadoEm": "2026-10-16",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/lBZz5TnqsFw"
-  },
-  {
-   "id": "X6Dy0eSFYGc",
-   "titulo": "JEEP COMMANDER - 2022/20231.3 T270 TURBO FLEX OVERLAND AT6",
-   "publicadoEm": "2026-10-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/X6Dy0eSFYGc"
   }
  ]
 }
