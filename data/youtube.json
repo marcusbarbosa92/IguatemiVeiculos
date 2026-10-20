@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "c_k6WGDQFJE",
-  "titulo": "FORD RANGER - 2026/20262.0 TURBO DIESEL CD BLACK 4X2 AUTOMÁTICO",
+  "id": "PEy057qdhJ4",
+  "titulo": "CHEVROLET MONTANA - 2023/20231.2 TURBO FLEX PREMIER AUTOMÁTICO",
   "publicadoEm": "2026-10-20",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/c_k6WGDQFJE"
+  "url": "https://www.youtube.com/shorts/PEy057qdhJ4"
  },
  "videos": [
+  {
+   "id": "PEy057qdhJ4",
+   "titulo": "CHEVROLET MONTANA - 2023/20231.2 TURBO FLEX PREMIER AUTOMÁTICO",
+   "publicadoEm": "2026-10-20",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/PEy057qdhJ4"
+  },
+  {
+   "id": "Te2w_vMPUjQ",
+   "titulo": "JEEP COMPASS - 2020/20202.0 16V FLEX SPORT AUTOMÁTICO",
+   "publicadoEm": "2026-10-20",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Te2w_vMPUjQ"
+  },
   {
    "id": "c_k6WGDQFJE",
    "titulo": "FORD RANGER - 2026/20262.0 TURBO DIESEL CD BLACK 4X2 AUTOMÁTICO",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-10-19",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/3RUN8oUt2dw"
-  },
-  {
-   "id": "8BxQ5Vx1GMk",
-   "titulo": "FIAT TORO - 2020/20212.0 16V TURBO DIESEL FREEDOM 4WD AT9",
-   "publicadoEm": "2026-10-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/8BxQ5Vx1GMk"
-  },
-  {
-   "id": "kdH4mljrvPI",
-   "titulo": "EEP RENEGADE - 2024/20241.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-10-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/kdH4mljrvPI"
   }
  ]
 }
