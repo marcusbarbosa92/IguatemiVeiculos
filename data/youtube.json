@@ -6,13 +6,20 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "WaAup_iArtM",
-  "titulo": "TOYOTA COROLLA - 2023/20232.0 VVT-IE FLEX ALTIS DIRECT SHIFT",
-  "publicadoEm": "2026-10-19",
+  "id": "c_k6WGDQFJE",
+  "titulo": "FORD RANGER - 2026/20262.0 TURBO DIESEL CD BLACK 4X2 AUTOMÁTICO",
+  "publicadoEm": "2026-10-20",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/WaAup_iArtM"
+  "url": "https://www.youtube.com/shorts/c_k6WGDQFJE"
  },
  "videos": [
+  {
+   "id": "c_k6WGDQFJE",
+   "titulo": "FORD RANGER - 2026/20262.0 TURBO DIESEL CD BLACK 4X2 AUTOMÁTICO",
+   "publicadoEm": "2026-10-20",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/c_k6WGDQFJE"
+  },
   {
    "id": "WaAup_iArtM",
    "titulo": "TOYOTA COROLLA - 2023/20232.0 VVT-IE FLEX ALTIS DIRECT SHIFT",
@@ -47,13 +54,6 @@
    "publicadoEm": "2026-10-16",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/kdH4mljrvPI"
-  },
-  {
-   "id": "lBZz5TnqsFw",
-   "titulo": "JEEP COMPASS - 2022/20231.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-10-16",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/lBZz5TnqsFw"
   }
  ]
 }
