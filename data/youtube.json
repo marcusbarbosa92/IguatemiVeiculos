@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "DdbMtGX0pUE",
-  "titulo": "MERCEDES-BENZ C 180 - 2020/20201.6 CGI FLEX EXCLUSIVE 9G-TRONIC",
+  "id": "ubeGKCbPjr8",
+  "titulo": "JEEP RENEGADE - 2020/20201.8 16V FLEX 4P AUTOMÁTICO",
   "publicadoEm": "2026-10-21",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/DdbMtGX0pUE"
+  "url": "https://www.youtube.com/shorts/ubeGKCbPjr8"
  },
  "videos": [
+  {
+   "id": "ubeGKCbPjr8",
+   "titulo": "JEEP RENEGADE - 2020/20201.8 16V FLEX 4P AUTOMÁTICO",
+   "publicadoEm": "2026-10-21",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/ubeGKCbPjr8"
+  },
+  {
+   "id": "gAQwzjJvtP4",
+   "titulo": "CHERY TIGGO 7 - 2024/20251.5 TCI TURBO FLEX SPORT CVT",
+   "publicadoEm": "2026-10-21",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/gAQwzjJvtP4"
+  },
+  {
+   "id": "erNP38RP0iU",
+   "titulo": "JEEP COMPASS - 2023/20231.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-10-21",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/erNP38RP0iU"
+  },
   {
    "id": "DdbMtGX0pUE",
    "titulo": "MERCEDES-BENZ C 180 - 2020/20201.6 CGI FLEX EXCLUSIVE 9G-TRONIC",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-10-20",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/PEy057qdhJ4"
-  },
-  {
-   "id": "Te2w_vMPUjQ",
-   "titulo": "JEEP COMPASS - 2020/20202.0 16V FLEX SPORT AUTOMÁTICO",
-   "publicadoEm": "2026-10-20",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/Te2w_vMPUjQ"
-  },
-  {
-   "id": "c_k6WGDQFJE",
-   "titulo": "FORD RANGER - 2026/20262.0 TURBO DIESEL CD BLACK 4X2 AUTOMÁTICO",
-   "publicadoEm": "2026-10-20",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/c_k6WGDQFJE"
-  },
-  {
-   "id": "WaAup_iArtM",
-   "titulo": "TOYOTA COROLLA - 2023/20232.0 VVT-IE FLEX ALTIS DIRECT SHIFT",
-   "publicadoEm": "2026-10-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/WaAup_iArtM"
   }
  ]
 }
