@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "PEy057qdhJ4",
-  "titulo": "CHEVROLET MONTANA - 2023/20231.2 TURBO FLEX PREMIER AUTOMÁTICO",
-  "publicadoEm": "2026-10-20",
+  "id": "DdbMtGX0pUE",
+  "titulo": "MERCEDES-BENZ C 180 - 2020/20201.6 CGI FLEX EXCLUSIVE 9G-TRONIC",
+  "publicadoEm": "2026-10-21",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/PEy057qdhJ4"
+  "url": "https://www.youtube.com/shorts/DdbMtGX0pUE"
  },
  "videos": [
+  {
+   "id": "DdbMtGX0pUE",
+   "titulo": "MERCEDES-BENZ C 180 - 2020/20201.6 CGI FLEX EXCLUSIVE 9G-TRONIC",
+   "publicadoEm": "2026-10-21",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/DdbMtGX0pUE"
+  },
+  {
+   "id": "iL81EPm36rc",
+   "titulo": "VOLKSWAGEN JETTA - 2018/20191.4 250 TSI TOTAL FLEX R-LINE TIPTRONIC",
+   "publicadoEm": "2026-10-21",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/iL81EPm36rc"
+  },
   {
    "id": "PEy057qdhJ4",
    "titulo": "CHEVROLET MONTANA - 2023/20231.2 TURBO FLEX PREMIER AUTOMÁTICO",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-10-19",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/WaAup_iArtM"
-  },
-  {
-   "id": "4Cjp8KDU9Zg",
-   "titulo": "BYD SONG PRO - 2024/20251.5 DM-I HÍBRIDO GS AUTOMÁTICO",
-   "publicadoEm": "2026-10-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/4Cjp8KDU9Zg"
-  },
-  {
-   "id": "3RUN8oUt2dw",
-   "titulo": "JEEP COMPASS - 2022/20221.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-10-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/3RUN8oUt2dw"
   }
  ]
 }
