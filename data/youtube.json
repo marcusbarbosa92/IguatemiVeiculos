@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "ubeGKCbPjr8",
-  "titulo": "JEEP RENEGADE - 2020/20201.8 16V FLEX 4P AUTOMÁTICO",
-  "publicadoEm": "2026-10-21",
+  "id": "w5lEg39f448",
+  "titulo": "JEEP COMPASS - 2024/20241.3 T270 TURBO FLEX LONGITUDE AT6",
+  "publicadoEm": "2026-10-22",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/ubeGKCbPjr8"
+  "url": "https://www.youtube.com/shorts/w5lEg39f448"
  },
  "videos": [
+  {
+   "id": "w5lEg39f448",
+   "titulo": "JEEP COMPASS - 2024/20241.3 T270 TURBO FLEX LONGITUDE AT6",
+   "publicadoEm": "2026-10-22",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/w5lEg39f448"
+  },
+  {
+   "id": "MqQxz_w5K5U",
+   "titulo": "KIA SORENTO - 2025/20262.2 TURBO DIESEL EX AWD DCT",
+   "publicadoEm": "2026-10-22",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/MqQxz_w5K5U"
+  },
   {
    "id": "ubeGKCbPjr8",
    "titulo": "JEEP RENEGADE - 2020/20201.8 16V FLEX 4P AUTOMÁTICO",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-10-21",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/DdbMtGX0pUE"
-  },
-  {
-   "id": "iL81EPm36rc",
-   "titulo": "VOLKSWAGEN JETTA - 2018/20191.4 250 TSI TOTAL FLEX R-LINE TIPTRONIC",
-   "publicadoEm": "2026-10-21",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/iL81EPm36rc"
-  },
-  {
-   "id": "PEy057qdhJ4",
-   "titulo": "CHEVROLET MONTANA - 2023/20231.2 TURBO FLEX PREMIER AUTOMÁTICO",
-   "publicadoEm": "2026-10-20",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/PEy057qdhJ4"
   }
  ]
 }
