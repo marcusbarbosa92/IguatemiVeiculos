@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "hdVk6QwY3mA",
-  "titulo": "TOYOTA COROLLA - 2024/20242.0 VVT-IE FLEX GR-S DIRECT SHIFT",
-  "publicadoEm": "2026-10-27",
+  "id": "1KHVekyG3fI",
+  "titulo": "FIAT FASTBACK - 2025/20251.0 TURBO 200 HYBRID AUDACE CVT",
+  "publicadoEm": "2026-10-28",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/hdVk6QwY3mA"
+  "url": "https://www.youtube.com/shorts/1KHVekyG3fI"
  },
  "videos": [
+  {
+   "id": "1KHVekyG3fI",
+   "titulo": "FIAT FASTBACK - 2025/20251.0 TURBO 200 HYBRID AUDACE CVT",
+   "publicadoEm": "2026-10-28",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/1KHVekyG3fI"
+  },
+  {
+   "id": "Qo5tO9olTX0",
+   "titulo": "BMW 320i - 2024/20242.0 16V TURBO FLEX SPORT GP AUTOMÁTICO",
+   "publicadoEm": "2026-10-28",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Qo5tO9olTX0"
+  },
+  {
+   "id": "PXlWGXZgmLY",
+   "titulo": "HONDA HR-V - 2023/20241.5 DI I-VTEC FLEX EXL CVT",
+   "publicadoEm": "2026-10-28",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/PXlWGXZgmLY"
+  },
   {
    "id": "hdVk6QwY3mA",
    "titulo": "TOYOTA COROLLA - 2024/20242.0 VVT-IE FLEX GR-S DIRECT SHIFT",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-10-27",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/6A4AQeXQo1M"
-  },
-  {
-   "id": "R1caCUcf4eI",
-   "titulo": "AUDI A3 - 2020/20201.4 TFSI GASOLINA SPORTBACK PRESTIGE PLUS S-TRONIC",
-   "publicadoEm": "2026-10-27",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/R1caCUcf4eI"
-  },
-  {
-   "id": "jC96aZVh4iM",
-   "titulo": "VOLKSWAGEN PASSAT - 2017/20182.0 16V TSI BLUEMOTION GASOLINA HIGHLINE 4P DSG",
-   "publicadoEm": "2026-10-27",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/jC96aZVh4iM"
-  },
-  {
-   "id": "KweNvkCee_Q",
-   "titulo": "FIAT FASTBACK - 2025/20251.0 TURBO 200 FLEX CVT",
-   "publicadoEm": "2026-10-27",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/KweNvkCee_Q"
   }
  ]
 }
