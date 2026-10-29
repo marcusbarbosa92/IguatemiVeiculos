@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "b1nCOgFZEAE",
-  "titulo": "TOYOTA COROLLA - 2021/20222.0 VVT-IE FLEX XEI DIRECT SHIFT",
-  "publicadoEm": "2026-10-28",
+  "id": "nVZ9iWXrUeA",
+  "titulo": "VOLKSWAGEN VIRTUS - 2025/20251.4 250 TSI EXCLUSIVE AUTOMÁTICO",
+  "publicadoEm": "2026-10-29",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/b1nCOgFZEAE"
+  "url": "https://www.youtube.com/shorts/nVZ9iWXrUeA"
  },
  "videos": [
+  {
+   "id": "nVZ9iWXrUeA",
+   "titulo": "VOLKSWAGEN VIRTUS - 2025/20251.4 250 TSI EXCLUSIVE AUTOMÁTICO",
+   "publicadoEm": "2026-10-29",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/nVZ9iWXrUeA"
+  },
+  {
+   "id": "En2ULEBjUlI",
+   "titulo": "TOYOTA COROLLA - 2022/20231.8 VVT-I HYBRID FLEX ALTIS PREMIUM CV",
+   "publicadoEm": "2026-10-29",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/En2ULEBjUlI"
+  },
   {
    "id": "b1nCOgFZEAE",
    "titulo": "TOYOTA COROLLA - 2021/20222.0 VVT-IE FLEX XEI DIRECT SHIFT",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-10-28",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/1KHVekyG3fI"
-  },
-  {
-   "id": "Qo5tO9olTX0",
-   "titulo": "BMW 320i - 2024/20242.0 16V TURBO FLEX SPORT GP AUTOMÁTICO",
-   "publicadoEm": "2026-10-28",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/Qo5tO9olTX0"
-  },
-  {
-   "id": "PXlWGXZgmLY",
-   "titulo": "HONDA HR-V - 2023/20241.5 DI I-VTEC FLEX EXL CVT",
-   "publicadoEm": "2026-10-28",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/PXlWGXZgmLY"
   }
  ]
 }
