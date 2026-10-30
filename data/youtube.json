@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "nVZ9iWXrUeA",
-  "titulo": "VOLKSWAGEN VIRTUS - 2025/20251.4 250 TSI EXCLUSIVE AUTOMÁTICO",
-  "publicadoEm": "2026-10-29",
+  "id": "Nu8gFPNq-nU",
+  "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX S AT6",
+  "publicadoEm": "2026-10-30",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/nVZ9iWXrUeA"
+  "url": "https://www.youtube.com/shorts/Nu8gFPNq-nU"
  },
  "videos": [
+  {
+   "id": "Nu8gFPNq-nU",
+   "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX S AT6",
+   "publicadoEm": "2026-10-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Nu8gFPNq-nU"
+  },
+  {
+   "id": "cOBeQKJqrdA",
+   "titulo": "FIAT TORO - 2025/20261.3 TURBO 270 FLEX VOLCANO AT6",
+   "publicadoEm": "2026-10-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/cOBeQKJqrdA"
+  },
+  {
+   "id": "Yn_sm2XrjE4",
+   "titulo": "FIAT TORO - 2024/20251.3 TURBO 270 FLEX FREEDOM AT6",
+   "publicadoEm": "2026-10-30",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/Yn_sm2XrjE4"
+  },
   {
    "id": "nVZ9iWXrUeA",
    "titulo": "VOLKSWAGEN VIRTUS - 2025/20251.4 250 TSI EXCLUSIVE AUTOMÁTICO",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-10-28",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/b1nCOgFZEAE"
-  },
-  {
-   "id": "CtgqucrwVL8",
-   "titulo": "TOYOTA COROLLA - 2022/20232.0 VVT-IE FLEX XEI DIRECT SHIFT",
-   "publicadoEm": "2026-10-28",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/CtgqucrwVL8"
-  },
-  {
-   "id": "ltH9QD2RU-k",
-   "titulo": "NISSAN KICKS - 2020/20211.6 16V FLEXSTART SV 4P XTRONIC",
-   "publicadoEm": "2026-10-28",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/ltH9QD2RU-k"
-  },
-  {
-   "id": "1KHVekyG3fI",
-   "titulo": "FIAT FASTBACK - 2025/20251.0 TURBO 200 HYBRID AUDACE CVT",
-   "publicadoEm": "2026-10-28",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/1KHVekyG3fI"
   }
  ]
 }
