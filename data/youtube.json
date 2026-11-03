@@ -6,13 +6,41 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "Nu8gFPNq-nU",
-  "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX S AT6",
-  "publicadoEm": "2026-10-30",
+  "id": "RDUVzVfprHI",
+  "titulo": "NISSAN SENTRA - 2024/20252.0 16V GASOLINA EXCLUSIVE XTRONIC",
+  "publicadoEm": "2026-11-03",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/Nu8gFPNq-nU"
+  "url": "https://www.youtube.com/shorts/RDUVzVfprHI"
  },
  "videos": [
+  {
+   "id": "RDUVzVfprHI",
+   "titulo": "NISSAN SENTRA - 2024/20252.0 16V GASOLINA EXCLUSIVE XTRONIC",
+   "publicadoEm": "2026-11-03",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/RDUVzVfprHI"
+  },
+  {
+   "id": "4fAJU6uAUrM",
+   "titulo": "CHEVROLET CRUZE - 2018/20181.4 TURBO LT 16V FLEX 4P AUTOMÁTICO",
+   "publicadoEm": "2026-11-03",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/4fAJU6uAUrM"
+  },
+  {
+   "id": "_78Q8Wx5X_0",
+   "titulo": "FIAT TORO - 2021/20222.0 16V TURBO DIESEL RANCH 4WD AT9",
+   "publicadoEm": "2026-11-03",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/_78Q8Wx5X_0"
+  },
+  {
+   "id": "kDC91O2-GCg",
+   "titulo": "LEAPMOTOR C10 - 2026/202728,4 KW REEV",
+   "publicadoEm": "2026-11-03",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/kDC91O2-GCg"
+  },
   {
    "id": "Nu8gFPNq-nU",
    "titulo": "JEEP COMPASS - 2024/20251.3 T270 TURBO FLEX S AT6",
@@ -26,34 +54,6 @@
    "publicadoEm": "2026-10-30",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/cOBeQKJqrdA"
-  },
-  {
-   "id": "Yn_sm2XrjE4",
-   "titulo": "FIAT TORO - 2024/20251.3 TURBO 270 FLEX FREEDOM AT6",
-   "publicadoEm": "2026-10-30",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/Yn_sm2XrjE4"
-  },
-  {
-   "id": "nVZ9iWXrUeA",
-   "titulo": "VOLKSWAGEN VIRTUS - 2025/20251.4 250 TSI EXCLUSIVE AUTOMÁTICO",
-   "publicadoEm": "2026-10-29",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/nVZ9iWXrUeA"
-  },
-  {
-   "id": "En2ULEBjUlI",
-   "titulo": "TOYOTA COROLLA - 2022/20231.8 VVT-I HYBRID FLEX ALTIS PREMIUM CV",
-   "publicadoEm": "2026-10-29",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/En2ULEBjUlI"
-  },
-  {
-   "id": "b1nCOgFZEAE",
-   "titulo": "TOYOTA COROLLA - 2021/20222.0 VVT-IE FLEX XEI DIRECT SHIFT",
-   "publicadoEm": "2026-10-28",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/b1nCOgFZEAE"
   }
  ]
 }
