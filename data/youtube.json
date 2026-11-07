@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "VdHzdVkz7ms",
-  "titulo": "JEEP COMPASS 2024/2025 1.3 T270 TURBO FLEX LONGITUDE AT6",
+  "id": "RULUTrwWPd0",
+  "titulo": "NISSAN KICKS CINZA  2023/2024 1.6 16V FLEXSTART EXCLUSIVE XTRONIC",
   "publicadoEm": "2026-11-06",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/VdHzdVkz7ms"
+  "url": "https://www.youtube.com/shorts/RULUTrwWPd0"
  },
  "videos": [
+  {
+   "id": "RULUTrwWPd0",
+   "titulo": "NISSAN KICKS CINZA  2023/2024 1.6 16V FLEXSTART EXCLUSIVE XTRONIC",
+   "publicadoEm": "2026-11-06",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/RULUTrwWPd0"
+  },
+  {
+   "id": "VaJZWJY4O4o",
+   "titulo": "JEEP RENEGADE CINZA 2023/2024 1.3 T270 TURBO FLEX TRAILHAWK 4X4 AT9",
+   "publicadoEm": "2026-11-06",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/VaJZWJY4O4o"
+  },
+  {
+   "id": "2e_F_Gx9Ujs",
+   "titulo": "TOYOTA COROLLA 2020/2021 2.0 VVT-IE FLEX XEI DIRECT SHIFT",
+   "publicadoEm": "2026-11-06",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/2e_F_Gx9Ujs"
+  },
   {
    "id": "VdHzdVkz7ms",
    "titulo": "JEEP COMPASS 2024/2025 1.3 T270 TURBO FLEX LONGITUDE AT6",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-11-05",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/7SIKa2yUgwY"
-  },
-  {
-   "id": "thjU2hdwxYQ",
-   "titulo": "FIAT TORO BRANCO 2022/2022 2.0 16V TURBO DIESEL VOLCANO 4WD AT9",
-   "publicadoEm": "2026-11-05",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/thjU2hdwxYQ"
-  },
-  {
-   "id": "ItKMRtn1bJc",
-   "titulo": "ORD RANGER PRETO 2022/2023 2.2 XLS 4X2 CD 16V DIESEL 4P AUTOMÁTICO",
-   "publicadoEm": "2026-11-05",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/ItKMRtn1bJc"
-  },
-  {
-   "id": "DAEl21eH2sg",
-   "titulo": "JEEP COMMANDER PRETO  2022/2022 2.0 TD380 TURBO DIESEL OVERLAND AT9",
-   "publicadoEm": "2026-11-05",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/DAEl21eH2sg"
   }
  ]
 }
