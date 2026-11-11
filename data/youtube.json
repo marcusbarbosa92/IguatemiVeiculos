@@ -6,13 +6,41 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "P0dRtJF2Rpw",
-  "titulo": "JEEP COMPASS BRANCO  2017/2018 2.0 16V FLEX LONGITUDE AUTOMÁTICO",
-  "publicadoEm": "2026-11-10",
+  "id": "cG2sq9YNFz0",
+  "titulo": "RENAULT DUSTER MARRON 2022/2023 1.6 16V SCE FLEX INTENSE X-TRONIC",
+  "publicadoEm": "2026-11-11",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/P0dRtJF2Rpw"
+  "url": "https://www.youtube.com/shorts/cG2sq9YNFz0"
  },
  "videos": [
+  {
+   "id": "cG2sq9YNFz0",
+   "titulo": "RENAULT DUSTER MARRON 2022/2023 1.6 16V SCE FLEX INTENSE X-TRONIC",
+   "publicadoEm": "2026-11-11",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/cG2sq9YNFz0"
+  },
+  {
+   "id": "JcMPBPJyqgM",
+   "titulo": "JEEP COMPASS PRATA  2024/2025 1.3 T270 TURBO FLEX SPORT AT6",
+   "publicadoEm": "2026-11-11",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/JcMPBPJyqgM"
+  },
+  {
+   "id": "_tXbXCZedT8",
+   "titulo": "CHERY TIGGO 7 PRO 2022/2023 1.5 TCI FLEX HYBRID CVT",
+   "publicadoEm": "2026-11-11",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/_tXbXCZedT8"
+  },
+  {
+   "id": "HIZGTKyrDiI",
+   "titulo": "BYD YUAN PLUS CINZA 2023/2023 60,8 KW ELÉTRICO",
+   "publicadoEm": "2026-11-11",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/HIZGTKyrDiI"
+  },
   {
    "id": "P0dRtJF2Rpw",
    "titulo": "JEEP COMPASS BRANCO  2017/2018 2.0 16V FLEX LONGITUDE AUTOMÁTICO",
@@ -26,34 +54,6 @@
    "publicadoEm": "2026-11-10",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/OnaWWgx2yfQ"
-  },
-  {
-   "id": "_FY2tfdaeYs",
-   "titulo": "CHERY TIGGO 8 PRO 2023/2024 1.5 TCI PLUG-IN HYBRID DHT",
-   "publicadoEm": "2026-11-10",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/_FY2tfdaeYs"
-  },
-  {
-   "id": "goZCdTXe4cg",
-   "titulo": "JEEP COMPASS  BRANCO 2022/2023 1.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-11-10",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/goZCdTXe4cg"
-  },
-  {
-   "id": "qK-i1rT3G1s",
-   "titulo": "JEEP COMMANDER PRATA  2023/2023 1.3 T270 TURBO FLEX LONGITUDE AT6",
-   "publicadoEm": "2026-11-10",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/qK-i1rT3G1s"
-  },
-  {
-   "id": "lPpkSZx11vo",
-   "titulo": "HONDA CITY CINZA  2018/2018 1.5 EXL 16V FLEX 4P AUTOMÁTICO",
-   "publicadoEm": "2026-11-09",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/lPpkSZx11vo"
   }
  ]
 }
