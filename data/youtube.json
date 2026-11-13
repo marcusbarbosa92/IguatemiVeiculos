@@ -6,13 +6,27 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "2tbk5wQcOgA",
-  "titulo": "JEEP COMPASS PRATA 2023/2023 1.3 T270 TURBO FLEX SPORT AT6",
+  "id": "CUplmJ0UCMU",
+  "titulo": "MERCEDES-BENZ GLA  BRANCO 200 2018/2018 1.6 CGI FLEX ADVANCE 7G-DCT",
   "publicadoEm": "2026-11-12",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/2tbk5wQcOgA"
+  "url": "https://www.youtube.com/shorts/CUplmJ0UCMU"
  },
  "videos": [
+  {
+   "id": "CUplmJ0UCMU",
+   "titulo": "MERCEDES-BENZ GLA  BRANCO 200 2018/2018 1.6 CGI FLEX ADVANCE 7G-DCT",
+   "publicadoEm": "2026-11-12",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/CUplmJ0UCMU"
+  },
+  {
+   "id": "lKIFRx1mPnA",
+   "titulo": "CHERY TIGGO 5X PRO 2024/2025 1.5 TURBO FLEX AUT.",
+   "publicadoEm": "2026-11-12",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/lKIFRx1mPnA"
+  },
   {
    "id": "2tbk5wQcOgA",
    "titulo": "JEEP COMPASS PRATA 2023/2023 1.3 T270 TURBO FLEX SPORT AT6",
@@ -40,20 +54,6 @@
    "publicadoEm": "2026-11-12",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/RoG4PWP3uOQ"
-  },
-  {
-   "id": "PnP-284aCIA",
-   "titulo": "NISSAN KICKS  PRETO 2019/2020 1.6 16V FLEXSTART SL 4P XTRONIC",
-   "publicadoEm": "2026-11-11",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/PnP-284aCIA"
-  },
-  {
-   "id": "smEUmgeGQw8",
-   "titulo": "JEEP COMMANDER  BRANCO 2024/2025 1.3 T270 TURBO FLEX OVERLAND AT6",
-   "publicadoEm": "2026-11-11",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/smEUmgeGQw8"
   }
  ]
 }
