@@ -6,13 +6,34 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "f65LXC52YjI",
-  "titulo": "RAM RAMPAGE CINZA  2026/2026 2.2 TURBO DIESEL REBEL 4X4 AUTOMÁTICO",
-  "publicadoEm": "2026-11-19",
+  "id": "UndD8HJGZ1o",
+  "titulo": "NISSAN KICKS BRANCO  PLAY 2025/2025 1.6 16V FLEXSTART SENSE XTRONIC",
+  "publicadoEm": "2026-11-23",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/f65LXC52YjI"
+  "url": "https://www.youtube.com/shorts/UndD8HJGZ1o"
  },
  "videos": [
+  {
+   "id": "UndD8HJGZ1o",
+   "titulo": "NISSAN KICKS BRANCO  PLAY 2025/2025 1.6 16V FLEXSTART SENSE XTRONIC",
+   "publicadoEm": "2026-11-23",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/UndD8HJGZ1o"
+  },
+  {
+   "id": "4HjF7rTIcWI",
+   "titulo": "FORD MUSTANG BRANCO  2010/2011 3.7 CONVERSIVEL V6 GASOLINA 2P AUTOMÁTICO",
+   "publicadoEm": "2026-11-23",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/4HjF7rTIcWI"
+  },
+  {
+   "id": "VSz_iiJhL2w",
+   "titulo": "HONDA HR-V AZUL 2025/2025 1.5 DI I-VTEC TURBO FLEX ADVANCE CVT",
+   "publicadoEm": "2026-11-23",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/VSz_iiJhL2w"
+  },
   {
    "id": "f65LXC52YjI",
    "titulo": "RAM RAMPAGE CINZA  2026/2026 2.2 TURBO DIESEL REBEL 4X4 AUTOMÁTICO",
@@ -33,27 +54,6 @@
    "publicadoEm": "2026-11-19",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/2hKw17Pw2PI"
-  },
-  {
-   "id": "fP9wXVjmxJs",
-   "titulo": "HONDA CITY PRATA 2023/2024 1.5 i-VTEC FLEX TOURING CVT",
-   "publicadoEm": "2026-11-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/fP9wXVjmxJs"
-  },
-  {
-   "id": "r2KhC7AJYt4",
-   "titulo": "HONDA HR-V CINZA 2020/2021 1.8 16V FLEX EX 4P AUTOMÁTICO",
-   "publicadoEm": "2026-11-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/r2KhC7AJYt4"
-  },
-  {
-   "id": "7KeOnencROs",
-   "titulo": "BYD KING 2024/2025 1.5 DM-I PHEV GS AUTOMÁTICO",
-   "publicadoEm": "2026-11-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/7KeOnencROs"
   }
  ]
 }
