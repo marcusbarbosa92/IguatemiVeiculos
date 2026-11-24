@@ -6,13 +6,20 @@
   "url": "https://www.youtube.com/@IguatemiAutomoveis"
  },
  "ultimo": {
-  "id": "UndD8HJGZ1o",
-  "titulo": "NISSAN KICKS BRANCO  PLAY 2025/2025 1.6 16V FLEXSTART SENSE XTRONIC",
-  "publicadoEm": "2026-11-23",
+  "id": "1Gsq23elIP8",
+  "titulo": "RAM RAMPAGE BRANCO 2025/2026 2.2 TURBO DIESEL BIG HORN 4X4 AUTOMÁTICO",
+  "publicadoEm": "2026-11-24",
   "vertical": true,
-  "url": "https://www.youtube.com/shorts/UndD8HJGZ1o"
+  "url": "https://www.youtube.com/shorts/1Gsq23elIP8"
  },
  "videos": [
+  {
+   "id": "1Gsq23elIP8",
+   "titulo": "RAM RAMPAGE BRANCO 2025/2026 2.2 TURBO DIESEL BIG HORN 4X4 AUTOMÁTICO",
+   "publicadoEm": "2026-11-24",
+   "vertical": true,
+   "url": "https://www.youtube.com/shorts/1Gsq23elIP8"
+  },
   {
    "id": "UndD8HJGZ1o",
    "titulo": "NISSAN KICKS BRANCO  PLAY 2025/2025 1.6 16V FLEXSTART SENSE XTRONIC",
@@ -47,13 +54,6 @@
    "publicadoEm": "2026-11-19",
    "vertical": true,
    "url": "https://www.youtube.com/shorts/qxmfihMgl5g"
-  },
-  {
-   "id": "2hKw17Pw2PI",
-   "titulo": "JEEP RENEGADE BRANCO 2021/2021 1.8 16V FLEX LONGITUDE 4P AUTOMÁTICO",
-   "publicadoEm": "2026-11-19",
-   "vertical": true,
-   "url": "https://www.youtube.com/shorts/2hKw17Pw2PI"
   }
  ]
 }
